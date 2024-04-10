@@ -9,6 +9,8 @@ local keymapping = {
 		["<C-j>"] = "<C-w>j",
 		["<C-k>"] = "<C-w>k",
 		["<C-l>"] = "<C-w>l",
+
+		["<leader>Th"] = "<cmd>Inspect<cr>",
 	},
 	i = {},
 	v = {
