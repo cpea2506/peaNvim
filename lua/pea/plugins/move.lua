@@ -1,11 +1,15 @@
 return {
 	"fedepujol/move.nvim",
 	keys = {
-		{
-			{ "<M-j>", ":MoveLine(1)<CR>", desc = "Move Line Up", mode = "n" },
-			{ "<M-k>", ":MoveLine(-1)<CR>", desc = "Move Line Down", mode = "n" },
-			{ "<M-h>", ":MoveHChar(-1)<CR>", desc = "Move Char Left", mode = "n" },
-			{ "<M-l>", ":MoveHChar(1)<CR>", desc = "Move Char Right", mode = "n" },
-		},
+		-- Normal mode
+		{ "<M-j>", "<cmd>MoveLine(1)<cr>", mode = "n" },
+		{ "<M-k>", "<cmd>MoveLine(-1)<cr>", mode = "n" },
+		{ "<M-h>", "<cmd>MoveHChar(-1)<cr>", mode = "n" },
+		{ "<M-l>", "<cmd>MoveHChar(1)<cr>", mode = "n" },
+		-- Block mode
+		{ "<M-j>", "<cmd>MoveBlock(1)<cr>", mode = "v" },
+		{ "<M-k>", "<cmd>MoveBlock(-1)<cr>", mode = "v" },
+		{ "<M-h>", "<cmd>MoveHBlock(-1)<cr>", mode = "v" },
+		{ "<M-l>", "<cmd>MoveHBlock(1)<cr>", mode = "v" },
 	},
 }
