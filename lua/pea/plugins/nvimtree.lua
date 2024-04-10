@@ -1,7 +1,7 @@
 return {
 	"nvim-tree/nvim-tree.lua",
 	keys = {
-		{ "<leader>e", "<cmd>NvimTreeToggle<cr>", "Open Explorer" },
+		{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Open Explorer" },
 	},
 	opts = {
 		hijack_cursor = true,

@@ -10,8 +10,8 @@ return {
 		"TSInstallSync",
 	},
 	keys = {
-		{ "<leader>Tu", "<cmd>TSUpdateSync<cr>", "Treesitter Update Sync" },
-		{ "<leader>Th", "<cmd>TSHighlightCapturesUnderCursor<cr>", "Show Highlighting Group" },
+		{ "<leader>Tu", "<cmd>TSUpdateSync<cr>", desc = "Treesitter Update Sync" },
+		{ "<leader>Th", "<cmd>TSHighlightCapturesUnderCursor<cr>", desc = "Show Highlighting Group" },
 	},
 	event = "VeryLazy",
 	config = function()

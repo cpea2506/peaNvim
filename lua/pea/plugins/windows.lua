@@ -2,8 +2,8 @@ return {
 	{
 		"anuvyklack/windows.nvim",
 		keys = {
-			{ "<C-w>a", "<cmd>WindowsMaximize<cr>", "Windows Maximize" },
-			{ "<C-w>=", "<cmd>WindowsEqualize<cr>", "Windows Equalize" },
+			{ "<C-w>a", "<cmd>WindowsMaximize<cr>", desc = "Windows Maximize" },
+			{ "<C-w>=", "<cmd>WindowsEqualize<cr>", desc = "Windows Equalize" },
 		},
 		config = true,
 		dependencies = {
