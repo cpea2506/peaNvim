@@ -12,4 +12,9 @@ return {
 		{ "<M-h>", "<cmd>MoveHBlock(-1)<cr>", mode = "v" },
 		{ "<M-l>", "<cmd>MoveHBlock(1)<cr>", mode = "v" },
 	},
+	opts = {
+		char = {
+			enable = true,
+		},
+	},
 }
