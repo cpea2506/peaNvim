@@ -1,6 +1,6 @@
 local keymapping = {
 	n = {
-		["<leader>q"] = "<cmd>q<cr>",
+		["<leader>q"] = "<cmd>confirm q<cr>",
 		["<C-e>"] = "<cmd>BuffClose<cr>",
 		["<C-s>"] = "<cmd>w<cr>",
 
