@@ -5,6 +5,7 @@ local options = {
 	hidden = true,
 	cmdheight = 0,
 	shiftwidth = 4,
+	number = true,
 	whichwrap = "",
 	showtabline = 0,
 	linebreak = true,
