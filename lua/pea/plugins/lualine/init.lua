@@ -7,6 +7,7 @@ return {
 	event = "VeryLazy",
 	init = function()
 		vim.g.lualine_laststatus = vim.o.laststatus
+
 		if vim.fn.argc(-1) > 0 then
 			-- Set an empty statusline till lualine loads.
 			vim.o.statusline = " "
@@ -40,6 +41,8 @@ return {
 				"toggleterm",
 			},
 			globalstatus = true,
+			component_separators = "",
+			section_separators = "",
 		},
 		sections = {
 			lualine_a = {},
