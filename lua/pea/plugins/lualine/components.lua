@@ -6,8 +6,8 @@ local components = {
 		function()
 			return "▊"
 		end,
-		color = { fg = colors.blue }, -- set highlighting of component
-		padding = { left = 0, right = 1 }, -- we don't need space before this
+		color = { fg = colors.blue },
+		padding = { left = 0, right = 1 },
 	},
 	evil = {
 		function()
@@ -68,33 +68,28 @@ local components = {
 	},
 	lsp = {
 		function()
-			local msg = "LS Inactive"
 			local bufnr = vim.api.nvim_get_current_buf()
 			local buf_clients = vim.lsp.get_clients({ bufnr = bufnr })
+			local buf_client_names = { "LS Inactive" }
 
-			if vim.tbl_isempty(buf_clients) then
-				return msg
+			if #buf_clients ~= 0 then
+				buf_client_names = {}
 			end
-
-			local buf_client_names = {}
 
 			for _, client in pairs(buf_clients) do
-				if client.name ~= "null-ls" then
-					buf_client_names[#buf_client_names + 1] = client.name
-				end
+				buf_client_names[#buf_client_names + 1] = client.name
 			end
 
-			local buf_ft = vim.bo.filetype
+			-- Add formatters.
+			local formatters = require("conform").list_formatters(bufnr)
+			local formatter_names = vim.tbl_map(function(f)
+				return f.name
+			end, formatters)
+			vim.list_extend(buf_client_names, formatter_names)
 
-			-- add formatter
-			local formatters = require("lvim.lsp.null-ls.formatters")
-			local supported_formatters = formatters.list_registered(buf_ft)
-			vim.list_extend(buf_client_names, supported_formatters)
-
-			-- add linter
-			local linters = require("lvim.lsp.null-ls.linters")
-			local supported_linters = linters.list_registered(buf_ft)
-			vim.list_extend(buf_client_names, supported_linters)
+			-- Add linters.
+			local linter_names = require("lint").get_running()
+			vim.list_extend(buf_client_names, linter_names)
 
 			return table.concat(buf_client_names, " | ")
 		end,
