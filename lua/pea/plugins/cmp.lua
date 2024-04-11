@@ -46,13 +46,13 @@ return {
 			cmdline_mappings["<C-j>"] = cmdline_mappings["<S-Tab>"]
 			cmdline_mappings["<C-k>"] = cmdline_mappings["<Tab>"]
 
-			cmp.cmdline.setup(":", {
+			cmp.setup.cmdline(":", {
 				mapping = cmdline_mappings,
 				sources = {
 					{ name = "cmdline" },
 				},
 			})
-			cmp.cmdline.setup({ "/", "?" }, {
+			cmp.setup.cmdline({ "/", "?" }, {
 				mapping = cmdline_mappings,
 				sources = {
 					{ name = "buffer" },
