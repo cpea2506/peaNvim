@@ -1,7 +1,7 @@
 local keymapping = {
 	n = {
 		["<leader>q"] = "<cmd>q<cr>",
-		["<C-e>"] = "<cmd>bd<cr>",
+		["<C-e>"] = "<cmd>BuffClose<cr>",
 		["<C-s>"] = "<cmd>w<cr>",
 
 		-- Better window movement.
