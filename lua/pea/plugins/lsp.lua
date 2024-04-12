@@ -89,6 +89,9 @@ return {
 					lspconfig.lua_ls.setup({
 						settings = {
 							Lua = {
+								runtime = {
+									version = "LuaJIT",
+								},
 								workspace = {
 									checkThirdParty = false,
 								},
@@ -97,6 +100,21 @@ return {
 								},
 								completion = {
 									callSnippet = "Replace",
+								},
+								hint = {
+									enable = true,
+									setType = true,
+									arrayIndex = "Disable",
+								},
+								semantic = {
+									keyword = true,
+								},
+								diagnostics = {
+									disable = {
+										"missing-parameter",
+										"param-type-mismatch",
+										"undefined-global",
+									},
 								},
 							},
 						},
