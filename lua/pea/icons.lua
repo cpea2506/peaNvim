@@ -41,4 +41,8 @@ return {
 		Value = "",
 		Variable = "",
 	},
+	ui = {
+		Telescope = "",
+		Forward = "",
+	},
 }
