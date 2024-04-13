@@ -1,8 +1,9 @@
 local modules = {
 	"options",
 	"manager",
-	"keymappings",
+	"autocmds",
 	"commands",
+	"keymappings",
 }
 
 for _, module in pairs(modules) do
