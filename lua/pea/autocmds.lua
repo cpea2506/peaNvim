@@ -2,7 +2,7 @@ local function augroup(name)
 	return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
-return {
+local autocmds = {
 	{
 		"TextYankPost",
 		{
@@ -60,3 +60,7 @@ return {
 		},
 	},
 }
+
+for _, autocmd in pairs(autocmds) do
+	vim.api.nvim_create_autocmd(autocmd[1], autocmd[2])
+end

@@ -1,7 +1,7 @@
-return {
+local commands = {
 	{
-		name = "BuffClose",
-		fn = function()
+		"BuffClose",
+		function()
 			local command = "bd"
 			local bo = vim.bo
 			local api = vim.api
@@ -57,3 +57,9 @@ return {
 		end,
 	},
 }
+
+for _, command in pairs(commands) do
+	local opts = vim.tbl_deep_extend("force", { force = true }, command[3] or {})
+
+	vim.api.nvim_create_user_command(command[1], command[2], opts)
+end
