@@ -36,18 +36,9 @@ return {
 			},
 		},
 		config = function(_, opts)
-			local register_capability = vim.lsp.handlers["client/registerCapability"]
-
 			vim.diagnostic.config(opts.diagnostics)
 
-			vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
-				local ret = register_capability(err, res, ctx)
-
-				-- local client = vim.lsp.get_client_by_id(ctx.client_id)
-				-- local buffer = vim.api.nvim_get_current_buf()
-				-- require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
-				return ret
-			end
+			local codelens_refresh_group = vim.api.nvim_create_augroup("codelens_refresh", { clear = true })
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
@@ -55,15 +46,33 @@ return {
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
 
 					if client then
+						require("pea.plugins.lsp.keymaps").on_attach(client, bufnr)
+
 						if client.supports_method("textDocument/inlayHint") then
 							vim.lsp.inlay_hint.enable(bufnr, true)
 						end
 
 						if client.supports_method("textDocument/codeLens") then
-							vim.lsp.codelens.refresh()
-							vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+							vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave" }, {
+								group = codelens_refresh_group,
 								buffer = bufnr,
 								callback = vim.lsp.codelens.refresh,
+							})
+						end
+					end
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("LspDetach", {
+				callback = function(args)
+					local bufnr = args.buf
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+					if client then
+						if client.supports_method("textDocument/codeLens") then
+							vim.api.nvim_clear_autocmds({
+								group = codelens_refresh_group,
+								buffer = bufnr,
 							})
 						end
 					end
