@@ -44,5 +44,7 @@ return {
 	ui = {
 		Telescope = "",
 		Forward = "",
+		ChevronRight = "",
+		Circle = " ",
 	},
 }
