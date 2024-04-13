@@ -77,54 +77,70 @@ return {
 			ensure_installed = {
 				"lua_ls",
 			},
-		},
-		config = function(_, opts)
-			local lspconfig = require("lspconfig")
-
-			local handlers = {
-				function(server)
-					require("lspconfig")[server].setup({})
-				end,
-				lua_ls = function()
-					lspconfig.lua_ls.setup({
-						settings = {
-							Lua = {
-								runtime = {
-									version = "LuaJIT",
-								},
-								workspace = {
-									checkThirdParty = false,
-								},
-								codeLens = {
-									enable = true,
-								},
-								completion = {
-									callSnippet = "Replace",
-								},
-								hint = {
-									enable = true,
-									setType = true,
-									arrayIndex = "Disable",
-								},
-								semantic = {
-									keyword = true,
-								},
-								diagnostics = {
-									disable = {
-										"missing-parameter",
-										"param-type-mismatch",
-										"undefined-global",
-									},
+			servers = {
+				lua_ls = {
+					settings = {
+						Lua = {
+							runtime = {
+								version = "LuaJIT",
+							},
+							workspace = {
+								checkThirdParty = false,
+							},
+							codeLens = {
+								enable = true,
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+							hint = {
+								enable = true,
+								setType = true,
+								arrayIndex = "Disable",
+							},
+							semantic = {
+								keyword = true,
+							},
+							diagnostics = {
+								disable = {
+									"missing-parameter",
+									"param-type-mismatch",
+									"undefined-global",
 								},
 							},
 						},
-					})
-				end,
-			}
+					},
+				},
+			},
+		},
+		config = function(_, opts)
+			local lspconfig = require("lspconfig")
+			local nvim_lsp = require("cmp_nvim_lsp")
+			local capabilities = vim.tbl_deep_extend(
+				"force",
+				vim.lsp.protocol.make_client_capabilities(),
+				nvim_lsp.default_capabilities() or {}
+			)
+
+			local function setup(server)
+				local server_opts = opts.servers[server]
+
+				if type(server_opts) == "function" then
+					server_opts()
+
+					return
+				end
+
+				server_opts = vim.tbl_deep_extend("force", {
+					capabilities = vim.deepcopy(capabilities),
+				}, server_opts or {})
+
+				lspconfig[server].setup(server_opts)
+			end
 
 			require("mason-lspconfig").setup({
 				ensure_installed = opts.ensure_installed,
-				handlers = handlers,
+				handlers = { setup },
 			})
 		end,
 	},
