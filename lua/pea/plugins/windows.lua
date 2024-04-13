@@ -8,6 +8,6 @@ return {
 		{ "<C-w>a", "<cmd>WindowsMaximize<cr>", desc = "Windows Maximize" },
 		{ "<C-w>=", "<cmd>WindowsEqualize<cr>", desc = "Windows Equalize" },
 	},
-	event = "BufRead",
+	event = "VeryLazy",
 	config = true,
 }
