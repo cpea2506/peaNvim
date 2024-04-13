@@ -1,4 +1,73 @@
 local icons = require("pea.icons").diagnostics
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+local codelens_refresh_group = augroup("codelens_refresh", { clear = false })
+local document_highlight_group = augroup("document_highlight", { clear = false })
+
+local function on_attach()
+	autocmd("LspAttach", {
+		callback = function(args)
+			local bufnr = args.buf
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+			if client then
+				if client.supports_method("textDocument/inlayHint") then
+					vim.lsp.inlay_hint.enable(bufnr, true)
+				end
+
+				if client.supports_method("textDocument/codeLens") then
+					autocmd({ "BufEnter", "InsertLeave" }, {
+						group = codelens_refresh_group,
+						buffer = bufnr,
+						callback = vim.lsp.codelens.refresh,
+					})
+				end
+
+				if client.supports_method("textDocument/documentHighlight") then
+					autocmd({ "CursorHold", "CursorHoldI" }, {
+						group = document_highlight_group,
+						buffer = bufnr,
+						callback = vim.lsp.buf.document_highlight,
+					})
+
+					autocmd("CursorMoved", {
+						group = document_highlight_group,
+						buffer = bufnr,
+						callback = vim.lsp.buf.clear_references,
+					})
+				end
+
+				require("pea.plugins.lsp.keymaps").on_attach(client, bufnr)
+			end
+		end,
+	})
+end
+
+local function on_detach()
+	autocmd("LspDetach", {
+		callback = function(args)
+			local bufnr = args.buf
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+			if client then
+				if client.supports_method("textDocument/codeLens") then
+					vim.api.nvim_clear_autocmds({
+						group = codelens_refresh_group,
+						buffer = bufnr,
+					})
+				end
+
+				if client.supports_method("textDocument/documentHighlight") then
+					vim.api.nvim_clear_autocmds({
+						group = document_highlight_group,
+						buffer = bufnr,
+					})
+				end
+			end
+		end,
+	})
+end
 
 return {
 	{
@@ -38,46 +107,8 @@ return {
 		config = function(_, opts)
 			vim.diagnostic.config(opts.diagnostics)
 
-			local codelens_refresh_group = vim.api.nvim_create_augroup("codelens_refresh", { clear = true })
-
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(args)
-					local bufnr = args.buf
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-					if client then
-						require("pea.plugins.lsp.keymaps").on_attach(client, bufnr)
-
-						if client.supports_method("textDocument/inlayHint") then
-							vim.lsp.inlay_hint.enable(bufnr, true)
-						end
-
-						if client.supports_method("textDocument/codeLens") then
-							vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave" }, {
-								group = codelens_refresh_group,
-								buffer = bufnr,
-								callback = vim.lsp.codelens.refresh,
-							})
-						end
-					end
-				end,
-			})
-
-			vim.api.nvim_create_autocmd("LspDetach", {
-				callback = function(args)
-					local bufnr = args.buf
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-					if client then
-						if client.supports_method("textDocument/codeLens") then
-							vim.api.nvim_clear_autocmds({
-								group = codelens_refresh_group,
-								buffer = bufnr,
-							})
-						end
-					end
-				end,
-			})
+			on_attach()
+			on_detach()
 		end,
 	},
 	{
@@ -184,7 +215,6 @@ return {
 
 			registry:on("package:install:success", function()
 				vim.defer_fn(function()
-					-- trigger FileType event to possibly load this newly installed LSP server
 					require("lazy.core.handler.event").trigger({
 						event = "FileType",
 						buf = vim.api.nvim_get_current_buf(),
