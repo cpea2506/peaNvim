@@ -8,6 +8,7 @@ return {
 			{ "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Telescope Find Text" },
 			{ "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "Telescope Find Files" },
 			{ "<leader>sp", "<cmd>Telescope project<cr>", desc = "Telescope Projects" },
+			{ "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
