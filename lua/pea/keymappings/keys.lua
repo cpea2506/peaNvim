@@ -18,12 +18,6 @@ local keymapping = {
 		["<"] = "<gv",
 		[">"] = ">gv",
 	},
-	c = {
-		-- Navigate tab completion with <c-j> and <c-k>.
-		-- Runs conditionally.
-		["<C-j>"] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
-		["<C-k>"] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
-	},
 }
 
 return keymapping
