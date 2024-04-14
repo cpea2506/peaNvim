@@ -23,7 +23,7 @@ return {
 					prefix = function(diagnostic)
 						local severity = vim.diagnostic.severity[diagnostic.severity]
 
-						return icons[severity]
+						return icons.diagnostics[severity]
 					end,
 				},
 				underline = true,
