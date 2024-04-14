@@ -27,6 +27,7 @@ return {
 				"markdown_inline",
 				"regex",
 				"rust",
+				"c_sharp",
 				"toml",
 				"vim",
 				"yaml",
