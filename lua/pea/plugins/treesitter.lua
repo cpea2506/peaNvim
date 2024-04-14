@@ -20,6 +20,7 @@ return {
 				sync_install = true,
 				auto_install = false,
 				ensure_installed = {
+					"glsl",
 					"bash",
 					"comment",
 					"json",
