@@ -227,21 +227,10 @@ return {
 				mode = { "i", "s" },
 			},
 		},
-		otps = {
+		opts = {
 			highlight_preview = true,
 			create_cmp_source = true,
 			friendly_snippets = true,
 		},
-		config = function(_, opts)
-			opts.search_paths = { vim.fn.stdpath("config") .. "/snippets" }
-
-			for _, path in ipairs(vim.opt.runtimepath:get()) do
-				if string.match(path, "friendly.snippets") then
-					table.insert(opts.search_paths, path .. "/snippets")
-				end
-			end
-
-			require("snippets").setup(opts)
-		end,
 	},
 }
