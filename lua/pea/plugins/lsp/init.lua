@@ -57,6 +57,8 @@ return {
 					lsp.on_exit(client, bufnr)
 				end,
 			})
+
+			require("pea.plugins.lsp.custom_servers").setup_servers()
 		end,
 	},
 	{
