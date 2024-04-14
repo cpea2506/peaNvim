@@ -89,7 +89,7 @@ local components = {
 			vim.list_extend(buf_client_names, formatter_names)
 
 			-- Add linters.
-			local linter_names = require("lint").get_running()
+			local linter_names = require("lint")._resolve_linter_by_ft(vim.bo.filetype)
 			vim.list_extend(buf_client_names, linter_names)
 
 			return table.concat(buf_client_names, (" %s "):format(icons.ui.ThinLine))
