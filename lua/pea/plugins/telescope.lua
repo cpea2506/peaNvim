@@ -6,7 +6,7 @@ return {
 		cmd = "Telescope",
 		keys = {
 			{ "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Telescope Find Text" },
-			{ "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "Telescope Find Files" },
+			{ "<leader>sf", "<cmd>Telescope corrode<cr>", desc = "Telescope Find Files" },
 			{ "<leader>sp", "<cmd>Telescope project<cr>", desc = "Telescope Projects" },
 			{ "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
 		},
@@ -14,6 +14,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"telescope-fzf-native.nvim",
 			"nvim-telescope/telescope-project.nvim",
+			"fdschmidt93/telescope-corrode.nvim",
 		},
 		opts = {
 			defaults = {
@@ -124,8 +125,10 @@ return {
 			}
 
 			telescope.setup(opts)
+
 			telescope.load_extension("fzf")
 			telescope.load_extension("project")
+			telescope.load_extension("corrode")
 		end,
 	},
 	{
