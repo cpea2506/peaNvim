@@ -125,7 +125,7 @@ return {
 								version = "LuaJIT",
 							},
 							workspace = {
-								checkThirdParty = false,
+								checkThirdParty = "ApplyInMemory",
 							},
 							codeLens = {
 								enable = true,
