@@ -16,6 +16,13 @@ local keymappings = {
 	-- Better indenting.
 	{ "<", "<gv", mode = "v" },
 	{ ">", ">gv", mode = "v" },
+
+	-- Lazy specific
+	{ "<leader>pi", "<cmd>Lazy install<cr>", desc = "Lazy Install" },
+	{ "<leader>ps", "<cmd>Lazy sync<cr>", desc = "Lazy Sync" },
+	{ "<leader>pS", "<cmd>Lazy clear<cr>", desc = "Lazy Status" },
+	{ "<leader>pc", "<cmd>Lazy clean<cr>", desc = "Lazy Clean" },
+	{ "<leader>pp", "<cmd>Lazy profile<cr>", desc = "Lazy Profile" },
 }
 
 local keys = keyhandler.resolve(keymappings)
