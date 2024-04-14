@@ -1,10 +1,11 @@
 local conditions = require("pea.plugins.lualine.conditions")
 local colors = require("pea.plugins.lualine.colors")
+local icons = require("pea.icons")
 
 local components = {
 	leftbar = {
 		function()
-			return "▊"
+			return icons.ui.HeavyLine
 		end,
 		color = { fg = colors.blue },
 		padding = { left = 0, right = 1 },
@@ -40,7 +41,7 @@ local components = {
 				bg = colors.bg,
 			})
 
-			return ""
+			return icons.ui.Evil
 		end,
 		color = "LualineMode",
 		padding = { right = 1 },
@@ -53,9 +54,9 @@ local components = {
 		"diagnostics",
 		sources = { "nvim_diagnostic" },
 		symbols = {
-			error = " ",
-			warn = " ",
-			info = " ",
+			error = icons.diagnostics.ERROR .. " ",
+			warn = icons.diagnostics.WARN .. " ",
+			info = icons.diagnostics.INFO .. " ",
 		},
 		diagnostics_color = {
 			color_error = { fg = colors.red },
@@ -91,9 +92,9 @@ local components = {
 			local linter_names = require("lint").get_running()
 			vim.list_extend(buf_client_names, linter_names)
 
-			return table.concat(buf_client_names, " | ")
+			return table.concat(buf_client_names, (" %s "):format(icons.ui.ThinLine))
 		end,
-		icon = " LSP:",
+		icon = icons.ui.Setting .. " LSP:",
 		color = { fg = colors.jungle_green, gui = "bold" },
 	},
 	diff = {
@@ -110,9 +111,9 @@ local components = {
 			end
 		end,
 		symbols = {
-			added = " ",
-			modified = " ",
-			removed = " ",
+			added = icons.git.LineAdded,
+			modified = icons.git.LineModified,
+			removed = icons.git.LineRemoved,
 		},
 		diff_color = {
 			added = { fg = colors.green },
@@ -123,7 +124,7 @@ local components = {
 	},
 	branch = {
 		"b:gitsigns_head",
-		icon = "",
+		icon = icons.git.Branch,
 		color = { fg = colors.violet, gui = "bold" },
 		cond = conditions.should_hide_in_width,
 	},
@@ -137,8 +138,7 @@ local components = {
 	},
 	os = {
 		function()
-			-- no room for window
-			return vim.fn.has("mac") == 1 and "" or ""
+			return icons.ui.Apple
 		end,
 		cond = conditions.should_hide_in_width,
 		color = { fg = colors.fg },
@@ -153,7 +153,7 @@ local components = {
 			local bufnr = vim.api.nvim_get_current_buf()
 			local active_status = vim.treesitter.highlighter.active[bufnr]
 
-			return active_status and " " or ""
+			return active_status and icons.ui.Treesitter .. " " or ""
 		end,
 		color = { fg = colors.green },
 		padding = { right = 0 },
@@ -162,7 +162,7 @@ local components = {
 		function()
 			local current = vim.fn.line(".")
 			local total = vim.fn.line("$")
-			local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+			local chars = icons.ui.Scrollbar
 			local index = math.ceil(current / total * #chars)
 
 			return chars[index]

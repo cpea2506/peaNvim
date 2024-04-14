@@ -1,3 +1,5 @@
+local icons = require("pea.icons").git
+
 return {
 	"nvim-tree/nvim-tree.lua",
 	event = "BufEnter",
@@ -55,9 +57,13 @@ return {
 			icons = {
 				glyphs = {
 					git = {
-						unstaged = "✗",
-						staged = "✓",
-						untracked = "★",
+						unmerged = icons.FileUnmerged,
+						renamed = icons.FileRenamed,
+						deleted = icons.FileDeleted,
+						ignored = icons.FileIgnored,
+						unstaged = icons.FileUnstaged,
+						staged = icons.FileStaged,
+						untracked = icons.FileUntracked,
 					},
 				},
 			},

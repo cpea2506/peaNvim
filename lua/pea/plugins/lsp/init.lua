@@ -1,4 +1,4 @@
-local icons = require("pea.icons").diagnostics
+local icons = require("pea.icons")
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -82,10 +82,10 @@ return {
 				update_in_insert = true,
 				signs = {
 					text = {
-						[vim.diagnostic.severity.ERROR] = icons.ERROR,
-						[vim.diagnostic.severity.WARN] = icons.WARN,
-						[vim.diagnostic.severity.HINT] = icons.HINT,
-						[vim.diagnostic.severity.INFO] = icons.INFO,
+						[vim.diagnostic.severity.ERROR] = icons.diagnostics.ERROR,
+						[vim.diagnostic.severity.WARN] = icons.diagnostics.WARN,
+						[vim.diagnostic.severity.HINT] = icons.diagnostics.HINT,
+						[vim.diagnostic.severity.INFO] = icons.diagnostics.INFO,
 					},
 				},
 				virtual_text = {
@@ -202,9 +202,9 @@ return {
 					uninstall_package = "d",
 				},
 				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
+					package_installed = icons.ui.ThinTick,
+					package_pending = icons.ui.ArrowRight,
+					package_uninstalled = icons.ui.Close,
 				},
 			},
 		},

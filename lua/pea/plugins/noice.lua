@@ -1,61 +1,57 @@
+local icons = require("pea.icons")
+
 return {
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		dependencies = "MunifTanjim/nui.nvim",
-		opts = {
-			cmdline = {
-				view = "cmdline",
-				format = {
-					cmdline = { icon_hl_group = "DevIconVim" },
-					lua = { icon_hl_group = "DevIconLua" },
-					help = { icon_hl_group = "Operator" },
-				},
-			},
-			popupmenu = {
-				backend = "cmp",
-			},
+	"folke/noice.nvim",
+	event = "VeryLazy",
+	dependencies = "MunifTanjim/nui.nvim",
+	opts = {
+		cmdline = {
+			view = "cmdline",
 			format = {
-				spinner = {
-					name = "circleFull",
-				},
+				cmdline = { icon_hl_group = "DevIconVim" },
+				lua = { icon_hl_group = "DevIconLua" },
+				help = { icon_hl_group = "Operator" },
 			},
-			lsp = {
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
-				},
-				signature = {
-					enabled = false,
-				},
-				progress = {
-					format_done = {
-						{ " ", hl_group = "Identifier" },
-						{ "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
-						{ "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
-					},
-				},
+		},
+		popupmenu = {
+			backend = "cmp",
+		},
+		format = {
+			spinner = {
+				name = "circleFull",
 			},
-			presets = {
-				long_message_to_split = true,
-				lsp_doc_border = true,
+		},
+		lsp = {
+			override = {
+				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+				["vim.lsp.util.stylize_markdown"] = true,
+				["cmp.entry.get_documentation"] = true,
 			},
-			views = {
-				notify = {
-					replace = true,
-					merge = true,
-				},
-				mini = {
-					win_options = {
-						winblend = 0,
-					},
+			signature = {
+				enabled = false,
+			},
+			progress = {
+				format_done = {
+					{ icons.ui.Tick .. " ", hl_group = "Identifier" },
+					{ "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
+					{ "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
 				},
 			},
 		},
-	},
-	{
-		"MunifTanjim/nui.nvim",
-		lazy = true,
+		presets = {
+			long_message_to_split = true,
+			lsp_doc_border = true,
+		},
+		views = {
+			notify = {
+				replace = true,
+				merge = true,
+			},
+			mini = {
+				win_options = {
+					winblend = 0,
+				},
+			},
+		},
 	},
 }

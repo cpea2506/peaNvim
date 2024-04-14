@@ -55,6 +55,10 @@ return {
 		Apple = "",
 		Treesitter = "",
 		Scrollbar = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
+		ThinTick = "✓",
+		Tick = "",
+		ArrowRight = "➜",
+		Close = "✗",
 	},
 	git = {
 		LineAdded = " ",
