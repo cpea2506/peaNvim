@@ -119,6 +119,7 @@ return {
 				n = {
 					["<C-j>"] = actions.move_selection_next,
 					["<C-k>"] = actions.move_selection_previous,
+					["q"] = actions.close,
 				},
 			}
 
