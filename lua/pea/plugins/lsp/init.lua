@@ -159,7 +159,7 @@ return {
 			local capabilities = vim.tbl_deep_extend(
 				"force",
 				vim.lsp.protocol.make_client_capabilities(),
-				nvim_lsp.default_capabilities() or {}
+				nvim_lsp.default_capabilities()
 			)
 
 			local function setup(server)
