@@ -1,6 +1,6 @@
 return {
 	"luckasRanarison/clear-action.nvim",
-	event = "BufRead",
+	event = "LspAttach",
 	opts = {
 		mappings = {
 			code_action = "<leader>la",
