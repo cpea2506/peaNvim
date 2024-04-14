@@ -31,6 +31,7 @@ return {
 					"toml",
 					"vim",
 					"yaml",
+					"vimdoc",
 				},
 				autotag = {
 					enable = true,
