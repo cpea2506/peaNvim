@@ -8,10 +8,10 @@ local keymappings = {
 	{
 		"gl",
 		function()
-			local config = vim.diagnostics.config().float
+			local config = vim.diagnostic.config().float
 			config.scope = "line"
 
-			vim.diagnostics.open_float(config)
+			vim.diagnostic.open_float(config)
 		end,
 		desc = "Show Line Diagnostics",
 	},
