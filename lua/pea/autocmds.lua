@@ -28,6 +28,7 @@ local autocmds = {
 				"lspinfo",
 				"lsp-installer",
 				"DressingSelect",
+				"CodeAction",
 			},
 			callback = function(event)
 				vim.bo[event.buf].buflisted = false
