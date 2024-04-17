@@ -64,9 +64,6 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
-			ensure_installed = {
-				"lua_ls",
-			},
 			servers = {
 				lua_ls = {
 					settings = {
@@ -124,7 +121,6 @@ return {
 			end
 
 			require("mason-lspconfig").setup({
-				ensure_installed = opts.ensure_installed,
 				handlers = { setup },
 			})
 		end,
@@ -138,7 +134,18 @@ return {
 		build = ":MasonUpdate",
 		opts = {
 			ensure_installed = {
+				"clangd",
+				"cmake-language-server",
+				"json-lsp",
+				"lua-language-server",
+				"marksman",
+				"rust-analyzer",
+				"csharpier",
+				"prettier",
 				"stylua",
+				"taplo",
+				"csharp-language-server",
+				"yaml-language-server",
 			},
 			ui = {
 				border = "rounded",
