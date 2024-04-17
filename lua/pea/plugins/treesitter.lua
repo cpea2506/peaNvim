@@ -32,6 +32,7 @@ return {
 					"c_sharp",
 					"toml",
 					"vim",
+					"query",
 					"yaml",
 					"vimdoc",
 				},
