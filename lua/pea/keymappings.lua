@@ -11,7 +11,7 @@ local keymappings = {
 	{ "<C-k>", "<C-w>k" },
 	{ "<C-l>", "<C-w>l" },
 
-	{ "<leader>Th", vim.show_pos },
+	{ "<leader>i", vim.show_pos },
 
 	-- Better indenting.
 	{ "<", "<gv", mode = "v" },
