@@ -76,6 +76,7 @@ return {
 		},
 		config = function(_, opts)
 			local cmp = require("cmp")
+			local cmp_buffer = require("cmp_buffer")
 			local select_behavior = cmp.SelectBehavior
 			local confirm_behavior = cmp.ConfirmBehavior
 			local window = cmp.config.window
@@ -89,6 +90,14 @@ return {
 			end
 
 			opts = vim.tbl_extend("force", opts, {
+				sorting = {
+					comparators = {
+						function(...)
+							return cmp_buffer:compare_locality(...)
+						end,
+						unpack(cmp.config.compare),
+					},
+				},
 				confirmation = {
 					default_behavior = confirm_behavior.Replace,
 				},
