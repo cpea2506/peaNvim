@@ -52,6 +52,7 @@ return {
 				entries = {
 					name = "custom",
 					selection_order = "near_cursor",
+					follow_cursor = true,
 				},
 			},
 			experimental = {
