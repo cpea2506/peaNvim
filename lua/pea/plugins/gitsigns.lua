@@ -5,11 +5,21 @@ return {
 	event = "BufRead",
 	opts = {
 		signs = {
-			add = { text = icons.ui.BoldLine },
-			change = { text = icons.ui.BoldLine },
-			delete = { text = icons.ui.Triangle },
-			topdelete = { text = icons.ui.Triangle },
-			changedelete = { text = icons.ui.BoldLine },
+			add = {
+				text = icons.ui.BoldLine,
+			},
+			change = {
+				text = icons.ui.BoldLine,
+			},
+			delete = {
+				text = icons.ui.Triangle,
+			},
+			topdelete = {
+				text = icons.ui.Triangle,
+			},
+			changedelete = {
+				text = icons.ui.BoldLine,
+			},
 		},
 		signcolumn = true,
 		numhl = false,
@@ -28,7 +38,7 @@ return {
 			delay = 500,
 			ignore_whitespace = false,
 		},
-		current_line_blame_formatter = "<author>, <author_time:%R> - <summary>",
+		current_line_blame_formatter = "<author>, <author_time:%R> " .. icons.ui.CircleMedium .. " <summary>",
 		sign_priority = 6,
 		status_formatter = nil,
 		update_debounce = 100,
