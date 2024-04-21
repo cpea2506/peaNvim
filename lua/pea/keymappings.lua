@@ -4,6 +4,7 @@ local keymappings = {
 	{ "<leader>q", "<cmd>confirm q<cr>" },
 	{ "<C-e>", "<cmd>BuffClose<cr>" },
 	{ "<C-s>", "<cmd>confirm w<cr>" },
+	{ "<leader>w", "<cmd>noautocmd w<cr>" },
 
 	-- Better window movement.
 	{ "<C-h>", "<C-w>h" },
