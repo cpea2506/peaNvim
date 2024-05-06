@@ -8,7 +8,7 @@ local document_highlight_group = augroup("document_highlight", { clear = false }
 
 M.on_attach = function(client, bufnr)
 	if client.supports_method("textDocument/inlayHint") then
-		vim.lsp.inlay_hint.enable(bufnr, true)
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	end
 
 	if client.supports_method("textDocument/codeLens") then
