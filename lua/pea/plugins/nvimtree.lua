@@ -35,6 +35,9 @@ return {
 				adaptive_size = false,
 				side = "right",
 				preserve_window_proportions = true,
+				width = {
+					max = -1,
+				},
 				float = {
 					enable = true,
 					quit_on_focus_loss = false,
