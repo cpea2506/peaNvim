@@ -73,6 +73,7 @@ return {
 				{ name = "treesitter" },
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "snippets" },
+				{ name = "crates" },
 			},
 		},
 		config = function(_, opts)
