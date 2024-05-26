@@ -142,6 +142,7 @@ return {
 				"rust-analyzer",
 				"csharpier",
 				"prettier",
+				"typescript-language-server",
 				"stylua",
 				"taplo",
 				"csharp-language-server",
