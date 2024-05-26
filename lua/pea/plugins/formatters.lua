@@ -6,6 +6,10 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			cs = { "csharpier" },
+			json = { "prettier" },
+			jsonc = { "prettier" },
+			javascript = { "prettier" },
+			typescript = { "prettier" },
 		},
 		format_on_save = {
 			timeout_ms = 500,
