@@ -142,6 +142,7 @@ return {
 				keymap = {
 					["<C-k>"] = { "select_prev", "fallback" },
 					["<C-j>"] = { "select_next", "fallback" },
+					["<Tab>"] = { "accept", "fallback" },
 					["<CR>"] = { "accept_and_enter", "fallback" },
 				},
 			},
