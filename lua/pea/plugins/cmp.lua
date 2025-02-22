@@ -242,6 +242,9 @@ return {
 			highlight_preview = true,
 			create_cmp_source = true,
 			friendly_snippets = true,
+			extended_filetypes = {
+				cs = { "unity" },
+			},
 		},
 	},
 }
