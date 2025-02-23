@@ -134,7 +134,6 @@ return {
 		build = ":MasonUpdate",
 		opts = {
 			ensure_installed = {
-				"clangd",
 				"cmake-language-server",
 				"json-lsp",
 				"lua-language-server",
@@ -145,7 +144,6 @@ return {
 				"typescript-language-server",
 				"stylua",
 				"taplo",
-				"csharp-language-server",
 				"yaml-language-server",
 			},
 			ui = {
