@@ -53,14 +53,14 @@ M.on_exit = function(client, bufnr)
 end
 
 M.capabilities = function()
-	local has_nvim_lsp, nvim_lsp = pcall(require, "cmp_nvim_lsp")
+	local has_lsp_file_operation, lsp_file_operations = pcall(require, "lsp-file-operations")
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-	if not has_nvim_lsp then
+	if not has_lsp_file_operation then
 		return capabilities
 	end
 
-	capabilities = vim.tbl_deep_extend("force", capabilities, nvim_lsp.default_capabilities())
+	capabilities = vim.tbl_deep_extend("force", capabilities, lsp_file_operations.default_capabilities())
 
 	return capabilities
 end
