@@ -39,11 +39,6 @@ local options = {
 	guicursor = "i-ci-ve:hor30",
 	guifont = "SFMono Nerd Font:h13",
 	completeopt = { "menuone", "noselect" },
-
-	-- windows.nvim
-	winwidth = 10,
-	winminwidth = 10,
-	equalalways = false,
 }
 
 return options
