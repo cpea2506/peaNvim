@@ -58,7 +58,7 @@ return {
 				end,
 			})
 
-			require("pea.plugins.lsp.custom_servers").setup_servers()
+			require("pea.plugins.lsp.servers").setup()
 		end,
 	},
 	{

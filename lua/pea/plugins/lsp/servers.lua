@@ -2,7 +2,7 @@ local M = {}
 
 local lspconfig = require("lspconfig")
 
-local custom_servers = {
+local servers = {
 	shaderlab_lsp = {
 		default_config = {
 			cmd = { "shader-ls", "stdio" },
@@ -17,8 +17,8 @@ local custom_servers = {
 	},
 }
 
-M.setup_servers = function()
-	for server, config in pairs(custom_servers) do
+M.setup = function()
+	for server, config in pairs(servers) do
 		require("lspconfig.configs")[server] = config
 
 		lspconfig[server].setup({})
