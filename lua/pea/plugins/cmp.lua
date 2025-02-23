@@ -3,7 +3,6 @@ local icons = require("pea.icons").kind
 return {
 	"saghen/blink.cmp",
 	version = "*",
-	build = "cargo build --release",
 	dependencies = {
 		"mikavilpas/blink-ripgrep.nvim",
 		"rafamadriz/friendly-snippets",
