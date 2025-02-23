@@ -13,9 +13,6 @@ return {
 				help = { icon_hl_group = "Operator" },
 			},
 		},
-		popupmenu = {
-			backend = "cmp",
-		},
 		format = {
 			spinner = {
 				name = "circleFull",
@@ -25,7 +22,6 @@ return {
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
-				["cmp.entry.get_documentation"] = true,
 			},
 			signature = {
 				enabled = false,
@@ -43,10 +39,6 @@ return {
 			lsp_doc_border = true,
 		},
 		views = {
-			notify = {
-				replace = true,
-				merge = true,
-			},
 			mini = {
 				win_options = {
 					winblend = 0,
