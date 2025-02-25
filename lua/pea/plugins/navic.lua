@@ -97,7 +97,6 @@ return {
 			"NvimTree",
 			"Trouble",
 			"toggleterm",
-			"DressingSelect",
 			"noice",
 			"",
 		},

@@ -29,7 +29,7 @@ return {
 			},
 			disabled_filetypes = {
 				"CodeAction",
-				"DressingInput",
+				"Input",
 				"NvimTree",
 				"TelescopePrompt",
 				"Trouble",

@@ -11,6 +11,7 @@ return {
 				cmdline = { icon_hl_group = "DevIconVim" },
 				lua = { icon_hl_group = "DevIconLua" },
 				help = { icon_hl_group = "Operator" },
+				input = false,
 			},
 		},
 		format = {

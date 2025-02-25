@@ -4,6 +4,7 @@ local modules = {
 	"autocmds",
 	"commands",
 	"keymappings",
+	"ui",
 }
 
 for _, module in pairs(modules) do

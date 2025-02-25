@@ -27,7 +27,6 @@ local autocmds = {
 				"floaterm",
 				"lspinfo",
 				"lsp-installer",
-				"DressingSelect",
 				"CodeAction",
 			},
 			callback = function(event)
