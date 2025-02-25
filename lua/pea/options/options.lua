@@ -41,4 +41,17 @@ local options = {
 	completeopt = { "menuone", "noselect" },
 }
 
+if vim.uv.os_uname().sysname:find("Windows") then
+	local windows_options = {
+		shell = "pwsh-preview -NoLogo",
+		shellcmdflag = "-ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+		shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+		shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+		shellquote = "",
+		shellxquote = "",
+	}
+
+	options = vim.tbl_deep_extend("force", options, windows_options)
+end
+
 return options
