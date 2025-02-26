@@ -1,5 +1,6 @@
 local utils = require("pea.ui.utils")
 
+local icon = " "
 local prefer_width = 40
 local max_width = { 140, 0.9 }
 local min_width = { 20, 0.2 }
@@ -22,6 +23,7 @@ local win_options = {
 	list = true,
 	listchars = "precedes:…,extends:…",
 	sidescrolloff = 0,
+	statuscolumn = " %#InputIcon#" .. icon .. " ",
 }
 
 local buf_options = {
@@ -73,9 +75,11 @@ vim.ui.input = function(opts, on_confirm)
 		vim.api.nvim_set_option_value(option, value, { scope = "local", win = winid })
 	end
 
-	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { default })
-	vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default) + 1 })
-	vim.cmd.startinsert()
+	if default then
+		vim.api.nvim_buf_set_text(bufnr, 0, 0, 0, 0, { default })
+		vim.cmd.startinsert()
+		vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default) + 1 })
+	end
 
 	vim.keymap.set({ "n", "i", "v" }, "<cr>", function()
 		local lines = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)

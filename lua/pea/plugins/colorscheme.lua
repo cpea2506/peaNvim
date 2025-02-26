@@ -11,6 +11,7 @@ return {
 				["@lsp.type.keyword.cs"] = { fg = colors.pink },
 				["@lsp.type.constant.cs"] = { link = "@constant" },
 				["@lsp.type.interface.cs"] = { link = "@type" },
+				InputIcon = { fg = colors.cyan },
 			}
 		end,
 	},
