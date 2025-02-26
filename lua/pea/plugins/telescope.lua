@@ -15,6 +15,7 @@ return {
 			"telescope-fzf-native.nvim",
 			"nvim-telescope/telescope-project.nvim",
 			"fdschmidt93/telescope-corrode.nvim",
+			"nvim-telescope/telescope-ui-select.nvim",
 		},
 		opts = {
 			defaults = {
@@ -129,6 +130,7 @@ return {
 			telescope.load_extension("fzf")
 			telescope.load_extension("project")
 			telescope.load_extension("corrode")
+			telescope.load_extension("ui-select")
 		end,
 	},
 	{
