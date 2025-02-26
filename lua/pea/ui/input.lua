@@ -54,7 +54,7 @@ vim.ui.input = function(opts, on_confirm)
 	on_confirm = on_confirm or function() end
 
 	local function close(winid, content)
-		vim.cmd("stopinsert")
+		vim.cmd.stopinsert()
 		on_confirm(content)
 		vim.api.nvim_win_close(winid, true)
 	end
@@ -73,9 +73,9 @@ vim.ui.input = function(opts, on_confirm)
 		vim.api.nvim_set_option_value(option, value, { scope = "local", win = winid })
 	end
 
-	vim.api.nvim_buf_set_text(bufnr, 0, 0, 0, 0, { default })
-	vim.cmd("startinsert")
+	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { default })
 	vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default) + 1 })
+	vim.cmd.startinsert()
 
 	vim.keymap.set({ "n", "i", "v" }, "<cr>", function()
 		local lines = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)
