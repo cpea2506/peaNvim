@@ -6,15 +6,15 @@ return {
 		cmd = "Telescope",
 		keys = {
 			{ "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Telescope Find Text" },
-			{ "<leader>sf", "<cmd>Telescope corrode<cr>", desc = "Telescope Find Files" },
+			{ "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "Telescope Find Files" },
 			{ "<leader>sp", "<cmd>Telescope project<cr>", desc = "Telescope Projects" },
 			{ "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
+			{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Telescope Buffers" },
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"telescope-fzf-native.nvim",
 			"nvim-telescope/telescope-project.nvim",
-			"fdschmidt93/telescope-corrode.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
 		},
 		opts = {
@@ -28,11 +28,9 @@ return {
 				sorting_strategy = "ascending",
 				layout_config = {
 					preview_cutoff = 1,
-
 					width = function(_, max_columns, _)
 						return math.min(max_columns, 80)
 					end,
-
 					height = function(_, _, max_lines)
 						return math.min(max_lines, 15)
 					end,
@@ -129,7 +127,6 @@ return {
 
 			telescope.load_extension("fzf")
 			telescope.load_extension("project")
-			telescope.load_extension("corrode")
 			telescope.load_extension("ui-select")
 		end,
 	},
