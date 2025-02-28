@@ -12,6 +12,9 @@ return {
 		"CmdlineEnter",
 	},
 	opts = {
+		fuzzy = {
+			implementation = "rust",
+		},
 		appearance = {
 			kind_icons = {
 				Text = icons.Text,
@@ -67,6 +70,9 @@ return {
 			["<S-Tab>"] = { "snippet_backward", "fallback" },
 		},
 		completion = {
+			accept = {
+				resolve_timeout_ms = 1000,
+			},
 			ghost_text = {
 				enabled = true,
 				show_with_selection = true,
