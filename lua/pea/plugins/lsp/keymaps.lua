@@ -18,7 +18,6 @@ local keymappings = {
 	{ "gt", vim.lsp.buf.type_definition, desc = "Goto Type Definition" },
 	{ "gK", vim.lsp.buf.signature_help, desc = "Signature Help" },
 	{ "<leader>la", vim.lsp.buf.code_action, mode = { "n", "v" }, desc = "Code Action" },
-	{ "<leader>ls", vim.lsp.buf.document_symbol, mode = { "n", "v" }, desc = "Document Symbol" },
 	{ "<leader>ll", vim.lsp.codelens.run, mode = { "n", "v" }, desc = "Run Codelens" },
 	{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
 	{ "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },

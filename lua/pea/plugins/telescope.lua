@@ -10,6 +10,7 @@ return {
 			{ "<leader>sp", "<cmd>Telescope project<cr>", desc = "Telescope Projects" },
 			{ "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
 			{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Telescope Buffers" },
+			{ "<leader>so", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Telescope Lsp Document Symbol" },
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
