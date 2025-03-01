@@ -1,11 +1,11 @@
-local options = require("pea.options.options")
+local vim_options = require("lua.pea.options.vim_options")
 
-for option, value in pairs(options) do
-	vim.opt[option] = value
+for option, value in pairs(vim_options) do
+	vim_options.opt[option] = value
 end
 
-local global = require("pea.options.global")
+local global_options = require("lua.pea.options.global_options")
 
-for option, value in pairs(global) do
-	vim.g[option] = value
+for option, value in pairs(global_options) do
+	vim_options.g[option] = value
 end

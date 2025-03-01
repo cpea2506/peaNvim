@@ -1,3 +1,5 @@
+local utils = require("pea.utils")
+
 local options = {
 	wrap = true,
 	tabstop = 4,
@@ -41,7 +43,7 @@ local options = {
 	completeopt = { "menuone", "noselect" },
 }
 
-if vim.uv.os_uname().sysname:find("Windows") then
+if utils.is_windows then
 	local windows_options = {
 		shell = "pwsh-preview -NoLogo",
 		shellcmdflag = "-ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
