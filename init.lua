@@ -1,10 +1,10 @@
 local modules = {
+	"utils",
 	"options",
 	"manager",
 	"autocmds",
 	"commands",
 	"keymappings",
-	"utils",
 	"ui",
 }
 
