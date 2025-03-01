@@ -54,6 +54,7 @@ return {
 		HeavyLine = "▊",
 		Setting = "",
 		Apple = "",
+		Windows = "",
 		Treesitter = "",
 		Scrollbar = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
 		ThinTick = "✓",
