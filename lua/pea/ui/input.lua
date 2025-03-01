@@ -38,7 +38,7 @@ local function trim_and_pad_title(title)
 	return (" %s "):format(title)
 end
 
-vim.ui.input = function(opts, on_confirm)
+local input = function(opts, on_confirm)
 	local prompt = opts.prompt or "Input"
 	local default = opts.default or ""
 
@@ -109,3 +109,5 @@ vim.ui.input = function(opts, on_confirm)
 		end,
 	})
 end
+
+return input
