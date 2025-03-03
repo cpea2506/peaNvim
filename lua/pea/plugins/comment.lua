@@ -4,7 +4,6 @@ return {
 		{ "gc", mode = { "n", "v" } },
 		{ "gb", mode = { "n", "v" } },
 	},
-	dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
 	opts = {
 		padding = true,
 		sticky = true,
@@ -26,12 +25,5 @@ return {
 			below = "gco",
 			eol = "gcA",
 		},
-		pre_hook = function(...)
-			local loaded, ts_comment = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
-
-			if loaded and ts_comment then
-				return ts_comment.create_pre_hook()(...)
-			end
-		end,
 	},
 }
