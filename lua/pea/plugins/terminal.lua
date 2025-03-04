@@ -23,19 +23,17 @@ function lazygit_toggle()
 end
 
 return {
-	{
-		"akinsho/toggleterm.nvim",
-		keys = {
-			"<C-t>",
-			{ "<leader>gg", "<cmd>lua lazygit_toggle()<cr>", desc = "Lazygit Toggle" },
-		},
-		opts = {
-			open_mapping = "<C-t>",
-			direction = "horizontal",
-			close_on_exit = true,
-			shade_terminals = false,
-			autochdir = true,
-			size = 15,
-		},
+	"akinsho/toggleterm.nvim",
+	keys = {
+		"<C-t>",
+		{ "<leader>gg", "<cmd>lua lazygit_toggle()<cr>", desc = "Lazygit Toggle" },
+	},
+	opts = {
+		open_mapping = "<C-t>",
+		direction = "horizontal",
+		close_on_exit = true,
+		shade_terminals = false,
+		autochdir = true,
+		size = 15,
 	},
 }
