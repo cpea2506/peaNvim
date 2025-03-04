@@ -12,7 +12,7 @@ M.on_attach = function(client, bufnr)
 	end
 
 	if client.supports_method("textDocument/codeLens") then
-		autocmd({ "BufEnter", "InsertLeave" }, {
+		autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
 			group = codelens_refresh_group,
 			buffer = bufnr,
 			callback = vim.lsp.codelens.refresh,
