@@ -46,6 +46,8 @@ return {
 		Forward = "",
 		ChevronRight = "",
 		Circle = "",
+		CircleWarning = "",
+		CircleInfo = "",
 		CircleMedium = "󰧞",
 		Evil = "",
 		Triangle = "󰐊",
