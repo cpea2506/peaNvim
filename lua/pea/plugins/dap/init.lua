@@ -100,6 +100,6 @@ return {
 			numhl = "DapStopped",
 		})
 
-		require("lua.pea.plugins.dap.config").setup()
+		require("pea.plugins.dap.config").setup()
 	end,
 }
