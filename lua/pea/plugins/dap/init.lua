@@ -16,6 +16,12 @@ return {
 		{ "<leader>dt", [[<cmd>lua require("dapui").toggle({ reset = true })<cr>]], desc = "Dap Toggle" },
 	},
 	opts = {
+		controls = {
+			icons = {
+				play = icons.ui.Triangle,
+				terminate = icons.ui.Square,
+			},
+		},
 		floating = {
 			border = "rounded",
 		},
@@ -72,31 +78,31 @@ return {
 		vim.fn.sign_define("DapBreakpoint", {
 			text = icons.ui.Circle,
 			texthl = "DapBreakpoint",
-			linehl = "",
+			linehl = "Visual",
 			numhl = "DapBreakpoint",
 		})
 		vim.fn.sign_define("DapBreakpointCondition", {
 			text = icons.ui.CircleInfo,
 			texthl = "DapBreakpoint",
-			linehl = "",
+			linehl = "Visual",
 			numhl = "DapBreakpoint",
 		})
 		vim.fn.sign_define("DapBreakpointRejected", {
 			text = icons.ui.CircleWarning,
 			texthl = "DapBreakpoint",
-			linehl = "",
+			linehl = "Visual",
 			numhl = "DapBreakpoint",
 		})
 		vim.fn.sign_define("DapLogPoint", {
 			text = icons.ui.CircleInfo,
 			texthl = "DapLogPoint",
-			linehl = "",
+			linehl = "Visual",
 			numhl = "DapLogPoint",
 		})
 		vim.fn.sign_define("DapStopped", {
-			text = icons.ui.Triangle,
+			text = icons.ui.CirclePlay,
 			texthl = "DapStopped",
-			linehl = "",
+			linehl = "Visual",
 			numhl = "DapStopped",
 		})
 
