@@ -171,6 +171,16 @@ local components = {
 		color = { fg = colors.yellow },
 		padding = { left = 1 },
 	},
+	macro = {
+		"macro",
+		fmt = function()
+			local reg = vim.fn.reg_recording()
+
+			return reg ~= "" and "recording @" .. reg or nil
+		end,
+		color = { fg = colors.orange },
+		draw_empty = false,
+	},
 }
 
 return components

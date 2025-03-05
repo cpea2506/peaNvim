@@ -56,6 +56,7 @@ return {
 				components.filetype,
 				components.location,
 				components.diagnostics,
+				components.macro,
 				components.center,
 				components.lsp,
 			},
