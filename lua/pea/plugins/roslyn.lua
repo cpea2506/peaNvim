@@ -71,6 +71,6 @@ return {
 				end
 			end,
 		},
-		filewatching = true,
+		filewatching = "roslyn",
 	},
 }
