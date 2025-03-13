@@ -18,7 +18,6 @@ return {
 	end,
 	opts = {
 		options = {
-			icons_enabled = true,
 			theme = {
 				normal = {
 					c = { fg = colors.fg, bg = colors.bg },
@@ -32,12 +31,10 @@ return {
 				"Input",
 				"NvimTree",
 				"TelescopePrompt",
-				"Trouble",
 				"lazy",
 				"lspinfo",
 				"mason",
 				"noice",
-				"null-ls-info",
 				"toggleterm",
 			},
 			globalstatus = true,
