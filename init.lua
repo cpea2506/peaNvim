@@ -2,6 +2,7 @@ local modules = {
 	"utils",
 	"options",
 	"manager",
+	"inputs",
 	"autocmds",
 	"commands",
 	"keymappings",
