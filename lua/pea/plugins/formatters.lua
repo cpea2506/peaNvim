@@ -8,6 +8,7 @@ return {
 			cs = { "csharpier" },
 			json = { "prettier" },
 			jsonc = { "prettier" },
+			markdown = { "prettier" },
 			javascript = { "prettier" },
 			typescript = { "prettier" },
 		},
