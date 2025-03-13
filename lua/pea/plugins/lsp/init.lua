@@ -3,7 +3,7 @@ local icons = require("pea.icons")
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = "BufRead",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
@@ -57,80 +57,25 @@ return {
 					lsp.on_exit(client, bufnr)
 				end,
 			})
-
-			require("pea.plugins.lsp.servers").setup()
 		end,
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		opts = {
-			servers = {
-				lua_ls = {
-					settings = {
-						Lua = {
-							runtime = {
-								version = "LuaJIT",
-							},
-							workspace = {
-								checkThirdParty = "ApplyInMemory",
-							},
-							codeLens = {
-								enable = true,
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-							hint = {
-								enable = true,
-								setType = true,
-								arrayIndex = "Disable",
-							},
-							semantic = {
-								keyword = true,
-							},
-							diagnostics = {
-								disable = {
-									"missing-parameter",
-									"param-type-mismatch",
-									"undefined-global",
-								},
-							},
-						},
-					},
-				},
-			},
-		},
 		config = function(_, opts)
-			local lspconfig = require("lspconfig")
-			local capabilities = require("pea.plugins.lsp.utils").capabilities()
+			local servers = require("pea.plugins.lsp.servers")
+			local utils = require("pea.plugins.lsp.utils")
 
-			local function setup(server)
-				local server_opts = opts.servers[server]
-
-				if type(server_opts) == "function" then
-					server_opts()
-
-					return
-				end
-
-				server_opts = vim.tbl_deep_extend("force", {
-					capabilities = vim.deepcopy(capabilities),
-				}, server_opts or {})
-
-				lspconfig[server].setup(server_opts)
-			end
-
-			require("mason-lspconfig").setup({
-				handlers = { setup },
+			require("mason-lspconfig").setup(opts)
+			require("mason-lspconfig").setup_handlers({
+				function(server)
+					utils.setup(server, servers[server])
+				end,
 			})
 		end,
 	},
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
-		keys = {
-			{ "<leader>lI", "<cmd>Mason<cr>", desc = "Mason" },
-		},
 		build = ":MasonUpdate",
 		opts = {
 			ensure_installed = {

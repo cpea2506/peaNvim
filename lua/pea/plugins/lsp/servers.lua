@@ -1,13 +1,14 @@
-local M = {}
+local utils = require("pea.plugins.lsp.utils")
+local configs = require("lspconfig.configs")
 
-local lspconfig = require("lspconfig")
-
-local servers = {
-	shaderlab_lsp = {
+local custom_servers = {
+	shaderlab_ls = {
 		default_config = {
 			cmd = { "shader-ls", "stdio" },
 			filetypes = { "glsl" },
-			root_dir = lspconfig.util.root_pattern({ "*.csproj", "*.sln" }),
+			root_dir = vim.fs.root(0, function(name, _)
+				return name:match("%.csproj$") ~= nil
+			end),
 			settings = {
 				ShaderLab = {
 					CompletionWord = true,
@@ -17,12 +18,46 @@ local servers = {
 	},
 }
 
-M.setup = function()
-	for server, config in pairs(servers) do
-		require("lspconfig.configs")[server] = config
+for server, config in pairs(custom_servers) do
+	configs[server] = config
 
-		lspconfig[server].setup({})
-	end
+	utils.setup(server)
 end
 
-return M
+local servers = {
+	lua_ls = {
+		settings = {
+			Lua = {
+				runtime = {
+					version = "LuaJIT",
+				},
+				workspace = {
+					checkThirdParty = "ApplyInMemory",
+				},
+				codeLens = {
+					enable = true,
+				},
+				completion = {
+					callSnippet = "Replace",
+				},
+				hint = {
+					enable = true,
+					setType = true,
+					arrayIndex = "Disable",
+				},
+				semantic = {
+					keyword = true,
+				},
+				diagnostics = {
+					disable = {
+						"missing-parameter",
+						"param-type-mismatch",
+						"undefined-global",
+					},
+				},
+			},
+		},
+	},
+}
+
+return servers
