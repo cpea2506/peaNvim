@@ -65,14 +65,4 @@ M.capabilities = function()
 	return capabilities
 end
 
-M.setup = function(server, opts)
-	local lspconfig = require("lspconfig")
-
-	opts = vim.tbl_deep_extend("force", {
-		capabilities = vim.deepcopy(M.capabilities()),
-	}, opts or {})
-
-	lspconfig[server].setup(opts)
-end
-
 return M

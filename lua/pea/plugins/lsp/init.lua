@@ -36,16 +36,16 @@ return {
 			},
 		},
 		config = function(_, opts)
-			vim.diagnostic.config(opts.diagnostics)
+			local utils = require("pea.plugins.lsp.utils")
 
-			local lsp = require("pea.plugins.lsp.utils")
+			vim.diagnostic.config(opts.diagnostics)
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
 					local bufnr = args.buf
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-					lsp.on_attach(client, bufnr)
+					utils.on_attach(client, bufnr)
 				end,
 			})
 
@@ -54,7 +54,7 @@ return {
 					local bufnr = args.buf
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-					lsp.on_exit(client, bufnr)
+					utils.on_exit(client, bufnr)
 				end,
 			})
 		end,
@@ -62,15 +62,11 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function(_, opts)
+			local mason_lspconfig = require("mason-lspconfig")
 			local servers = require("pea.plugins.lsp.servers")
-			local utils = require("pea.plugins.lsp.utils")
 
-			require("mason-lspconfig").setup(opts)
-			require("mason-lspconfig").setup_handlers({
-				function(server)
-					utils.setup(server, servers[server])
-				end,
-			})
+			mason_lspconfig.setup(opts)
+			mason_lspconfig.setup_handlers({ servers.setup })
 		end,
 	},
 	{
