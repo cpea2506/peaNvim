@@ -10,13 +10,16 @@ return {
 			"TSInstallInfo",
 			"TSInstallSync",
 		},
-		keys = {
-			{ "<leader>Tu", "<cmd>TSUpdateSync<cr>", desc = "Treesitter Update Sync" },
-		},
 		event = { "BufRead", "VeryLazy" },
 		dependencies = {
 			"HiPhish/rainbow-delimiters.nvim",
-			"nvim-treesitter/nvim-treesitter-context",
+			{
+				"nvim-treesitter/nvim-treesitter-context",
+				opts = {
+					mode = "cursor",
+					max_lines = 3,
+				},
+			},
 		},
 		opts = {
 			sync_install = true,
@@ -34,12 +37,5 @@ return {
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		opts = {
-			mode = "cursor",
-			max_lines = 3,
-		},
 	},
 }
