@@ -1,10 +1,9 @@
 local M = {}
 
 local keymappings = {
-	{ "gd", vim.lsp.buf.definition, desc = "Go to Definition" },
-	{ "gD", vim.lsp.buf.declaration, desc = "Go to Declaration" },
-	{ "gr", vim.lsp.buf.references, desc = "Go to References" },
-	{ "gi", vim.lsp.buf.implementation, desc = "Go to Implementation" },
+	{ "gd", vim.lsp.buf.definition, desc = "Definition" },
+	{ "gr", vim.lsp.buf.references, desc = "References" },
+	{ "gi", vim.lsp.buf.implementation, desc = "Implementation" },
 	{
 		"gl",
 		function()
@@ -15,12 +14,11 @@ local keymappings = {
 		end,
 		desc = "Show Line Diagnostics",
 	},
-	{ "gt", vim.lsp.buf.type_definition, desc = "Goto Type Definition" },
 	{ "gK", vim.lsp.buf.signature_help, desc = "Signature Help" },
 	{ "<leader>la", vim.lsp.buf.code_action, mode = { "n", "v" }, desc = "Code Action" },
-	{ "<leader>ll", vim.lsp.codelens.run, mode = { "n", "v" }, desc = "Run Codelens" },
-	{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
+	{ "<leader>ll", vim.lsp.codelens.run, mode = { "n", "v" }, desc = "Codelens" },
 	{ "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
+	{ "<leader>ls", vim.lsp.buf.document_symbol, desc = "Document Symbol" },
 }
 
 function M.on_attach(_, bufnr)
@@ -31,6 +29,7 @@ function M.on_attach(_, bufnr)
 		local opts = keyhandler.opts(key)
 
 		opts.silent = true
+		opts.noremap = true
 		opts.buffer = bufnr
 
 		vim.keymap.set(key.mode, key.lhs, key.rhs, opts)
