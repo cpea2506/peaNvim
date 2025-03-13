@@ -1,4 +1,4 @@
-local commands = {
+local usercmds = {
 	{
 		"BuffClose",
 		function()
@@ -58,8 +58,8 @@ local commands = {
 	},
 }
 
-for _, command in pairs(commands) do
-	local opts = vim.tbl_deep_extend("force", { force = true }, command[3] or {})
+for _, usercmd in pairs(usercmds) do
+	local opts = vim.tbl_deep_extend("force", { force = true }, usercmd[3] or {})
 
-	vim.api.nvim_create_user_command(command[1], command[2], opts)
+	vim.api.nvim_create_user_command(usercmd[1], usercmd[2], opts)
 end

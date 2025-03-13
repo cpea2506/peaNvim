@@ -4,7 +4,7 @@ local modules = {
 	"manager",
 	"inputs",
 	"autocmds",
-	"commands",
+	"usercmds",
 	"keymappings",
 	"ui",
 }
