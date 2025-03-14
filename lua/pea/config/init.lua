@@ -10,7 +10,7 @@ local modules = {
 	"ui.input",
 }
 
-local function setup_lazy()
+local function init_lazy()
 	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 	if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -29,7 +29,9 @@ local function setup_lazy()
 	end
 
 	vim.opt.rtp:prepend(lazypath)
+end
 
+local function setup_lazy()
 	require("lazy").setup("pea.plugins", {
 		root = vim.fn.stdpath("data") .. "/lazy",
 		defaults = {
@@ -71,11 +73,13 @@ local function setup_lazy()
 end
 
 M.setup = function()
-	setup_lazy()
+	init_lazy()
 
 	for _, module in pairs(modules) do
 		require("pea.config." .. module)
 	end
+
+	setup_lazy()
 end
 
 return M
