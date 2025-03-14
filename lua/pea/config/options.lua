@@ -48,14 +48,18 @@ local options = {
 	},
 }
 
-options.vim = vim.tbl_deep_extend("force", options.vim, utils.is_windows and {
-	shell = "pwsh-preview -NoLogo",
-	shellcmdflag = "-ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
-	shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
-	shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
-	shellquote = "",
-	shellxquote = "",
-} or {})
+if utils.is_windows then
+	options = vim.tbl_deep_extend("force", options, {
+		vim = {
+			shell = "pwsh-preview -NoLogo",
+			shellcmdflag = "-ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+			shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+			shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+			shellquote = "",
+			shellxquote = "",
+		},
+	})
+end
 
 for option, value in pairs(options.vim) do
 	vim.opt[option] = value
