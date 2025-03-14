@@ -1,7 +1,7 @@
 local utils = require("pea.utils")
 local conditions = require("pea.plugins.lualine.conditions")
 local colors = require("pea.plugins.lualine.colors")
-local icons = require("pea.icons")
+local icons = require("pea.config.ui.icons")
 
 local components = {
 	leftbar = {

@@ -1,4 +1,4 @@
-local icons = require("pea.icons").kind
+local icons = require("pea.config.ui.icons")
 
 return {
 	"saghen/blink.cmp",
@@ -17,36 +17,36 @@ return {
 		},
 		appearance = {
 			kind_icons = {
-				Text = icons.Text,
-				Method = icons.Method,
-				Function = icons.Function,
-				Constructor = icons.Constructor,
+				Text = icons.kind.Text,
+				Method = icons.kind.Method,
+				Function = icons.kind.Function,
+				Constructor = icons.kind.Constructor,
 
-				Field = icons.Field,
-				Variable = icons.Variable,
-				Property = icons.Property,
+				Field = icons.kind.Field,
+				Variable = icons.kind.Variable,
+				Property = icons.kind.Property,
 
-				Class = icons.Class,
-				Interface = icons.Interface,
-				Struct = icons.Struct,
-				Module = icons.Module,
+				Class = icons.kind.Class,
+				Interface = icons.kind.Interface,
+				Struct = icons.kind.Struct,
+				Module = icons.kind.Module,
 
-				Unit = icons.Unit,
-				Value = icons.Value,
-				Enum = icons.Enum,
-				EnumMember = icons.EnumMember,
+				Unit = icons.kind.Unit,
+				Value = icons.kind.Value,
+				Enum = icons.kind.Enum,
+				EnumMember = icons.kind.EnumMember,
 
-				Keyword = icons.Keyword,
-				Constant = icons.Constant,
+				Keyword = icons.kind.Keyword,
+				Constant = icons.kind.Constant,
 
-				Snippet = icons.Snippet,
-				Color = icons.Color,
-				File = icons.File,
-				Reference = icons.Reference,
-				Folder = icons.Folder,
-				Event = icons.Event,
-				Operator = icons.Operator,
-				TypeParameter = icons.TypeParameter,
+				Snippet = icons.kind.Snippet,
+				Color = icons.kind.Color,
+				File = icons.kind.File,
+				Reference = icons.kind.Reference,
+				Folder = icons.kind.Folder,
+				Event = icons.kind.Event,
+				Operator = icons.kind.Operator,
+				TypeParameter = icons.kind.TypeParameter,
 			},
 		},
 		keymap = {

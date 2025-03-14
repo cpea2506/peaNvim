@@ -1,4 +1,4 @@
-local icons = require("pea.icons").git
+local icons = require("pea.config.ui.icons")
 
 return {
 	{
@@ -65,13 +65,13 @@ return {
 				icons = {
 					glyphs = {
 						git = {
-							unmerged = icons.FileUnmerged,
-							renamed = icons.FileRenamed,
-							deleted = icons.FileDeleted,
-							ignored = icons.FileIgnored,
-							unstaged = icons.FileUnstaged,
-							staged = icons.FileStaged,
-							untracked = icons.FileUntracked,
+							unmerged = icons.git.FileUnmerged,
+							renamed = icons.git.FileRenamed,
+							deleted = icons.git.FileDeleted,
+							ignored = icons.git.FileIgnored,
+							unstaged = icons.git.FileUnstaged,
+							staged = icons.git.FileStaged,
+							untracked = icons.git.FileUntracked,
 						},
 					},
 				},

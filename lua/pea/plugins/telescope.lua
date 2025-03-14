@@ -15,7 +15,7 @@ return {
 		"nvim-telescope/telescope-ui-select.nvim",
 	},
 	opts = function()
-		local icons = require("pea.icons")
+		local icons = require("pea.config.ui.icons")
 		local actions = require("telescope.actions")
 
 		return {

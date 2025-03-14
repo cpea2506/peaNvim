@@ -1,4 +1,4 @@
-local utils = require("pea.ui.utils")
+local utils = require("pea.config.ui.utils")
 
 local icon = " "
 local prefer_width = 40
@@ -38,7 +38,7 @@ local function trim_and_pad_title(title)
 	return (" %s "):format(title)
 end
 
-local input = function(opts, on_confirm)
+vim.ui.input = function(opts, on_confirm)
 	local prompt = opts.prompt or "Input"
 	local default = opts.default or ""
 
@@ -109,5 +109,3 @@ local input = function(opts, on_confirm)
 		end,
 	})
 end
-
-return input

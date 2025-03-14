@@ -1,4 +1,4 @@
-local icons = require("pea.icons")
+local icons = require("pea.config.ui.icons")
 
 return {
 	"lewis6991/gitsigns.nvim",

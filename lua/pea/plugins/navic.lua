@@ -1,4 +1,4 @@
-local icons = require("pea.icons")
+local icons = require("pea.config.ui.icons")
 
 local function isempty(s)
 	return s == nil or s == ""
