@@ -12,18 +12,13 @@ local keymappings = {
 	{ "<C-k>", "<C-w>k" },
 	{ "<C-l>", "<C-w>l" },
 
-	{ "<leader>i", vim.show_pos },
-
 	-- Better indenting.
 	{ "<", "<gv", mode = "v" },
 	{ ">", ">gv", mode = "v" },
 
 	-- Lazy specific
-	{ "<leader>pi", "<cmd>Lazy install<cr>", desc = "Lazy Install" },
 	{ "<leader>ps", "<cmd>Lazy sync<cr>", desc = "Lazy Sync" },
-	{ "<leader>pS", "<cmd>Lazy clear<cr>", desc = "Lazy Status" },
-	{ "<leader>pc", "<cmd>Lazy clean<cr>", desc = "Lazy Clean" },
-	{ "<leader>pp", "<cmd>Lazy profile<cr>", desc = "Lazy Profile" },
+	{ "<leader>pp", "<cmd>Lazy<cr>", desc = "Lazy Status" },
 }
 
 local keys = keyhandler.resolve(keymappings)
