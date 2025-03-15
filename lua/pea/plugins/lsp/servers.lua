@@ -1,4 +1,4 @@
-local servers = {}
+local M = {}
 
 local utils = require("pea.plugins.lsp.utils")
 local lspconfig = require("lspconfig")
@@ -58,7 +58,7 @@ local configs = {
 	},
 }
 
-servers.setup = function(server)
+M.setup = function(server)
 	local opts = vim.tbl_deep_extend("force", {
 		capabilities = vim.deepcopy(utils.capabilities()),
 	}, configs.defaults[server] or {})
@@ -69,7 +69,7 @@ end
 for server, config in pairs(configs.customs) do
 	lspconfigs[server] = config
 
-	servers.setup(server)
+	M.setup(server)
 end
 
-return servers
+return M
