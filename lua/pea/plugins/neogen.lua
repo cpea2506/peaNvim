@@ -1,6 +1,6 @@
 return {
 	"danymat/neogen",
-	event = "BufRead",
+	cmd = "Neogen",
 	keys = {
 		{ "<leader>ld", "<cmd>Neogen<cr>", desc = "Generate language documentation" },
 	},

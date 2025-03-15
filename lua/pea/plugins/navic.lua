@@ -77,7 +77,7 @@ end
 
 return {
 	"smiteshp/nvim-navic",
-	event = "VeryLazy",
+	event = "LazyFile",
 	opts = {
 		icons = vim.tbl_map(function(icon)
 			return icon .. " "

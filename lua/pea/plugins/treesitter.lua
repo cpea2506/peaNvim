@@ -2,7 +2,7 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	cmd = { "TSInstall", "TSUpdateSync" },
-	event = { "LazyFile", "VeryLazy" },
+	event = "LazyFile",
 	dependencies = {
 		"HiPhish/rainbow-delimiters.nvim",
 		{
