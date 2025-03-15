@@ -6,6 +6,7 @@ local modules = {
 	"autocmds",
 	"usercmds",
 	"keymaps",
+	"events",
 	"ui.float",
 	"ui.input",
 }

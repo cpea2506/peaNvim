@@ -2,7 +2,7 @@ local icons = require("pea.config.ui.icons")
 
 return {
 	"lewis6991/gitsigns.nvim",
-	event = "BufRead",
+	event = "LazyFile",
 	opts = {
 		signs = {
 			add = {
