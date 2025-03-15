@@ -1,6 +1,3 @@
-local colors = require("pea.plugins.lualine.colors")
-local components = require("pea.plugins.lualine.components")
-
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "VeryLazy",
@@ -15,65 +12,70 @@ return {
 			vim.o.laststatus = 0
 		end
 	end,
-	opts = {
-		options = {
-			theme = {
-				normal = {
-					c = { fg = colors.fg, bg = colors.bg },
+	opts = function()
+		local colors = require("pea.plugins.lualine.colors")
+		local components = require("pea.plugins.lualine.components")
+
+		return {
+			options = {
+				theme = {
+					normal = {
+						c = { fg = colors.fg, bg = colors.bg },
+					},
+					inactive = {
+						c = { fg = colors.fg, bg = colors.bg },
+					},
 				},
-				inactive = {
-					c = { fg = colors.fg, bg = colors.bg },
+				disabled_filetypes = {
+					"CodeAction",
+					"Input",
+					"NvimTree",
+					"TelescopePrompt",
+					"lazy",
+					"lspinfo",
+					"mason",
+					"noice",
+					"toggleterm",
+				},
+				globalstatus = true,
+				component_separators = "",
+				section_separators = "",
+			},
+			sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_y = {},
+				lualine_z = {},
+				lualine_c = {
+					components.leftbar,
+					components.evil,
+					components.filesize,
+					components.filetype,
+					components.location,
+					components.diagnostics,
+					components.macro,
+					components.center,
+					components.lsp,
+				},
+				lualine_x = {
+					components.treesitter,
+					components.os,
+					components.encoding,
+					components.branch,
+					components.diff,
+					components.scrollbar,
 				},
 			},
-			disabled_filetypes = {
-				"CodeAction",
-				"Input",
-				"NvimTree",
-				"TelescopePrompt",
-				"lazy",
-				"lspinfo",
-				"mason",
-				"noice",
-				"toggleterm",
+			inactive_sections = {
+				lualine_a = {
+					"filename",
+				},
+				lualine_b = {},
+				lualine_y = {},
+				lualine_z = {},
+				lualine_c = {},
+				lualine_x = {},
 			},
-			globalstatus = true,
-			component_separators = "",
-			section_separators = "",
-		},
-		sections = {
-			lualine_a = {},
-			lualine_b = {},
-			lualine_y = {},
-			lualine_z = {},
-			lualine_c = {
-				components.leftbar,
-				components.evil,
-				components.filesize,
-				components.filetype,
-				components.location,
-				components.diagnostics,
-				components.macro,
-				components.center,
-				components.lsp,
-			},
-			lualine_x = {
-				components.treesitter,
-				components.os,
-				components.encoding,
-				components.branch,
-				components.diff,
-				components.scrollbar,
-			},
-		},
-		inactive_sections = {
-			lualine_a = {
-				"filename",
-			},
-			lualine_b = {},
-			lualine_y = {},
-			lualine_z = {},
-			lualine_c = {},
-			lualine_x = {},
-		},
-	},
+		}
+	end,
 }
