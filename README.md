@@ -1,2 +1,2 @@
-# nvim
-Nvim with lazy personality.
+# peaNvim
+Me and nvim with lazy personality.
