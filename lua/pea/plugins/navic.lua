@@ -78,7 +78,6 @@ end
 return {
 	"smiteshp/nvim-navic",
 	event = "VeryLazy",
-	dependencies = "nvim-tree/nvim-web-devicons",
 	opts = {
 		icons = vim.tbl_map(function(icon)
 			return icon .. " "
@@ -93,9 +92,7 @@ return {
 		exclude_filetypes = {
 			"help",
 			"lazy",
-			"neogitstatus",
 			"NvimTree",
-			"Trouble",
 			"toggleterm",
 			"noice",
 			"",
