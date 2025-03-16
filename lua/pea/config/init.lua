@@ -34,12 +34,10 @@ end
 
 local function setup_lazy()
 	require("lazy").setup("pea.plugins", {
-		root = vim.fn.stdpath("data") .. "/lazy",
 		defaults = {
 			lazy = true,
 		},
 		install = {
-			missing = true,
 			colorscheme = { "one_monokai" },
 		},
 		ui = {
@@ -47,28 +45,22 @@ local function setup_lazy()
 			backdrop = 100,
 			title = "Plugins",
 			title_pos = "center",
-			pills = true,
-			throttle = 20,
 		},
 		checker = {
 			enabled = true,
-			concurrency = nil,
-			notify = true,
 			frequency = 43200,
 		},
-		change_detection = {
-			enabled = true,
-			notify = true,
-		},
 		performance = {
-			cache = {
-				enabled = true,
+			rtp = {
+				disabled_plugins = {
+					"gzip",
+					"netrwPlugin",
+					"tarPlugin",
+					"tohtml",
+					"tutor",
+					"zipPlugin",
+				},
 			},
-			reset_packpath = true,
-		},
-		profiling = {
-			loader = true,
-			require = true,
 		},
 	})
 end
