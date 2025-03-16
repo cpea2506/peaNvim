@@ -41,14 +41,9 @@ end
 vim.ui.input = function(opts, on_confirm)
 	local prompt = opts.prompt or "Input"
 	local default = opts.default or ""
-
 	local prompt_lines = vim.split(prompt, "\n", { plain = true, trimempty = true })
 	local width = utils.calculate_width(prefer_width, win_config.width, min_width, max_width)
-	width = math.max(width, 4 + utils.get_max_strwidth(prompt_lines))
-
-	if default then
-		width = math.max(width, 2 + vim.api.nvim_strwidth(default))
-	end
+	width = math.max(width, 4 + utils.get_max_strwidth(prompt_lines), 2 + vim.api.nvim_strwidth(default))
 
 	win_config.title = trim_and_pad_title(prompt)
 	win_config.width = utils.calculate_width(width, win_config.width, min_width, max_width)
@@ -75,11 +70,9 @@ vim.ui.input = function(opts, on_confirm)
 		vim.api.nvim_set_option_value(option, value, { scope = "local", win = winid })
 	end
 
-	if default then
-		vim.api.nvim_buf_set_text(bufnr, 0, 0, 0, 0, { default })
-		vim.cmd.startinsert()
-		vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default) + 1 })
-	end
+	vim.api.nvim_buf_set_text(bufnr, 0, 0, 0, 0, { default })
+	vim.cmd.startinsert()
+	vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default) + 1 })
 
 	vim.keymap.set({ "n", "i", "v" }, "<cr>", function()
 		local lines = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)
