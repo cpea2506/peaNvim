@@ -15,6 +15,7 @@ return {
 	opts = function()
 		local colors = require("pea.plugins.lualine.colors")
 		local components = require("pea.plugins.lualine.components")
+		local extensions = require("pea.plugins.lualine.extensions")
 
 		return {
 			options = {
@@ -31,7 +32,6 @@ return {
 					"Input",
 					"NvimTree",
 					"TelescopePrompt",
-					"lazy",
 					"lspinfo",
 					"mason",
 					"noice",
@@ -40,6 +40,10 @@ return {
 				globalstatus = true,
 				component_separators = "",
 				section_separators = "",
+			},
+			extensions = {
+				extensions.lazy,
+				extensions.quickfix,
 			},
 			sections = {
 				lualine_a = {},
@@ -52,7 +56,6 @@ return {
 					components.filesize,
 					components.filetype,
 					components.location,
-					components.diagnostics,
 					components.macro,
 					components.center,
 					components.lsp,
@@ -62,7 +65,6 @@ return {
 					components.os,
 					components.encoding,
 					components.branch,
-					components.diff,
 					components.scrollbar,
 				},
 			},

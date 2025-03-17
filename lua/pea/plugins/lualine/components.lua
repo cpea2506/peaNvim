@@ -51,20 +51,6 @@ local components = {
 		"filesize",
 		cond = conditions.buffer_not_empty,
 	},
-	diagnostics = {
-		"diagnostics",
-		sources = { "nvim_diagnostic" },
-		symbols = {
-			error = icons.diagnostics.ERROR .. " ",
-			warn = icons.diagnostics.WARN .. " ",
-			info = icons.diagnostics.INFO .. " ",
-		},
-		diagnostics_color = {
-			color_error = { fg = colors.red },
-			color_warn = { fg = colors.yellow },
-			color_info = { fg = colors.cyan },
-		},
-	},
 	center = {
 		"%=",
 	},
@@ -97,31 +83,6 @@ local components = {
 		end,
 		icon = icons.ui.Setting .. " LSP:",
 		color = { fg = colors.jungle_green, gui = "bold" },
-	},
-	diff = {
-		"diff",
-		source = function()
-			local gitsigns = vim.b.gitsigns_status_dict
-
-			if gitsigns then
-				return {
-					added = gitsigns.added,
-					modified = gitsigns.changed,
-					removed = gitsigns.removed,
-				}
-			end
-		end,
-		symbols = {
-			added = icons.git.LineAdded,
-			modified = icons.git.LineModified,
-			removed = icons.git.LineRemoved,
-		},
-		diff_color = {
-			added = { fg = colors.green },
-			modified = { fg = colors.orange },
-			removed = { fg = colors.red },
-		},
-		cond = conditions.should_hide_in_width,
 	},
 	branch = {
 		"b:gitsigns_head",
