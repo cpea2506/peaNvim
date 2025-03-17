@@ -35,6 +35,7 @@ return {
 					"lspinfo",
 					"mason",
 					"noice",
+					"help",
 					"toggleterm",
 				},
 				globalstatus = true,
