@@ -15,6 +15,7 @@ local options = {
 		showmode = false,
 		linebreak = true,
 		timeoutlen = 250,
+		fixeol = false,
 		conceallevel = 0,
 		autoindent = true,
 		ignorecase = true,
