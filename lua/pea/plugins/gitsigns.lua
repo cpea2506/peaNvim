@@ -3,9 +3,10 @@ return {
 	event = "LazyFile",
 	opts = function()
 		local icons = require("pea.config.ui.icons")
+		local keyhandler = require("lazy.core.handler.keys")
+		local gitsigns = require("gitsigns")
 
 		return {
-
 			signs = {
 				add = {
 					text = icons.ui.BoldLine,
@@ -53,10 +54,7 @@ return {
 				col = 1,
 			},
 			on_attach = function(bufnr)
-				local keyhandler = require("lazy.core.handler.keys")
-				local gitsigns = require("gitsigns")
-
-				local keymappings = {
+				local keymaps = {
 					{
 						"<leader>gn",
 						function()
@@ -110,7 +108,7 @@ return {
 					{ "<leader>ge", gitsigns.toggle_deleted },
 				}
 
-				local keys = keyhandler.resolve(keymappings)
+				local keys = keyhandler.resolve(keymaps)
 
 				for _, key in pairs(keys) do
 					local opts = keyhandler.opts(key)
