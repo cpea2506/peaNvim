@@ -3,7 +3,6 @@ return {
 	event = "LazyFile",
 	opts = function()
 		local icons = require("pea.config.ui.icons")
-		local gitsigns = require("gitsigns")
 
 		return {
 			signs = {
