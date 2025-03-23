@@ -43,6 +43,7 @@ local options = {
 		fileencoding = "utf-8",
 		clipboard = "unnamedplus",
 		fillchars = { eob = " " },
+		guicursor = "i-ci-ve:hor30",
 		guifont = "SFMono Nerd Font:h13",
 		completeopt = { "menu", "menuone", "noselect" },
 	},
