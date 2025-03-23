@@ -1,5 +1,5 @@
 local function augroup(name)
-	return vim.api.nvim_create_augroup(name, { clear = true })
+	return vim.api.nvim_create_augroup("pea_" .. name, { clear = true })
 end
 
 local autocmds = {
@@ -7,9 +7,8 @@ local autocmds = {
 		"TextYankPost",
 		{
 			group = augroup("highlight_yank"),
-			desc = "Highlight text on yank",
 			callback = function()
-				vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
+				vim.hl.on_yank()
 			end,
 		},
 	},
@@ -19,20 +18,21 @@ local autocmds = {
 			group = augroup("q_close"),
 			pattern = {
 				"help",
-				"lspinfo",
 				"qf",
 				"startuptime",
 				"checkhealth",
 				"man",
-				"floaterm",
-				"lspinfo",
-				"lsp-installer",
-				"CodeAction",
 			},
 			callback = function(event)
 				vim.bo[event.buf].buflisted = false
 
-				vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+				vim.schedule(function()
+					vim.keymap.set("n", "q", function()
+						vim.cmd.close()
+
+						pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+					end, { buffer = event.buf, silent = true, desc = "Quit buffer" })
+				end)
 			end,
 		},
 	},
@@ -40,7 +40,7 @@ local autocmds = {
 		{ "FocusGained", "TermClose", "TermLeave" },
 		{
 			group = augroup("checktime"),
-			callback = function(_)
+			callback = function()
 				if vim.o.buftype ~= "nofile" then
 					vim.cmd("checktime")
 				end
