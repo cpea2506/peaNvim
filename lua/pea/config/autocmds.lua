@@ -18,6 +18,7 @@ local autocmds = {
 			group = augroup("q_close"),
 			pattern = {
 				"help",
+				"man",
 				"qf",
 				"startuptime",
 				"checkhealth",
