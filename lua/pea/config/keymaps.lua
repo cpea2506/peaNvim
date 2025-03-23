@@ -1,6 +1,5 @@
 local keymaps = {
 	{ "n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" } },
-	{ "n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" } },
 	{ "n", "<C-s>", "<cmd>w<cr>", { desc = "Save File" } },
 	{ "n", "<C-e>", "<cmd>BufClose<cr>", { desc = "Close Buffer" } },
 
