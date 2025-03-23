@@ -25,6 +25,7 @@ local options = {
 		splitright = true,
 		swapfile = false,
 		termguicolors = true,
+		confirm = true,
 		title = true,
 		undofile = true,
 		updatetime = 250,
