@@ -1,5 +1,5 @@
 local function namespace(name)
-	return vim.api.nvim_create_namespace(name)
+	return vim.api.nvim_create_namespace("pea_" .. name)
 end
 
 local on_key_listeners = {
