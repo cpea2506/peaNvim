@@ -3,7 +3,6 @@ return {
 	event = "LazyFile",
 	opts = function()
 		local icons = require("pea.config.ui.icons")
-		local keyhandler = require("lazy.core.handler.keys")
 		local gitsigns = require("gitsigns")
 
 		return {
@@ -53,71 +52,6 @@ return {
 				row = 0,
 				col = 1,
 			},
-			on_attach = function(bufnr)
-				local keymaps = {
-					{
-						"<leader>gn",
-						function()
-							gitsigns.nav_hunk("next")
-						end,
-						desc = "Git Navigate to Next Hunk",
-					},
-
-					{
-						"<leader>gp",
-						function()
-							gitsigns.nav_hunk("prev")
-						end,
-						desc = "Git Navigate to Previous Hunk",
-					},
-					{ "<leader>gs", gitsigns.stage_hunk, desc = "Git Stage Hunk" },
-					{ "<leader>gr", gitsigns.reset_hunk, desc = "Git Reset Hunk" },
-					{
-						"<leader>gs",
-						function()
-							gitsigns.stage_hunk({
-								vim.fn.line("."),
-								vim.fn.line("v"),
-							})
-						end,
-						mode = "v",
-						desc = "Git Stage Hunk",
-					},
-					{
-						"<leader>gr",
-						function()
-							gitsigns.reset_hunk({
-								vim.fn.line("."),
-								vim.fn.line("v"),
-							})
-						end,
-						mode = "v",
-						desc = "Git Reset Hunk",
-					},
-					{ "<leader>gS", gitsigns.stage_buffer, desc = "Git Stage Buffer" },
-					{ "<leader>gu", gitsigns.undo_stage_hunk, "Git Undo Stage Hunk" },
-					{ "<leader>gR", gitsigns.reset_buffer, "Git Reset Buffer" },
-					{ "<leader>gp", gitsigns.preview_hunk, "Git Preview Hunk" },
-					{ "<leader>gd", gitsigns.diffthis },
-					{
-						"<leader>gD",
-						function()
-							gitsigns.diffthis("~")
-						end,
-					},
-					{ "<leader>ge", gitsigns.toggle_deleted },
-				}
-
-				local keys = keyhandler.resolve(keymaps)
-
-				for _, key in pairs(keys) do
-					local opts = keyhandler.opts(key)
-					opts.silent = true
-					opts.buffer = bufnr
-
-					vim.keymap.set(key.mode, key.lhs, key.rhs, opts)
-				end
-			end,
 		}
 	end,
 }
