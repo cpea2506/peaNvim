@@ -1,33 +1,27 @@
-local keyhandler = require("lazy.core.handler.keys")
-
-local keymappings = {
-	{ "<leader>q", "<cmd>confirm q<cr>" },
-	{ "<C-e>", "<cmd>BuffClose<cr>" },
-	{ "<C-s>", "<cmd>confirm w<cr>" },
-	{ "<leader>w", "<cmd>noautocmd w<cr>" },
+local keymaps = {
+	{ "n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" } },
+	{ "n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" } },
+	{ "n", "<C-s>", "<cmd>w<cr>", { desc = "Save File" } },
+	{ "n", "<C-e>", "<cmd>BufClose<cr>", { desc = "Close Buffer" } },
 
 	-- Better window movement.
-	{ "<C-h>", "<C-w>h" },
-	{ "<C-j>", "<C-w>j" },
-	{ "<C-k>", "<C-w>k" },
-	{ "<C-l>", "<C-w>l" },
+	{ "n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true } },
+	{ "n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true } },
+	{ "n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true } },
+	{ "n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true } },
 
 	-- Better indenting.
-	{ "<", "<gv", mode = "v" },
-	{ ">", ">gv", mode = "v" },
+	{ "v", "<", "<gv" },
+	{ "v", ">", ">gv" },
 
 	-- Lazy specific
-	{ "<leader>ps", "<cmd>Lazy sync<cr>", desc = "Lazy Sync" },
-	{ "<leader>pp", "<cmd>Lazy<cr>", desc = "Lazy Status" },
+	{ "n", "<leader>ph", "<cmd>Lazy<cr>", { desc = "Lazy Status" } },
+	{ "n", "<leader>ps", "<cmd>Lazy sync<cr>", { desc = "Lazy Sync" } },
 }
 
-local keys = keyhandler.resolve(keymappings)
-
-for _, key in pairs(keys) do
-	local opts = keyhandler.opts(key)
-
+for _, key in pairs(keymaps) do
+	local opts = key[4] or {}
 	opts.silent = true
-	opts.noremap = true
 
-	vim.keymap.set(key.mode, key.lhs, key.rhs, opts)
+	vim.keymap.set(key[1], key[2], key[3], opts)
 end

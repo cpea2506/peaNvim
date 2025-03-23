@@ -1,6 +1,6 @@
 local usercmds = {
 	{
-		"BuffClose",
+		"BufClose",
 		function()
 			local command = "bd"
 			local bo = vim.bo
