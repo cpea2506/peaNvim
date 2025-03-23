@@ -5,21 +5,17 @@ local usercmds = {
 			local command = "bd"
 			local bo = vim.bo
 			local api = vim.api
-			local fmt = string.format
-			local fn = vim.fn
 			local bufnr = api.nvim_get_current_buf()
+			local fmt = string.format
 			local bufname = api.nvim_buf_get_name(bufnr)
 			local force_close = false
-
-			local choice
+			local choice = nil
 
 			if bo.modified then
-				choice = fn.confirm(fmt([[Save changes to "%s"?]], bufname), "&Yes\n&No\n&Cancel")
+				choice = vim.fn.confirm(fmt([[Save changes to "%s"?]], bufname), "&Yes\n&No\n&Cancel")
 
 				if choice == 1 then
-					vim.api.nvim_buf_call(bufnr, function()
-						vim.cmd("w")
-					end)
+					api.nvim_buf_call(bufnr, vim.cmd.w)
 				elseif choice == 2 then
 					force_close = true
 				else
@@ -44,6 +40,7 @@ local usercmds = {
 					if v == bufnr then
 						local prev_buf_idx = i == 1 and #buffers or (i - 1)
 						local prev_buffer = buffers[prev_buf_idx]
+
 						for _, win in ipairs(windows) do
 							api.nvim_win_set_buf(win, prev_buffer)
 						end
@@ -52,14 +49,15 @@ local usercmds = {
 			end
 
 			if api.nvim_buf_is_valid(bufnr) and bo[bufnr].buflisted then
-				vim.cmd(string.format("%s %d", command, bufnr))
+				vim.cmd(fmt("%s %d", command, bufnr))
 			end
 		end,
 	},
 }
 
 for _, usercmd in pairs(usercmds) do
-	local opts = vim.tbl_deep_extend("force", { force = true }, usercmd[3] or {})
+	local opts = usercmd[3] or {}
+	opts.force = true
 
 	vim.api.nvim_create_user_command(usercmd[1], usercmd[2], opts)
 end
