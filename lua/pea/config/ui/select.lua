@@ -143,7 +143,10 @@ vim.ui.select = function(items, opts, on_choice)
 		cancel(winid)
 	end, { buffer = bufnr })
 
+	local augroup = vim.api.nvim_create_augroup("pea_select", { clear = true })
+
 	vim.api.nvim_create_autocmd("BufLeave", {
+		group = augroup,
 		desc = "Cancel vim.ui.select",
 		buffer = bufnr,
 		nested = true,
@@ -154,6 +157,7 @@ vim.ui.select = function(items, opts, on_choice)
 	})
 
 	vim.api.nvim_create_autocmd("CmdlineEnter", {
+		group = augroup,
 		desc = "Show Cursor",
 		buffer = bufnr,
 		nested = true,
@@ -163,6 +167,7 @@ vim.ui.select = function(items, opts, on_choice)
 	})
 
 	vim.api.nvim_create_autocmd("CmdlineLeave", {
+		group = augroup,
 		desc = "Hide Cursor",
 		buffer = bufnr,
 		nested = true,
