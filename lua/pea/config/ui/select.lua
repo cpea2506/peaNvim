@@ -53,6 +53,10 @@ local function show_cursor(show)
 end
 
 vim.ui.select = function(items, opts, on_choice)
+	if not items then
+		return
+	end
+
 	local prompt = opts.prompt or "Select"
 
 	local bufnr = vim.api.nvim_create_buf(false, true)
