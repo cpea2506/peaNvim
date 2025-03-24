@@ -119,14 +119,14 @@ vim.ui.select = function(items, opts, on_choice)
 	win_config.row = utils.calc_row(win_config.relative, win_config.height)
 	win_config.col = utils.calc_column(win_config.relative, win_config.width)
 
+	show_cursor(false)
+
 	local winid = vim.api.nvim_open_win(bufnr, true, win_config)
 
 	-- Set window options.
 	for option, value in pairs(win_options) do
 		vim.api.nvim_set_option_value(option, value, { scope = "local", win = winid })
 	end
-
-	show_cursor(false)
 
 	vim.keymap.set("n", "<cr>", function()
 		choose(winid)
