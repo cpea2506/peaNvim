@@ -65,6 +65,7 @@ return {
 		Tick = "",
 		ArrowRight = "➜",
 		Close = "✗",
+		Write = "",
 	},
 	git = {
 		LineAdded = " ",

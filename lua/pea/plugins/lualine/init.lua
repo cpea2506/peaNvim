@@ -29,7 +29,8 @@ return {
 				},
 				disabled_filetypes = {
 					"CodeAction",
-					"Input",
+					"PeaInput",
+					"PeaSelect",
 					"NvimTree",
 					"TelescopePrompt",
 					"lspinfo",

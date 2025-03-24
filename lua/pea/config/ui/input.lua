@@ -1,6 +1,6 @@
 local utils = require("pea.config.ui.utils")
+local icons = require("pea.config.ui.icons")
 
-local icon = " "
 local prefer_width = 40
 local max_width = { 140, 0.9 }
 local min_width = { 20, 0.2 }
@@ -23,30 +23,24 @@ local win_options = {
 	list = true,
 	listchars = "precedes:…,extends:…",
 	sidescrolloff = 0,
-	statuscolumn = " %#InputIcon#" .. icon .. " ",
+	statuscolumn = " %#PeaInputIcon#" .. icons.ui.Write .. "  ",
 }
 
 local buf_options = {
 	swapfile = false,
 	bufhidden = "wipe",
-	filetype = "Input",
+	filetype = "PeaInput",
 }
-
-local function trim_and_pad_title(title)
-	title = vim.trim(title):gsub(":$", "")
-
-	return (" %s "):format(title)
-end
 
 vim.ui.input = function(opts, on_confirm)
 	local prompt = opts.prompt or "Input"
 	local default = opts.default or ""
 	local prompt_lines = vim.split(prompt, "\n", { plain = true, trimempty = true })
-	local width = utils.calculate_width(prefer_width, win_config.width, min_width, max_width)
+	local width = utils.calc_width(win_config.relative, prefer_width, win_config.width, min_width, max_width)
 	width = math.max(width, 4 + utils.get_max_strwidth(prompt_lines), 2 + vim.api.nvim_strwidth(default))
 
-	win_config.title = trim_and_pad_title(prompt)
-	win_config.width = utils.calculate_width(width, win_config.width, min_width, max_width)
+	win_config.title = utils.trim_and_pad_title(prompt)
+	win_config.width = utils.calc_width(win_config.relative, width, win_config.width, min_width, max_width)
 
 	on_confirm = on_confirm or function() end
 

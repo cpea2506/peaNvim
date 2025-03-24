@@ -1,42 +1,47 @@
+---@source: https://github.com/stevearc/dressing.nvim/blob/master/lua/dressing/util.lua
 local M = {}
 
-local function calculate_float(value, max_value)
-	local _, p = math.modf(value)
+local function calc_float(value, max_value)
+	if value then
+		local _, p = math.modf(value)
 
-	if value and p ~= 0 then
-		return math.min(max_value, value * max_value)
-	else
-		return value
+		if p ~= 0 then
+			return math.min(max_value, value * max_value)
+		end
 	end
+
+	return value
 end
 
-local function calculate_width(values, max_value, aggregator, limit)
+local function calc_list(value, max_value, aggregator, limit)
 	local result = limit
 
-	if type(values) == "table" then
-		for _, v in ipairs(values) do
-			result = aggregator(result, calculate_float(v, max_value))
+	if type(value) == "table" then
+		for _, v in ipairs(value) do
+			result = aggregator(result, calc_float(v, max_value))
 		end
-
-		return result
 	else
-		result = aggregator(result, calculate_float(values, max_value))
+		result = aggregator(result, calc_float(value, max_value))
 	end
 
 	return result
 end
 
-local function calculate_dimension(desired_size, size, min_size, max_size, total_size)
-	local result = calculate_float(size, total_size)
-	local min_val = calculate_width(min_size, total_size, math.max, 1)
-	local max_val = calculate_width(max_size, total_size, math.min, total_size)
+local function get_max_width(relative, winid)
+	return relative == "editor" and vim.o.columns or vim.api.nvim_win_get_width(winid or 0)
+end
+
+local function get_max_height(relative, winid)
+	return relative == "editor" and vim.o.lines - vim.o.cmdheight or vim.api.nvim_win_get_height(winid or 0)
+end
+
+local function calc_size(desired_size, current_size, min_size, max_size, total_size)
+	local result = calc_float(current_size, total_size)
+	local min_val = calc_list(min_size, total_size, math.max, 1)
+	local max_val = calc_list(max_size, total_size, math.min, total_size)
 
 	if not result then
-		if not desired_size then
-			result = (min_val + max_val) / 2
-		else
-			result = calculate_float(desired_size, total_size)
-		end
+		result = calc_float(desired_size, total_size)
 	end
 
 	result = math.min(result, max_val)
@@ -45,7 +50,15 @@ local function calculate_dimension(desired_size, size, min_size, max_size, total
 	return math.floor(result)
 end
 
-M.get_max_strwidth = function(lines)
+function M.calc_width(relative, desired_size, current_size, min_size, max_size)
+	return calc_size(desired_size, current_size, min_size, max_size, get_max_width(relative))
+end
+
+function M.calc_height(relative, desired_size, current_size, min_size, max_size)
+	return calc_size(desired_size, current_size, min_size, max_size, get_max_height(relative))
+end
+
+function M.get_max_strwidth(lines)
 	local max = 0
 
 	for _, line in ipairs(lines) do
@@ -55,8 +68,26 @@ M.get_max_strwidth = function(lines)
 	return max
 end
 
-M.calculate_width = function(desired_width, width, min_width, max_width, winid)
-	return calculate_dimension(desired_width, width, min_width, max_width, vim.api.nvim_win_get_width(winid or 0))
+function M.calc_column(relative, width)
+	if relative == "cursor" then
+		return 0
+	else
+		return math.floor((get_max_width(relative) - width) / 2)
+	end
+end
+
+function M.calc_row(relative, height)
+	if relative == "cursor" then
+		return 0
+	else
+		return math.floor((get_max_height(relative) - height) / 2)
+	end
+end
+
+function M.trim_and_pad_title(title)
+	title = vim.trim(title):gsub(":$", "")
+
+	return (" %s "):format(title)
 end
 
 return M

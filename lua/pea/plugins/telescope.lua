@@ -12,7 +12,6 @@ return {
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
 		},
-		"nvim-telescope/telescope-ui-select.nvim",
 	},
 	opts = function()
 		local icons = require("pea.config.ui.icons")
@@ -79,6 +78,5 @@ return {
 
 		telescope.setup(opts)
 		telescope.load_extension("fzf")
-		telescope.load_extension("ui-select")
 	end,
 }
