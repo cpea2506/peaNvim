@@ -3,7 +3,6 @@ local M = {}
 local utils = require("pea.config.ui.utils")
 local icons = require("pea.config.ui.icons")
 
-local icon = icons.ui.Forward
 local max_width = { 140, 0.8 }
 local min_width = { 80, 0.2 }
 local max_height = 0.9
@@ -35,7 +34,7 @@ local buf_options = {
 }
 
 function M.statuscolumn()
-	return vim.v.relnum == 0 and "%#PeaSelectOptionIcon#" .. icon .. " " or ""
+	return vim.v.relnum == 0 and "%#PeaSelectOptionIcon#" .. icons.ui.Forward .. " " or ""
 end
 
 local function show_cursor(show)
