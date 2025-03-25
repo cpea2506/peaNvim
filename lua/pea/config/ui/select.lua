@@ -38,12 +38,8 @@ function M.statuscolumn()
 end
 
 local function show_cursor(show)
-	local hl = vim.api.nvim_get_hl(0, { name = "Cursor" })
-	hl.blend = show and 0 or 100
-
-	vim.api.nvim_set_hl(0, "Cursor", hl)
-
-	local guicursor = "a:Cursor/lCursor"
+	vim.api.nvim_set_hl(0, "PeaSelectHiddenCursor", { bg = "#abb2bf", blend = show and 0 or 100 })
+	local guicursor = "a:PeaSelectHiddenCursor"
 
 	if show then
 		vim.opt.guicursor:remove(guicursor)
@@ -53,10 +49,6 @@ local function show_cursor(show)
 end
 
 vim.ui.select = function(items, opts, on_choice)
-	if not items then
-		return
-	end
-
 	local prompt = opts.prompt or "Select"
 
 	local bufnr = vim.api.nvim_create_buf(false, true)
