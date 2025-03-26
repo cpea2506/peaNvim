@@ -1,13 +1,6 @@
 return {
 	"nvim-tree/nvim-tree.lua",
 	event = "BufEnter",
-	dependencies = {
-		{
-			"antosha417/nvim-lsp-file-operations",
-			dependencies = "nvim-lua/plenary.nvim",
-			config = true,
-		},
-	},
 	keys = {
 		{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Open Explorer" },
 	},

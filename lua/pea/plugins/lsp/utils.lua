@@ -53,13 +53,11 @@ M.on_exit = function(client, bufnr)
 end
 
 M.capabilities = function()
-	local has_lsp_file_operation, lsp_file_operations = pcall(require, "lsp-file-operations")
 	local has_blink, blink = pcall(require, "blink.cmp")
 	local capabilities = vim.tbl_deep_extend(
 		"force",
 		{},
 		vim.lsp.protocol.make_client_capabilities(),
-		has_lsp_file_operation and lsp_file_operations.default_capabilities() or {},
 		has_blink and blink.get_lsp_capabilities() or {}
 	)
 
