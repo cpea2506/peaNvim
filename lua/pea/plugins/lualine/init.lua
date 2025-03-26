@@ -38,6 +38,7 @@ return {
 					"noice",
 					"help",
 					"toggleterm",
+					"fzf",
 				},
 				globalstatus = true,
 				component_separators = "",
