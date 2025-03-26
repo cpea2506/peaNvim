@@ -66,7 +66,7 @@ vim.ui.input = function(opts, on_confirm)
 
 	vim.api.nvim_buf_set_text(bufnr, 0, 0, 0, 0, { default })
 	vim.cmd.startinsert()
-	vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default) + 1 })
+	vim.api.nvim_win_set_cursor(winid, { 1, vim.str_utfindex(default, "utf-8") + 1 })
 
 	vim.keymap.set({ "n", "i", "v" }, "<cr>", function()
 		local lines = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)

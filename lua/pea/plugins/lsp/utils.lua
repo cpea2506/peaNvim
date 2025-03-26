@@ -7,11 +7,11 @@ local codelens_refresh_group = augroup("codelens_refresh", { clear = false })
 local document_highlight_group = augroup("document_highlight", { clear = false })
 
 M.on_attach = function(client, bufnr)
-	if client.supports_method("textDocument/inlayHint") then
+	if client:supports_method("textDocument/inlayHint", bufnr) then
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	end
 
-	if client.supports_method("textDocument/codeLens") then
+	if client:supports_method("textDocument/codeLens", bufnr) then
 		autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
 			group = codelens_refresh_group,
 			buffer = bufnr,
@@ -19,7 +19,7 @@ M.on_attach = function(client, bufnr)
 		})
 	end
 
-	if client.supports_method("textDocument/documentHighlight") then
+	if client:supports_method("textDocument/documentHighlight", bufnr) then
 		autocmd({ "CursorHold", "CursorHoldI" }, {
 			group = document_highlight_group,
 			buffer = bufnr,
@@ -37,14 +37,14 @@ M.on_attach = function(client, bufnr)
 end
 
 M.on_exit = function(client, bufnr)
-	if client.supports_method("textDocument/codeLens") then
+	if client:supports_method("textDocument/codeLens", bufnr) then
 		vim.api.nvim_clear_autocmds({
 			group = codelens_refresh_group,
 			buffer = bufnr,
 		})
 	end
 
-	if client.supports_method("textDocument/documentHighlight") then
+	if client:supports_method("textDocument/documentHighlight", bufnr) then
 		vim.api.nvim_clear_autocmds({
 			group = document_highlight_group,
 			buffer = bufnr,

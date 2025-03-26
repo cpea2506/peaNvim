@@ -16,9 +16,8 @@ local function get_filename()
 			file_icon = icons.kind.File
 		end
 
-		local navic_text = vim.api.nvim_get_hl_by_name("Normal", true)
-
-		vim.api.nvim_set_hl(0, "Winbar", { fg = navic_text.foreground })
+		local text_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
+		vim.api.nvim_set_hl(0, "Winbar", { fg = text_hl.foreground })
 
 		return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#Winbar#" .. filename .. "%*"
 	end
