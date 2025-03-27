@@ -7,13 +7,16 @@ return {
 		{ "<leader>sd", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "FzfLua Diagnostics" },
 	},
 	opts = function()
+		local utils = require("pea.utils")
 		local icons = require("pea.config.ui.icons")
 
 		return {
+			file_icon_padding = utils.is_windows and " " or "",
 			winopts = {
 				height = 0.85,
 				width = 0.5,
 				title_flags = false,
+				treesitter = true,
 				preview = {
 					border = "rounded",
 					layout = "vertical",
