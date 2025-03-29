@@ -17,7 +17,6 @@ local win_config = {
 	noautocmd = true,
 	zindex = 150,
 	style = "minimal",
-	border = "rounded",
 }
 
 local win_options = {

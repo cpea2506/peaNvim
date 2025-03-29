@@ -1,7 +1,9 @@
 return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
-	dependencies = "MunifTanjim/nui.nvim",
+	dependencies = {
+		{ "pynappo/nui.nvim", branch = "support-winborder" },
+	},
 	opts = function()
 		local icons = require("pea.config.ui.icons")
 

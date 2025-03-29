@@ -40,6 +40,7 @@ local options = {
 		showcmd = false,
 		ruler = false,
 		laststatus = 3,
+		winborder = "rounded",
 		fileencoding = "utf-8",
 		clipboard = "unnamedplus",
 		fillchars = { eob = " " },

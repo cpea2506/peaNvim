@@ -7,7 +7,6 @@ local modules = {
 	"usercmds",
 	"keymaps",
 	"events",
-	"ui.float",
 	"ui.input",
 	"ui.select",
 }

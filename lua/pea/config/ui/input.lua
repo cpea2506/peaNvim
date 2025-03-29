@@ -15,7 +15,6 @@ local win_config = {
 	focusable = false,
 	noautocmd = true,
 	style = "minimal",
-	border = "rounded",
 }
 
 local win_options = {
