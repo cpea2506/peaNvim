@@ -19,16 +19,18 @@ return {
 						[vim.diagnostic.severity.INFO] = icons.diagnostics.INFO,
 					},
 				},
-				virtual_text = {
-					prefix = function(diagnostic)
+				virtual_lines = {
+					format = function(diagnostic)
 						local severity = vim.diagnostic.severity[diagnostic.severity]
 
-						return icons.diagnostics[severity]
+						return icons.diagnostics[severity] .. " " .. diagnostic.message
 					end,
 				},
 				underline = true,
 				severity_sort = true,
 				float = {
+					source = true,
+					severity_sort = true,
 					focusable = true,
 					style = "minimal",
 					border = "rounded",
