@@ -1,5 +1,4 @@
----@diagnostic disable-next-line: lowercase-global
-function lazygit_toggle()
+local function toggle_lazygit()
 	local terminal = require("toggleterm.terminal").Terminal
 	local size = 99999
 
@@ -26,7 +25,7 @@ return {
 	"akinsho/toggleterm.nvim",
 	keys = {
 		"<C-t>",
-		{ "<leader>gg", "<cmd>lua lazygit_toggle()<cr>", desc = "Lazygit Toggle" },
+		{ "<leader>gg", toggle_lazygit, desc = "Lazygit Toggle" },
 	},
 	opts = {
 		open_mapping = "<C-t>",
