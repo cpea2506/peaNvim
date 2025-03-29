@@ -29,6 +29,7 @@ return {
 				},
 				disabled_filetypes = {
 					"CodeAction",
+					"checkhealth",
 					"PeaInput",
 					"PeaSelect",
 					"NvimTree",
