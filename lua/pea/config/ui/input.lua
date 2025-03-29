@@ -1,9 +1,4 @@
-local utils = require("pea.config.ui.utils")
-local icons = require("pea.config.ui.icons")
-
-local prefer_width = 40
-local max_width = { 140, 0.9 }
-local min_width = { 20, 0.2 }
+local M = {}
 
 local win_config = {
 	relative = "cursor",
@@ -22,7 +17,7 @@ local win_options = {
 	list = true,
 	listchars = "precedes:…,extends:…",
 	sidescrolloff = 0,
-	statuscolumn = " %#PeaInputIcon#" .. icons.ui.Write .. "  ",
+	statuscolumn = [[%!v:lua.require("pea.config.ui.input").statuscolumn()]],
 }
 
 local buf_options = {
@@ -31,15 +26,30 @@ local buf_options = {
 	filetype = "PeaInput",
 }
 
+local prefer_width = 40
+local width_limit = {
+	min_value = { 20, 0.2 },
+	max_value = { 140, 0.9 },
+}
+
+function M.statuscolumn()
+	local icons = require("pea.config.ui.icons")
+
+	return " %#PeaInputIcon#" .. icons.ui.Write .. "  "
+end
+
 vim.ui.input = function(opts, on_confirm)
+	local utils = require("pea.config.ui.utils")
+
 	local prompt = opts.prompt or "Input"
 	local default = opts.default or ""
 	local prompt_lines = vim.split(prompt, "\n", { plain = true, trimempty = true })
-	local width = utils.calc_width(win_config.relative, prefer_width, win_config.width, min_width, max_width)
+
+	local width = utils.calc_width(win_config.relative, prefer_width, win_config.width, width_limit)
 	width = math.max(width, 4 + utils.get_max_strwidth(prompt_lines), 2 + vim.api.nvim_strwidth(default))
 
 	win_config.title = utils.trim_and_pad_title(prompt)
-	win_config.width = utils.calc_width(win_config.relative, width, win_config.width, min_width, max_width)
+	win_config.width = utils.calc_width(win_config.relative, width, win_config.width, width_limit)
 
 	on_confirm = on_confirm or function() end
 
@@ -95,3 +105,5 @@ vim.ui.input = function(opts, on_confirm)
 		end,
 	})
 end
+
+return M

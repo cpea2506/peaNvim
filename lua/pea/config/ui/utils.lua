@@ -35,10 +35,10 @@ local function get_max_height(relative, winid)
 	return relative == "editor" and vim.o.lines - vim.o.cmdheight or vim.api.nvim_win_get_height(winid or 0)
 end
 
-local function calc_size(desired_size, current_size, min_size, max_size, total_size)
+local function calc_size(desired_size, current_size, size_limit, total_size)
 	local result = calc_float(current_size, total_size)
-	local min_val = calc_list(min_size, total_size, math.max, 1)
-	local max_val = calc_list(max_size, total_size, math.min, total_size)
+	local min_val = calc_list(size_limit.min_value, total_size, math.max, 1)
+	local max_val = calc_list(size_limit.max_value, total_size, math.min, total_size)
 
 	if not result then
 		result = calc_float(desired_size, total_size)
@@ -50,12 +50,12 @@ local function calc_size(desired_size, current_size, min_size, max_size, total_s
 	return math.floor(result)
 end
 
-function M.calc_width(relative, desired_size, current_size, min_size, max_size)
-	return calc_size(desired_size, current_size, min_size, max_size, get_max_width(relative))
+function M.calc_width(relative, desired_size, current_size, size_limit)
+	return calc_size(desired_size, current_size, size_limit, get_max_width(relative))
 end
 
-function M.calc_height(relative, desired_size, current_size, min_size, max_size)
-	return calc_size(desired_size, current_size, min_size, max_size, get_max_height(relative))
+function M.calc_height(relative, desired_size, current_size, size_limit)
+	return calc_size(desired_size, current_size, size_limit, get_max_height(relative))
 end
 
 function M.get_max_strwidth(lines)

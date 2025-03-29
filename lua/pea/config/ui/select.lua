@@ -1,13 +1,5 @@
 local M = {}
 
-local utils = require("pea.config.ui.utils")
-local icons = require("pea.config.ui.icons")
-
-local max_width = { 140, 0.8 }
-local min_width = { 80, 0.2 }
-local max_height = 0.9
-local min_height = { 10, 0.2 }
-
 local win_config = {
 	relative = "editor",
 	anchor = "NW",
@@ -32,7 +24,18 @@ local buf_options = {
 	filetype = "PeaSelect",
 }
 
+local width_limit = {
+	min_value = { 80, 0.2 },
+	max_value = { 140, 0.8 },
+}
+local height_limit = {
+	min_value = { 10, 0.2 },
+	max_value = 0.9,
+}
+
 function M.statuscolumn()
+	local icons = require("pea.config.ui.icons")
+
 	return vim.v.relnum == 0 and "%#PeaSelectOptionIcon#" .. icons.ui.Forward .. " " or ""
 end
 
@@ -48,8 +51,9 @@ local function show_cursor(show)
 end
 
 vim.ui.select = function(items, opts, on_choice)
-	local prompt = opts.prompt or "Select"
+	local utils = require("pea.config.ui.utils")
 
+	local prompt = opts.prompt or "Select"
 	local bufnr = vim.api.nvim_create_buf(false, true)
 
 	-- Set buffer options.
@@ -62,12 +66,14 @@ vim.ui.select = function(items, opts, on_choice)
 		vim.api.nvim_win_close(winid or 0, true)
 	end
 
-	local function choose(winid)
-		local cursor = vim.api.nvim_win_get_cursor(0)
-		local i = cursor[1]
+	local function choose(winid, index)
+		if not index then
+			local cursor = vim.api.nvim_win_get_cursor(0)
+			index = cursor[1]
+		end
 
 		close_window(winid)
-		on_choice(items[i], i)
+		on_choice(items[index], index)
 	end
 
 	local function cancel(winid)
@@ -84,13 +90,7 @@ vim.ui.select = function(items, opts, on_choice)
 
 		table.insert(highlights, { #lines, prefix:len() })
 
-		vim.keymap.set("n", tostring(i), function()
-			close_window()
-			on_choice(items[i], i)
-		end, { buffer = bufnr })
-
-		local formatted_item = opts.format_item and opts.format_item(item)
-		local line = prefix .. (formatted_item or item)
+		local line = prefix .. (opts.format_item and opts.format_item(item) or item)
 		max_line_width = math.max(max_line_width, vim.api.nvim_strwidth(line))
 
 		table.insert(lines, line)
@@ -108,8 +108,8 @@ vim.ui.select = function(items, opts, on_choice)
 	end
 
 	win_config.title = utils.trim_and_pad_title(prompt)
-	win_config.width = utils.calc_width(win_config.relative, max_line_width, win_config.width, min_width, max_width)
-	win_config.height = utils.calc_height(win_config.relative, #lines, win_config.height, min_height, max_height)
+	win_config.width = utils.calc_width(win_config.relative, max_line_width, win_config.width, width_limit)
+	win_config.height = utils.calc_height(win_config.relative, #lines, win_config.height, height_limit)
 	win_config.row = utils.calc_row(win_config.relative, win_config.height)
 	win_config.col = utils.calc_column(win_config.relative, win_config.width)
 
@@ -120,6 +120,12 @@ vim.ui.select = function(items, opts, on_choice)
 	-- Set window options.
 	for option, value in pairs(win_options) do
 		vim.api.nvim_set_option_value(option, value, { scope = "local", win = winid })
+	end
+
+	for i, _ in ipairs(items) do
+		vim.keymap.set("n", tostring(i), function()
+			choose(winid, i)
+		end, { buffer = bufnr })
 	end
 
 	vim.keymap.set("n", "<cr>", function()
