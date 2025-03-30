@@ -12,7 +12,7 @@ local function toggle_lazygit()
 			height = size,
 		},
 		on_open = function(_)
-			vim.cmd("startinsert!")
+			vim.cmd.startinsert({ bang = true })
 		end,
 		on_close = function(_) end,
 		count = 99,

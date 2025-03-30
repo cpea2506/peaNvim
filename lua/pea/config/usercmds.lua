@@ -2,17 +2,15 @@ local usercmds = {
 	{
 		"BufClose",
 		function()
-			local command = "bd"
 			local bo = vim.bo
 			local api = vim.api
 			local bufnr = api.nvim_get_current_buf()
 			local fmt = string.format
 			local bufname = api.nvim_buf_get_name(bufnr)
 			local force_close = false
-			local choice = nil
 
 			if bo.modified then
-				choice = vim.fn.confirm(fmt([[Save changes to "%s"?]], bufname), "&Yes\n&No\n&Cancel")
+				local choice = vim.fn.confirm(fmt([[Save changes to "%s"?]], bufname), "&Yes\n&No\n&Cancel")
 
 				if choice == 1 then
 					api.nvim_buf_call(bufnr, vim.cmd.w)
@@ -26,10 +24,6 @@ local usercmds = {
 			local windows = vim.tbl_filter(function(win)
 				return api.nvim_win_get_buf(win) == bufnr
 			end, api.nvim_list_wins())
-
-			if force_close then
-				command = command .. "!"
-			end
 
 			local buffers = vim.tbl_filter(function(buf)
 				return api.nvim_buf_is_valid(buf) and bo[buf].buflisted
@@ -49,7 +43,7 @@ local usercmds = {
 			end
 
 			if api.nvim_buf_is_valid(bufnr) and bo[bufnr].buflisted then
-				vim.cmd(fmt("%s %d", command, bufnr))
+				vim.cmd.bd({ bufnr, bang = force_close })
 			end
 		end,
 	},
