@@ -1,6 +1,6 @@
 return {
 	"smiteshp/nvim-navic",
-	event = "LazyFile",
+	event = "LspAttach",
 	opts = function()
 		local icons = require("pea.config.ui.icons")
 
