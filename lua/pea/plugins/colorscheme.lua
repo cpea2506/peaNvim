@@ -4,7 +4,7 @@ return {
 	priority = 1000,
 	opts = {
 		transparent = true,
-		themes = function(colors)
+		highlights = function(colors)
 			return {
 				["@lsp.type.event.cs"] = { fg = colors.yellow },
 				["@lsp.type.delegate.cs"] = { link = "@function" },
