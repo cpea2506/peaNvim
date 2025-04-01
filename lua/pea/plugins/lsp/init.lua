@@ -20,6 +20,7 @@ return {
 					},
 				},
 				virtual_lines = {
+					current_line = true,
 					format = function(diagnostic)
 						local severity = vim.diagnostic.severity[diagnostic.severity]
 
