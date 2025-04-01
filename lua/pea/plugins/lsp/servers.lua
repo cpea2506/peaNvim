@@ -2,7 +2,6 @@ local M = {}
 
 local utils = require("pea.plugins.lsp.utils")
 local lspconfig = require("lspconfig")
-local lspconfigs = require("lspconfig.configs")
 
 local configs = {
 	defaults = {
@@ -40,22 +39,6 @@ local configs = {
 			},
 		},
 	},
-	customs = {
-		shaderlab_ls = {
-			default_config = {
-				cmd = { "shader-ls", "stdio" },
-				filetypes = { "glsl" },
-				root_dir = vim.fs.root(0, function(name, _)
-					return name:match("%.csproj$") ~= nil
-				end),
-				settings = {
-					ShaderLab = {
-						CompletionWord = true,
-					},
-				},
-			},
-		},
-	},
 }
 
 M.setup = function(server)
@@ -64,12 +47,6 @@ M.setup = function(server)
 	}, configs.defaults[server] or {})
 
 	lspconfig[server].setup(opts)
-end
-
-for server, config in pairs(configs.customs) do
-	lspconfigs[server] = config
-
-	M.setup(server)
 end
 
 return M

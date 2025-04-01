@@ -3,3 +3,5 @@ vim.filetype.add({
 		shader = "glsl",
 	},
 })
+
+vim.lsp.enable("shaderls")
