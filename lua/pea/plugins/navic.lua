@@ -1,5 +1,5 @@
 return {
-	"smiteshp/nvim-navic",
+	"cpea2506/nvim-navic",
 	event = "LspAttach",
 	opts = function()
 		local icons = require("pea.config.ui.icons")
