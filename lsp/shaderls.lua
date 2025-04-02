@@ -1,4 +1,4 @@
-vim.lsp.config.shaderls = {
+return {
 	cmd = { "shader-ls", "stdio" },
 	filetypes = { "glsl", "shaderlab" },
 	root_dir = vim.fs.root(0, function(name, _)
