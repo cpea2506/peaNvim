@@ -9,6 +9,7 @@ local modules = {
 	"events",
 	"ui.input",
 	"ui.select",
+	"ui.winbar",
 }
 
 local function init_lazy()
