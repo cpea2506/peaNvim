@@ -3,14 +3,7 @@ local icons = require("pea.config.ui.icons")
 local config = {
 	icons = icons.kind,
 	separator = icons.ui.ChevronRight,
-	exclude_filetypes = {
-		"help",
-		"lazy",
-		"NvimTree",
-		"toggleterm",
-		"noice",
-		"",
-	},
+	exclude_filetypes = { "help", "lazy", "NvimTree", "toggleterm", "noice", "" },
 }
 
 setmetatable(config.icons, {
@@ -54,40 +47,11 @@ setmetatable(lsp_str_to_num, {
 	end,
 })
 
-for k, v in pairs(config.icons) do
-	if lsp_str_to_num[k] then
-		config.icons[lsp_str_to_num[k]] = v
-	end
-end
+local lsp_num_to_str = {}
 
-local lsp_num_to_str = {
-	[1] = "File",
-	[2] = "Module",
-	[3] = "Namespace",
-	[4] = "Package",
-	[5] = "Class",
-	[6] = "Method",
-	[7] = "Property",
-	[8] = "Field",
-	[9] = "Constructor",
-	[10] = "Enum",
-	[11] = "Interface",
-	[12] = "Function",
-	[13] = "Variable",
-	[14] = "Constant",
-	[15] = "String",
-	[16] = "Number",
-	[17] = "Boolean",
-	[18] = "Array",
-	[19] = "Object",
-	[20] = "Key",
-	[21] = "Null",
-	[22] = "EnumMember",
-	[23] = "Struct",
-	[24] = "Event",
-	[25] = "Operator",
-	[26] = "TypeParameter",
-}
+for k, v in pairs(lsp_str_to_num) do
+	lsp_num_to_str[v] = k
+end
 
 setmetatable(lsp_num_to_str, {
 	__index = function()
@@ -95,10 +59,14 @@ setmetatable(lsp_num_to_str, {
 	end,
 })
 
-local function request_symbol(client, bufnr, handler, retry_count)
-	if retry_count == nil then
-		retry_count = 5
+for k, v in pairs(config.icons) do
+	if lsp_str_to_num[k] then
+		config.icons[lsp_str_to_num[k]] = v
 	end
+end
+
+local function request_symbol(client, bufnr, handler, retry_count)
+	retry_count = retry_count or 5
 
 	if retry_count == 0 then
 		handler(bufnr, {})
@@ -109,17 +77,17 @@ local function request_symbol(client, bufnr, handler, retry_count)
 		return
 	end
 
-	local text_document_params = vim.lsp.util.make_text_document_params(bufnr)
+	local params = vim.lsp.util.make_text_document_params(bufnr)
 
-	client:request("textDocument/documentSymbol", { textDocument = text_document_params }, function(err, symbols, _)
-		if err ~= nil then
+	client:request("textDocument/documentSymbol", { textDocument = params }, function(err, symbols)
+		if err == nil then
+			handler(bufnr, symbols or {})
+		else
 			if vim.api.nvim_buf_is_valid(bufnr) then
 				vim.defer_fn(function()
 					request_symbol(client, bufnr, handler, retry_count - 1)
 				end, 750)
 			end
-		else
-			handler(bufnr, symbols or {})
 		end
 	end, bufnr)
 end
@@ -279,10 +247,7 @@ local function update_data(bufnr, symbols)
 	curr_symbols[bufnr] = parse(symbols)
 end
 
-local function get_position(cursor_pos, range)
-	local line = cursor_pos[1]
-	local char = cursor_pos[2]
-
+local function get_position(line, char, range)
 	if line < range["start"].line then
 		return -1
 	elseif line > range["end"].line then
@@ -311,7 +276,7 @@ local function update_context(bufnr)
 
 	local old_context_data = curr_context_data[bufnr]
 	local new_context_data = {}
-	local cursor = vim.api.nvim_win_get_cursor(0)
+	local line, char = unpack(vim.api.nvim_win_get_cursor(0))
 
 	for _, context in ipairs(old_context_data) do
 		if curr_symbol == nil then
@@ -319,7 +284,7 @@ local function update_context(bufnr)
 		end
 
 		if
-			get_position(cursor, context.scope) == 0
+			get_position(line, char, context.scope) == 0
 			and curr_symbol[context.index] ~= nil
 			and context.name == curr_symbol[context.index].name
 			and context.kind == curr_symbol[context.index].kind
@@ -338,7 +303,7 @@ local function update_context(bufnr)
 
 		while low <= hight do
 			local mid = bit.rshift(low + hight, 1)
-			local pos = get_position(cursor, curr_symbol[mid].scope)
+			local pos = get_position(line, char, curr_symbol[mid].scope)
 
 			if pos == -1 then
 				hight = mid - 1
@@ -368,20 +333,15 @@ end
 local function get_filename()
 	local filename = vim.fn.expand("%:t")
 
-	if not is_empty(filename) then
-		local extension = vim.fn.expand("%:e")
-		local devicons = require("nvim-web-devicons")
-		local fileicon, hlgroup = devicons.get_icon(filename, extension, { default = true })
-
-		if is_empty(fileicon) then
-			fileicon = icons.kind.File
-		end
-
-		local text_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
-		vim.api.nvim_set_hl(0, "WinBar", { fg = text_hl.foreground })
-
-		return " " .. "%#" .. hlgroup .. "#" .. fileicon .. "%*" .. " " .. "%#WinBar#" .. filename .. "%*"
+	if is_empty(filename) then
+		return nil
 	end
+
+	local extension = vim.fn.expand("%:e")
+	local devicons = require("nvim-web-devicons")
+	local fileicon, hlgroup = devicons.get_icon(filename, extension, { default = true })
+
+	return " " .. "%#" .. hlgroup .. "#" .. fileicon .. "%*" .. " " .. "%#WinBar#" .. filename .. "%*"
 end
 
 local function get_data(bufnr)
@@ -407,24 +367,22 @@ local function get_data(bufnr)
 end
 
 local function get_locations(bufnr)
-	local file_name = get_filename()
+	local filename = get_filename()
 
 	if not vim.b[bufnr].winbar_client_id then
-		return file_name
+		return filename
 	end
 
 	local data = get_data(bufnr)
 
 	if data == nil then
-		return file_name
+		return filename
 	end
 
-	local locations = { file_name }
+	local locations = { filename }
 
 	for _, value in ipairs(data) do
-		local name = ""
-
-		name = string.gsub(value.name, "%%", "%%%%")
+		local name = string.gsub(value.name, "%%", "%%%%")
 		name = string.gsub(name, "\n", " ")
 
 		locations[#locations + 1] = "%#NavicIcons"
