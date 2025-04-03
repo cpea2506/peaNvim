@@ -3,7 +3,7 @@ local icons = require("pea.config.ui.icons")
 local config = {
 	icons = icons.kind,
 	separator = icons.ui.ChevronRight,
-	exclude_filetypes = { "help", "lazy", "NvimTree", "toggleterm", "noice", "" },
+	exclude_filetypes = { "help", "lazy", "toggleterm", "noice", "oil", "" },
 }
 
 setmetatable(config.icons, {
@@ -334,7 +334,7 @@ local function get_filename()
 	local filename = vim.fn.expand("%:t")
 
 	if is_empty(filename) then
-		return nil
+		return ""
 	end
 
 	local extension = vim.fn.expand("%:e")
