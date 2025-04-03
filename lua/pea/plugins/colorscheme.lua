@@ -12,7 +12,6 @@ return {
 				["@lsp.type.constant.cs"] = { link = "@constant" },
 				["@lsp.type.interface.cs"] = { link = "@type" },
 
-				WinBar = { link = "Normal" },
 				PeaInputIcon = { fg = colors.cyan },
 				PeaSelectOption = { fg = colors.aqua },
 				PeaSelectOptionIcon = { bg = colors.dark_gray },
