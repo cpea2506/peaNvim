@@ -109,7 +109,7 @@ local function request_symbol(client, bufnr, handler, retry_count)
 		return
 	end
 
-	local text_document_params = vim.lsp.util.make_text_document_params()
+	local text_document_params = vim.lsp.util.make_text_document_params(bufnr)
 
 	client:request("textDocument/documentSymbol", { textDocument = text_document_params }, function(err, symbols, _)
 		if err ~= nil then
