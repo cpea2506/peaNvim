@@ -110,11 +110,11 @@ return {
 				},
 			},
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+				default = { "lsp", "path", "snippets", "buffer", "ripgrep", "lazydev" },
 				providers = {
 					ripgrep = {
-						module = "blink-ripgrep",
 						name = "Ripgrep",
+						module = "blink-ripgrep",
 						opts = {
 							search_casing = "--smart-case",
 						},
@@ -129,6 +129,11 @@ return {
 								cs = { "unity" },
 							},
 						},
+					},
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						score_offset = 100,
 					},
 				},
 			},
