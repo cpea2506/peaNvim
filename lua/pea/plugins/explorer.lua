@@ -12,7 +12,7 @@ return {
 			["<CR>"] = "actions.select",
 			["<C-j>"] = { "actions.select", opts = { vertical = true } },
 			["<C-h>"] = { "actions.select", opts = { horizontal = true } },
-			["<C-c>"] = { "actions.close", mode = "n" },
+			["q"] = { "actions.close", mode = "n" },
 			["R"] = "actions.refresh",
 			["-"] = { "actions.parent", mode = "n" },
 			["_"] = { "actions.open_cwd", mode = "n" },
