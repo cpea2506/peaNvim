@@ -1,5 +1,5 @@
 ---
-base: lua53
+base: lua54
 globals:
   vim:
     any: true
