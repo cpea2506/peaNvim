@@ -95,7 +95,10 @@ vim.ui.input = function(opts, on_confirm)
 		close(winid)
 	end, { buffer = bufnr })
 
+	local augroup = vim.api.nvim_create_augroup("pea_input", { clear = true })
+
 	vim.api.nvim_create_autocmd("BufLeave", {
+		group = augroup,
 		desc = "Cancel vim.ui.input",
 		buffer = bufnr,
 		nested = true,
