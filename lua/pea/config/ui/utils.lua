@@ -1,4 +1,4 @@
----@source: https://github.com/stevearc/dressing.nvim/blob/master/lua/dressing/util.lua
+---See: https://github.com/stevearc/dressing.nvim/blob/master/lua/dressing/util.lua
 local M = {}
 
 local function calc_float(value, max_value)
