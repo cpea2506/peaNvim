@@ -38,6 +38,7 @@ return {
 					"help",
 					"fzf",
 					"oil",
+					"",
 				},
 				globalstatus = true,
 				component_separators = "",
