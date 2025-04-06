@@ -1,6 +1,6 @@
 local config = require("pea.config.lsp.config")
 
-vim.diagnostic.config(config.diagnostics)
+vim.diagnostic.config(config.diagnostics())
 
 local augroup = vim.api.nvim_create_augroup("pea_lsp", { clear = true })
 

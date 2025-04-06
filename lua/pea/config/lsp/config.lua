@@ -1,36 +1,5 @@
 local M = {}
 
-local icons = require("pea.config.ui.icons")
-
-M.diagnostics = {
-	update_in_insert = true,
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = icons.diagnostics.ERROR,
-			[vim.diagnostic.severity.WARN] = icons.diagnostics.WARN,
-			[vim.diagnostic.severity.HINT] = icons.diagnostics.HINT,
-			[vim.diagnostic.severity.INFO] = icons.diagnostics.INFO,
-		},
-	},
-	virtual_lines = {
-		current_line = true,
-		format = function(diagnostic)
-			local severity = vim.diagnostic.severity[diagnostic.severity]
-
-			return icons.diagnostics[severity] .. " " .. diagnostic.message
-		end,
-	},
-	underline = true,
-	severity_sort = true,
-	float = {
-		source = true,
-		severity_sort = true,
-		focusable = true,
-		style = "minimal",
-		border = "rounded",
-	},
-}
-
 local function set_keymaps(bufnr)
 	local function dedup(items)
 		local seen = {}
@@ -87,7 +56,7 @@ local function set_keymaps(bufnr)
 			"n",
 			"gd",
 			function()
-				vim.lsp.buf.definition({ on_list = on_list, reuse_win = true })
+				vim.lsp.buf.definition({ on_list = on_list })
 			end,
 			{ desc = "Definition" },
 		},
@@ -182,6 +151,39 @@ M.capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 	return capabilities
+end
+
+M.diagnostics = function()
+	local icons = require("pea.config.ui.icons")
+
+	return {
+		update_in_insert = true,
+		signs = {
+			text = {
+				[vim.diagnostic.severity.ERROR] = icons.diagnostics.ERROR,
+				[vim.diagnostic.severity.WARN] = icons.diagnostics.WARN,
+				[vim.diagnostic.severity.HINT] = icons.diagnostics.HINT,
+				[vim.diagnostic.severity.INFO] = icons.diagnostics.INFO,
+			},
+		},
+		virtual_lines = {
+			current_line = true,
+			format = function(diagnostic)
+				local severity = vim.diagnostic.severity[diagnostic.severity]
+
+				return icons.diagnostics[severity] .. " " .. diagnostic.message
+			end,
+		},
+		underline = true,
+		severity_sort = true,
+		float = {
+			source = true,
+			severity_sort = true,
+			focusable = true,
+			style = "minimal",
+			border = "rounded",
+		},
+	}
 end
 
 return M
