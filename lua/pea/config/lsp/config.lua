@@ -1,6 +1,6 @@
 local M = {}
 
-local function set_keymaps(bufnr)
+local function set_lsp_keymaps(bufnr)
 	local function dedup(items)
 		local seen = {}
 		local result = {}
@@ -102,7 +102,7 @@ local codelens_refresh_group = vim.api.nvim_create_augroup("pea_codelens_refresh
 local document_highlight_group = vim.api.nvim_create_augroup("pea_document_highlight", { clear = true })
 
 M.on_attach = function(client, bufnr)
-	set_keymaps(bufnr)
+	set_lsp_keymaps(bufnr)
 
 	if client:supports_method("textDocument/inlayHint", bufnr) then
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
