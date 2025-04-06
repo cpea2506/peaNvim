@@ -51,8 +51,6 @@ vim.ui.input = function(opts, on_confirm)
 	win_config.title = utils.trim_and_pad_title(prompt)
 	win_config.width = utils.calc_width(win_config.relative, width, win_config.width, width_limit)
 
-	on_confirm = on_confirm or function() end
-
 	local function close(winid, content)
 		vim.cmd.stopinsert()
 		on_confirm(content)
