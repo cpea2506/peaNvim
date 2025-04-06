@@ -10,6 +10,7 @@ local modules = {
 	"ui.input",
 	"ui.select",
 	"ui.winbar",
+	"lsp",
 }
 
 local function init_lazy()

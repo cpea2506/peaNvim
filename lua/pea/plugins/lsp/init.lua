@@ -2,94 +2,15 @@ local icons = require("pea.config.ui.icons")
 
 return {
 	{
-		"neovim/nvim-lspconfig",
+		"TheRealLorenz/nvim-lspconfig",
 		event = "LazyFile",
-		dependencies = {
-			"mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-		},
-		opts = {
-			diagnostics = {
-				update_in_insert = true,
-				signs = {
-					text = {
-						[vim.diagnostic.severity.ERROR] = icons.diagnostics.ERROR,
-						[vim.diagnostic.severity.WARN] = icons.diagnostics.WARN,
-						[vim.diagnostic.severity.HINT] = icons.diagnostics.HINT,
-						[vim.diagnostic.severity.INFO] = icons.diagnostics.INFO,
-					},
-				},
-				virtual_lines = {
-					current_line = true,
-					format = function(diagnostic)
-						local severity = vim.diagnostic.severity[diagnostic.severity]
-
-						return icons.diagnostics[severity] .. " " .. diagnostic.message
-					end,
-				},
-				underline = true,
-				severity_sort = true,
-				float = {
-					source = true,
-					severity_sort = true,
-					focusable = true,
-					style = "minimal",
-					border = "rounded",
-				},
-			},
-		},
-		config = function(_, opts)
-			local utils = require("pea.plugins.lsp.utils")
-
-			vim.diagnostic.config(opts.diagnostics)
-
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(args)
-					local bufnr = args.buf
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-					utils.on_attach(client, bufnr)
-				end,
-			})
-
-			vim.api.nvim_create_autocmd("LspDetach", {
-				callback = function(args)
-					local bufnr = args.buf
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-					utils.on_exit(client, bufnr)
-				end,
-			})
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function(_, opts)
-			local mason_lspconfig = require("mason-lspconfig")
-			local servers = require("pea.plugins.lsp.servers")
-
-			mason_lspconfig.setup(opts)
-			mason_lspconfig.setup_handlers({ servers.setup })
-		end,
+		dependencies = { "williamboman/mason-lspconfig.nvim" },
 	},
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
 		opts = {
-			ensure_installed = {
-				"cmake-language-server",
-				"json-lsp",
-				"lua-language-server",
-				"marksman",
-				"rust-analyzer",
-				"csharpier",
-				"prettier",
-				"typescript-language-server",
-				"stylua",
-				"taplo",
-				"yaml-language-server",
-			},
 			ui = {
 				border = "rounded",
 				keymaps = {
@@ -103,35 +24,130 @@ return {
 				},
 			},
 		},
-		config = function(_, opts)
-			require("mason").setup(opts)
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		opts = function()
+			local servers = require("pea.plugins.lsp.servers")
 
-			local registry = require("mason-registry")
+			return {
+				handlers = {
+					function(server)
+						vim.lsp.config(server, servers[server] or {})
+						vim.lsp.enable(server)
+					end,
+				},
+			}
+		end,
+	},
+	{
+		"seblyng/roslyn.nvim",
+		ft = "cs",
+		opts = function()
+			local function apply_vs_text_edit(edit)
+				local bufnr = vim.api.nvim_get_current_buf()
+				local start_line = edit.range.start.line
+				local start_char = edit.range.start.character
+				local end_line = edit.range["end"].line
+				local end_char = edit.range["end"].character
 
-			registry:on("package:install:success", function()
-				vim.defer_fn(function()
-					require("lazy.core.handler.event").trigger({
-						event = "FileType",
-						buf = vim.api.nvim_get_current_buf(),
-					})
-				end, 100)
-			end)
+				local newText = string.gsub(edit.newText, "\r", "")
+				local lines = vim.split(newText, "\n")
+				local placeholder_row = -1
+				local placeholder_col = -1
 
-			local function ensure_installed()
-				for _, tool in ipairs(opts.ensure_installed) do
-					local p = registry.get_package(tool)
+				for i, line in ipairs(lines) do
+					local placeholder = string.find(line, "%$0")
 
-					if not p:is_installed() then
-						p:install()
+					if placeholder then
+						lines[i] = string.gsub(line, "%$0", "", 1)
+						placeholder_row = start_line + i - 1
+						placeholder_col = placeholder - 1
+
+						break
 					end
+				end
+
+				vim.api.nvim_buf_set_text(bufnr, start_line, start_char, end_line, end_char, lines)
+
+				if placeholder_row ~= -1 and placeholder_col ~= -1 then
+					local win = vim.api.nvim_get_current_win()
+					vim.api.nvim_win_set_cursor(win, { placeholder_row + 1, placeholder_col })
 				end
 			end
 
-			if registry.refresh then
-				registry.refresh(ensure_installed)
-			else
-				ensure_installed()
-			end
+			vim.api.nvim_create_autocmd("InsertCharPre", {
+				pattern = "*.cs",
+				callback = function()
+					local char = vim.v.char
+
+					if char ~= "/" then
+						return
+					end
+
+					local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+					row, col = row - 1, col + 1
+					local bufnr = vim.api.nvim_get_current_buf()
+					local uri = vim.uri_from_bufnr(bufnr)
+
+					local params = {
+						_vs_textDocument = { uri = uri },
+						_vs_position = { line = row, character = col },
+						_vs_ch = char,
+						_vs_options = { tabSize = 4, insertSpaces = true },
+					}
+
+					-- NOTE: we should send textDocument/_vs_onAutoInsert request only after buffer has changed.
+					vim.defer_fn(function()
+						vim.lsp.buf_request(bufnr, "textDocument/_vs_onAutoInsert", params)
+					end, 1)
+				end,
+			})
+
+			return {
+				config = {
+					settings = {
+						["csharp|inlay_hints"] = {
+							csharp_enable_inlay_hints_for_implicit_object_creation = true,
+							csharp_enable_inlay_hints_for_implicit_variable_types = true,
+							csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+							csharp_enable_inlay_hints_for_types = true,
+							dotnet_enable_inlay_hints_for_indexer_parameters = true,
+							dotnet_enable_inlay_hints_for_literal_parameters = true,
+							dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+							dotnet_enable_inlay_hints_for_other_parameters = true,
+							dotnet_enable_inlay_hints_for_parameters = true,
+							dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+							dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+							dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+						},
+						["csharp|code_lens"] = {
+							dotnet_enable_references_code_lens = true,
+						},
+						["csharp|completion"] = {
+							dotnet_show_completion_items_from_unimported_namespaces = true,
+							dotnet_show_name_completion_suggestions = true,
+						},
+						["csharp|symbol_search"] = {
+							dotnet_search_reference_assemblies = true,
+						},
+					},
+					capabilities = {
+						textDocument = {
+							_vs_onAutoInsert = { dynamicRegistration = false },
+						},
+					},
+					handlers = {
+						["textDocument/_vs_onAutoInsert"] = function(err, result, _)
+							if err or not result then
+								return
+							end
+							apply_vs_text_edit(result._vs_textEdit)
+						end,
+					},
+				},
+				filewatching = "roslyn",
+			}
 		end,
 	},
 }
