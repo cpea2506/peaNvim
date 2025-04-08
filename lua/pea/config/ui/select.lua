@@ -63,7 +63,7 @@ vim.ui.select = function(items, opts, on_choice)
 
 	local function close_window(winid)
 		show_cursor(true)
-		vim.api.nvim_win_close(winid or 0, true)
+		vim.api.nvim_win_close(winid, true)
 	end
 
 	local function choose(winid, index)
@@ -78,7 +78,6 @@ vim.ui.select = function(items, opts, on_choice)
 
 	local function cancel(winid)
 		close_window(winid)
-		on_choice(nil, nil)
 	end
 
 	local lines = {}
