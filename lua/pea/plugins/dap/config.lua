@@ -1,6 +1,6 @@
 local M = {}
 
-local vstuc_path = vim.env.HOME .. "/.vscode-insiders/extensions/visualstudiotoolsforunity.vstuc-1.1.0/bin/"
+local vstuc_path = vim.env.HOME .. "/.vscode-insiders/extensions/visualstudiotoolsforunity.vstuc-1.1.1/bin/"
 
 local adapters = {
 	vstuc = {
