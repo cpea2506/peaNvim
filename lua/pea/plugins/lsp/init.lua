@@ -57,6 +57,13 @@ return {
 				local placeholder_col = -1
 
 				for i, line in ipairs(lines) do
+					if line:match("^(///)") then
+						local indentation = string.rep(" ", start_char - 3)
+						lines[i] = indentation .. line
+					end
+				end
+
+				for i, line in ipairs(lines) do
 					local placeholder = string.find(line, "%$0")
 
 					if placeholder then
@@ -142,6 +149,7 @@ return {
 							if err or not result then
 								return
 							end
+
 							apply_vs_text_edit(result._vs_textEdit)
 						end,
 					},
