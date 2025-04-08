@@ -16,23 +16,18 @@ local autocmds = {
 		"FileType",
 		{
 			group = augroup("q_close"),
-			pattern = {
-				"help",
-				"man",
-				"qf",
-				"startuptime",
-				"checkhealth",
-				"man",
-			},
-			callback = function(event)
-				vim.bo[event.buf].buflisted = false
+			pattern = { "help", "man", "qf", "startuptime", "checkhealth", "man" },
+			callback = function(args)
+				local bufnr = args.buf
+
+				vim.bo[bufnr].buflisted = false
 
 				vim.schedule(function()
 					vim.keymap.set("n", "q", function()
 						vim.cmd.close()
 
-						pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
-					end, { buffer = event.buf, silent = true, desc = "Quit buffer" })
+						pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+					end, { buffer = bufnr, silent = true, desc = "Quit buffer" })
 				end)
 			end,
 		},
@@ -57,6 +52,16 @@ local autocmds = {
 
 				vim.cmd.tabdo("wincmd =")
 				vim.cmd.tabnext(current_tab)
+			end,
+		},
+	},
+	{
+		"VimLeave",
+		{
+			group = augroup("restore_cursor"),
+			callback = function()
+				vim.opt.guicursor = ""
+				vim.api.nvim_chan_send(vim.v.stderr, "\x1b[ q")
 			end,
 		},
 	},
