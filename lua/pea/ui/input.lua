@@ -17,7 +17,7 @@ local win_options = {
 	list = true,
 	listchars = "precedes:…,extends:…",
 	sidescrolloff = 0,
-	statuscolumn = [[%!v:lua.require("pea.config.ui.input").statuscolumn()]],
+	statuscolumn = [[%!v:lua.require("pea.ui.input").statuscolumn()]],
 }
 
 local buf_options = {
@@ -33,13 +33,13 @@ local width_limit = {
 }
 
 function M.statuscolumn()
-	local icons = require("pea.config.ui.icons")
+	local icons = require("pea.ui.icons")
 
 	return " %#PeaInputIcon#" .. icons.ui.Write .. "  "
 end
 
 vim.ui.input = function(opts, on_confirm)
-	local utils = require("pea.config.ui.utils")
+	local utils = require("pea.ui.utils")
 
 	local prompt = opts.prompt or "Input"
 	local default = opts.default or ""

@@ -5,7 +5,7 @@ return {
 		{ "pynappo/nui.nvim", branch = "support-winborder" },
 	},
 	opts = function()
-		local icons = require("pea.config.ui.icons")
+		local icons = require("pea.ui.icons")
 
 		return {
 			cmdline = {

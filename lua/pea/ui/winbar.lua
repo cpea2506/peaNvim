@@ -1,4 +1,4 @@
-local icons = require("pea.config.ui.icons")
+local icons = require("pea.ui.icons")
 
 local config = {
 	icons = icons.kind,

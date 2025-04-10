@@ -154,7 +154,7 @@ M.capabilities = function()
 end
 
 M.diagnostics = function()
-	local icons = require("pea.config.ui.icons")
+	local icons = require("pea.ui.icons")
 
 	return {
 		update_in_insert = true,

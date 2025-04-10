@@ -2,7 +2,7 @@ return {
 	"lewis6991/gitsigns.nvim",
 	event = "LazyFile",
 	opts = function()
-		local icons = require("pea.config.ui.icons")
+		local icons = require("pea.ui.icons")
 
 		return {
 			signs = {

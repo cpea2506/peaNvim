@@ -10,7 +10,7 @@ return {
 		"CmdlineEnter",
 	},
 	opts = function()
-		local icons = require("pea.config.ui.icons")
+		local icons = require("pea.ui.icons")
 
 		return {
 			fuzzy = {

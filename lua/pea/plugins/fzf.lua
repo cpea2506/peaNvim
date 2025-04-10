@@ -8,7 +8,7 @@ return {
 	},
 	opts = function()
 		local utils = require("pea.utils")
-		local icons = require("pea.config.ui.icons")
+		local icons = require("pea.ui.icons")
 
 		return {
 			file_icon_padding = utils.is_windows and " " or "",

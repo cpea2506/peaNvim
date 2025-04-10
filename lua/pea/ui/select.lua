@@ -15,7 +15,7 @@ local win_options = {
 	cursorline = true,
 	cursorlineopt = "both",
 	winhighlight = "Normal:FloatNormal,FloatBorder:FloatBorder,CursorLine:Visual",
-	statuscolumn = [[%!v:lua.require("pea.config.ui.select").statuscolumn()]],
+	statuscolumn = [[%!v:lua.require("pea.ui.select").statuscolumn()]],
 }
 
 local buf_options = {
@@ -34,7 +34,7 @@ local height_limit = {
 }
 
 function M.statuscolumn()
-	local icons = require("pea.config.ui.icons")
+	local icons = require("pea.ui.icons")
 
 	return vim.v.relnum == 0 and "%#PeaSelectOptionIcon#" .. icons.ui.Forward .. " " or ""
 end
@@ -51,7 +51,7 @@ local function show_cursor(show)
 end
 
 vim.ui.select = function(items, opts, on_choice)
-	local utils = require("pea.config.ui.utils")
+	local utils = require("pea.ui.utils")
 
 	local prompt = opts.prompt or "Select"
 	local bufnr = vim.api.nvim_create_buf(false, true)
