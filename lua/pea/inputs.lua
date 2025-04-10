@@ -8,7 +8,7 @@ local on_key_listeners = {
 			if vim.fn.mode() == "n" then
 				local hlsearch = vim.tbl_contains({ "<CR>", "/", "?", "*", "#", "n", "N" }, vim.fn.keytrans(char))
 
-				if vim.opt.hlsearch:get() ~= hlsearch then
+				if vim.o.hlsearch ~= hlsearch then
 					vim.opt.hlsearch = hlsearch
 				end
 			end
