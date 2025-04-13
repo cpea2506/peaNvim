@@ -2,7 +2,7 @@ local icons = require("pea.ui.icons")
 
 return {
 	{
-		"TheRealLorenz/nvim-lspconfig",
+		"neovim/nvim-lspconfig",
 		event = "LazyFile",
 		dependencies = { "williamboman/mason-lspconfig.nvim" },
 	},
