@@ -4,7 +4,10 @@ return {
 	cmd = { "TSInstall", "TSUpdateSync" },
 	event = "LazyFile",
 	dependencies = {
-		"HiPhish/rainbow-delimiters.nvim",
+		{
+			"HiPhish/rainbow-delimiters.nvim",
+			submodules = false,
+		},
 		{
 			"nvim-treesitter/nvim-treesitter-context",
 			opts = {
