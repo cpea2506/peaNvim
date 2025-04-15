@@ -38,6 +38,7 @@ return {
 					"help",
 					"fzf",
 					"oil",
+					"TelescopePrompt",
 					"",
 				},
 				globalstatus = true,
