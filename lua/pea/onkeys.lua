@@ -9,7 +9,7 @@ local on_key_listeners = {
 				local hlsearch = vim.tbl_contains({ "<CR>", "/", "?", "*", "#", "n", "N" }, vim.fn.keytrans(char))
 
 				if vim.o.hlsearch ~= hlsearch then
-					vim.opt.hlsearch = hlsearch
+					vim.o.hlsearch = hlsearch
 				end
 			end
 		end,

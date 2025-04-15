@@ -43,10 +43,10 @@ local options = {
 		winborder = "rounded",
 		fileencoding = "utf-8",
 		clipboard = "unnamedplus",
-		fillchars = { eob = " " },
+		fillchars = "eob: ",
 		guicursor = "i-ci-ve-t:hor30",
 		guifont = "SFMono Nerd Font:h13",
-		completeopt = { "menu", "menuone", "noselect" },
+		completeopt = "menu,menuone,noselect",
 	},
 	global = {
 		mapleader = " ",
@@ -67,7 +67,7 @@ if utils.is_windows then
 end
 
 for option, value in pairs(options.vim) do
-	vim.opt[option] = value
+	vim.o[option] = value
 end
 
 for option, value in pairs(options.global) do

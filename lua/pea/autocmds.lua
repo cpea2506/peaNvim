@@ -60,7 +60,7 @@ local autocmds = {
 		{
 			group = augroup("restore_cursor"),
 			callback = function()
-				vim.opt.guicursor = ""
+				vim.o.guicursor = ""
 				vim.api.nvim_chan_send(vim.v.stderr, "\x1b[ q")
 			end,
 		},
