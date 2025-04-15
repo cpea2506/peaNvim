@@ -3,7 +3,7 @@ local icons = require("pea.ui.icons")
 local config = {
 	icons = icons.kind,
 	separator = icons.ui.ChevronRight,
-	exclude_filetypes = { "help", "lazy", "toggleterm", "noice", "oil", "fzf", "" },
+	exclude_filetypes = { "help", "lazy", "toggleterm", "noice", "oil", "fzf", "TelescopePrompt", "" },
 }
 
 setmetatable(config.icons, {
