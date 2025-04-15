@@ -56,10 +56,10 @@ local options = {
 if utils.is_windows then
 	options = vim.tbl_deep_extend("force", options, {
 		vim = {
-			shell = "pwsh-preview -NoLogo",
-			shellcmdflag = "-ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
-			shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
-			shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+			shell = "pwsh-preview",
+			shellcmdflag = "-NoLogo -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';",
+			shellredir = "2>&1 | %{ '$_' } | Out-File %s; exit $LastExitCode",
+			shellpipe = "2>&1 | %{ '$_' } | Tee-Object %s; exit $LastExitCode",
 			shellquote = "",
 			shellxquote = "",
 		},
