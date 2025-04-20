@@ -1,5 +1,3 @@
-local icons = require("pea.ui.icons")
-
 return {
 	"rcarriga/nvim-dap-ui",
 	dependencies = {
@@ -15,58 +13,63 @@ return {
 		{ "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Dap Toggle Breakpoint" },
 		{ "<leader>dt", [[<cmd>lua require("dapui").toggle({ reset = true })<cr>]], desc = "Dap Toggle" },
 	},
-	opts = {
-		controls = {
-			icons = {
-				play = icons.ui.Triangle,
-				terminate = icons.ui.Square,
-			},
-		},
-		floating = {
-			border = "rounded",
-		},
-		layouts = {
-			{
-				elements = {
-					{
-						id = "scopes",
-						size = 0.25,
-					},
-					{
-						id = "breakpoints",
-						size = 0.25,
-					},
-					{
-						id = "stacks",
-						size = 0.25,
-					},
-					{
-						id = "watches",
-						size = 0.25,
-					},
+	opts = function()
+		local icons = require("pea.ui.icons")
+
+		return {
+			controls = {
+				icons = {
+					play = icons.ui.Triangle,
+					terminate = icons.ui.Square,
 				},
-				position = "right",
-				size = 40,
 			},
-			{
-				elements = {
-					{
-						id = "console",
-						size = 0.5,
+			floating = {
+				border = "rounded",
+			},
+			layouts = {
+				{
+					elements = {
+						{
+							id = "scopes",
+							size = 0.25,
+						},
+						{
+							id = "breakpoints",
+							size = 0.25,
+						},
+						{
+							id = "stacks",
+							size = 0.25,
+						},
+						{
+							id = "watches",
+							size = 0.25,
+						},
 					},
-					{
-						id = "repl",
-						size = 0.5,
-					},
+					position = "right",
+					size = 40,
 				},
-				position = "bottom",
-				size = 10,
+				{
+					elements = {
+						{
+							id = "console",
+							size = 0.5,
+						},
+						{
+							id = "repl",
+							size = 0.5,
+						},
+					},
+					position = "bottom",
+					size = 10,
+				},
 			},
-		},
-	},
+		}
+	end,
 	config = function(_, opts)
 		local dap = require("dap")
 		local dapui = require("dapui")
+		local icons = require("pea.ui.icons")
 
 		dapui.setup(opts)
 

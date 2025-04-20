@@ -1,5 +1,3 @@
-local icons = require("pea.ui.icons")
-
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -10,20 +8,24 @@ return {
 		"williamboman/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
-		opts = {
-			ui = {
-				border = "rounded",
-				keymaps = {
-					toggle_package_expand = "o",
-					uninstall_package = "d",
+		opts = function()
+			local icons = require("pea.ui.icons")
+
+			return {
+				ui = {
+					border = "rounded",
+					keymaps = {
+						toggle_package_expand = "o",
+						uninstall_package = "d",
+					},
+					icons = {
+						package_installed = icons.ui.ThinTick,
+						package_pending = icons.ui.ArrowRight,
+						package_uninstalled = icons.ui.Close,
+					},
 				},
-				icons = {
-					package_installed = icons.ui.ThinTick,
-					package_pending = icons.ui.ArrowRight,
-					package_uninstalled = icons.ui.Close,
-				},
-			},
-		},
+			}
+		end,
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
