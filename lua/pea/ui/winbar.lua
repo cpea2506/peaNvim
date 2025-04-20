@@ -13,6 +13,7 @@ local config = {
 		"noice",
 		"oil",
 		"toggleterm",
+		"qf",
 	},
 }
 
