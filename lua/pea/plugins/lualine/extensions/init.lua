@@ -3,13 +3,10 @@
 ---@field quickfix table
 local M = {}
 
-local modules = {
-	"lazy",
-	"quickfix",
-}
-
-for _, mod in pairs(modules) do
-	M[mod] = require("pea.plugins.lualine.extensions." .. mod)
-end
+setmetatable(M, {
+	__index = function(_, key)
+		return require("pea.plugins.lualine.extensions." .. key)
+	end,
+})
 
 return M
