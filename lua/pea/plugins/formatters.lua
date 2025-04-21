@@ -14,6 +14,7 @@ return {
 			markdown = { "prettier" },
 			javascript = { "prettier" },
 			typescript = { "prettier" },
+			cpp = { "clang-format" },
 		},
 		formatters = {
 			csharpier = {
