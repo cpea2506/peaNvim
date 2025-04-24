@@ -28,7 +28,6 @@ local modules = {
 	"events",
 	"ui.input",
 	"ui.select",
-	"ui.winbar",
 	"lsp",
 }
 
