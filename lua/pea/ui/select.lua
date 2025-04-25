@@ -1,5 +1,3 @@
-local M = {}
-
 local win_config = {
 	relative = "editor",
 	anchor = "NW",
@@ -15,7 +13,6 @@ local win_options = {
 	cursorline = true,
 	cursorlineopt = "both",
 	winhighlight = "Normal:FloatNormal,FloatBorder:FloatBorder,CursorLine:Visual",
-	statuscolumn = [[%!v:lua.require("pea.ui.select").statuscolumn()]],
 }
 
 local buf_options = {
@@ -32,12 +29,6 @@ local height_limit = {
 	min_value = { 10, 0.2 },
 	max_value = 0.9,
 }
-
-function M.statuscolumn()
-	local icons = require("pea.ui.icons")
-
-	return vim.v.relnum == 0 and "%#PeaSelectOptionIcon#" .. icons.ui.Forward .. " " or ""
-end
 
 local function show_cursor(show)
 	vim.api.nvim_set_hl(0, "PeaSelectHiddenCursor", { bg = "#abb2bf", blend = show and 0 or 100 })
@@ -176,5 +167,3 @@ vim.ui.select = function(items, opts, on_choice)
 		end,
 	})
 end
-
-return M
