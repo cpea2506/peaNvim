@@ -30,7 +30,7 @@ return {
 				},
 				fzf_opts = {
 					["--prompt"] = icons.ui.Telescope .. " ",
-					["--pointer"] = icons.ui.Forward,
+					["--pointer"] = " ",
 					["--cycle"] = true,
 					["--no-scrollbar"] = true,
 				},
