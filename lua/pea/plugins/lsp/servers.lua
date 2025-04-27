@@ -22,6 +22,9 @@ local servers = {
 				semantic = {
 					keyword = true,
 				},
+				diagnostics = {
+					globals = { "vim" },
+				},
 			},
 		},
 	},
