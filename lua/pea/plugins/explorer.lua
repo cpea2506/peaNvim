@@ -10,7 +10,7 @@ return {
 		keymaps = {
 			["g?"] = { "actions.show_help", mode = "n" },
 			["<CR>"] = "actions.select",
-			["<C-j>"] = { "actions.select", opts = { vertical = true } },
+			["<C-v>"] = { "actions.select", opts = { vertical = true } },
 			["<C-h>"] = { "actions.select", opts = { horizontal = true } },
 			["q"] = { "actions.close", mode = "n" },
 			["R"] = "actions.refresh",
@@ -22,6 +22,7 @@ return {
 			["gx"] = "actions.open_external",
 			["g."] = { "actions.toggle_hidden", mode = "n" },
 			["g\\"] = { "actions.toggle_trash", mode = "n" },
+			["gy"] = { "actions.yank_entry", mode = "n" },
 		},
 		use_default_keymaps = false,
 		lsp_file_methods = {
