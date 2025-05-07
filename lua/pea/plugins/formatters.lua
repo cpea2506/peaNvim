@@ -18,6 +18,8 @@ return {
 		},
 		formatters = {
 			csharpier = {
+				command = "csharpier",
+				args = { "format" },
 				cwd = function(_, ctx)
 					return vim.fs.root(ctx.dirname, { ".csharpierrc" })
 				end,
