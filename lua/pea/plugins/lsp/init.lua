@@ -5,7 +5,7 @@ return {
 		dependencies = { "williamboman/mason-lspconfig.nvim" },
 	},
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
 		opts = function()
