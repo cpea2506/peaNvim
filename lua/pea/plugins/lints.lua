@@ -4,6 +4,7 @@ return {
 	opts = {
 		linters_by_ft = {
 			lua = { "selene" },
+			sh = { "shellcheck" },
 		},
 	},
 	config = function(_, opts)
