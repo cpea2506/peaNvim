@@ -2,7 +2,14 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = "LazyFile",
-		dependencies = { "williamboman/mason-lspconfig.nvim" },
+		dependencies = {
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
+		},
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {},
 	},
 	{
 		"mason-org/mason.nvim",
@@ -23,21 +30,6 @@ return {
 						package_pending = icons.ui.ArrowRight,
 						package_uninstalled = icons.ui.Close,
 					},
-				},
-			}
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		opts = function()
-			local servers = require("pea.plugins.lsp.servers")
-
-			return {
-				handlers = {
-					function(server)
-						vim.lsp.config(server, servers[server] or {})
-						vim.lsp.enable(server)
-					end,
 				},
 			}
 		end,
