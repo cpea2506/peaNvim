@@ -118,6 +118,7 @@ return {
 						opts = {
 							search_casing = "--smart-case",
 						},
+						score_offset = -3,
 					},
 					snippets = {
 						name = "Snippets",
