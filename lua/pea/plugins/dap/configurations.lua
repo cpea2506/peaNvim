@@ -1,15 +1,4 @@
-local M = {}
-
-local vstuc_path = vim.env.HOME .. "/.vscode-insiders/extensions/visualstudiotoolsforunity.vstuc-1.1.1/bin/"
-
-local adapters = {
-	vstuc = {
-		type = "executable",
-		command = "dotnet",
-		args = { vstuc_path .. "UnityDebugAdapter.dll" },
-		name = "Attach to Unity",
-	},
-}
+local utils = require("pea.plugins.dap.utils")
 
 local configurations = {
 	cs = {
@@ -37,7 +26,7 @@ local configurations = {
 				end
 			end,
 			endPoint = function()
-				local system_obj = vim.system({ "dotnet", vstuc_path .. "UnityAttachProbe.dll" }, { text = true })
+				local system_obj = vim.system({ "dotnet", utils.vstuc_path .. "UnityAttachProbe.dll" }, { text = true })
 				local probe_result = system_obj:wait(2000).stdout
 
 				if probe_result == nil or #probe_result == 0 then
@@ -66,16 +55,4 @@ local configurations = {
 	},
 }
 
-M.setup = function()
-	local dap = require("dap")
-
-	for adapter, config in pairs(adapters) do
-		dap.adapters[adapter] = config
-	end
-
-	for filetype, config in pairs(configurations) do
-		dap.configurations[filetype] = config
-	end
-end
-
-return M
+return configurations
