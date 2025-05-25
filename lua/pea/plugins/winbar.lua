@@ -25,6 +25,7 @@ return {
 				"oil",
 				"toggleterm",
 				"qf",
+				"lazygit",
 			},
 		}
 	end,
