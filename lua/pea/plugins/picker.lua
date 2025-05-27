@@ -75,10 +75,6 @@ return {
 		},
 		dependencies = {
 			{
-				"emmanueltouzery/plenary.nvim",
-				branch = "winborder",
-			},
-			{
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "make",
 			},
