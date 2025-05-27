@@ -2,6 +2,10 @@ local config = require("pea.lsp.config")
 
 vim.diagnostic.config(config.diagnostics())
 
+vim.lsp.config("*", {
+	capabilities = config.capabilities(),
+})
+
 local augroup = vim.api.nvim_create_augroup("pea_lsp", { clear = true })
 
 vim.api.nvim_create_autocmd("LspAttach", {
