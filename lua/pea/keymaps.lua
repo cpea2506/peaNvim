@@ -1,8 +1,4 @@
 local keymaps = {
-	{ "n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" } },
-	{ "n", "<C-s>", "<cmd>w<cr>", { desc = "Save File" } },
-	{ "n", "<C-e>", "<cmd>BufClose<cr>", { desc = "Close Buffer" } },
-
 	-- Better window movement.
 	{ "n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true } },
 	{ "n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true } },

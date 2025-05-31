@@ -22,13 +22,9 @@ vim.opt.rtp:prepend(lazypath)
 local modules = {
 	"options",
 	"autocmds",
-	"usercmds",
 	"keymaps",
 	"onkeys",
 	"events",
-	"ui.input",
-	"ui.select",
-	"lsp",
 }
 
 for _, module in pairs(modules) do
