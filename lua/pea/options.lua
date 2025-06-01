@@ -35,6 +35,7 @@ local options = {
 		termguicolors = true,
 		confirm = true,
 		fillchars = "eob: ",
+		clipboard = "unnamedplus",
 	},
 	global = {
 		mapleader = " ",
