@@ -19,6 +19,10 @@ return {
 			local icons = require("pea.ui.icons")
 
 			return {
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:Crashdummyy/mason-registry",
+				},
 				ui = {
 					border = "rounded",
 					keymaps = {
