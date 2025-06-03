@@ -1,14 +1,3 @@
-local win_config = {
-	relative = "editor",
-	anchor = "NW",
-	width = nil,
-	height = nil,
-	focusable = false,
-	noautocmd = true,
-	zindex = 150,
-	style = "minimal",
-}
-
 local win_options = {
 	cursorline = true,
 	cursorlineopt = "both",
@@ -43,6 +32,17 @@ local function show_cursor(show)
 end
 
 vim.ui.select = function(items, opts, on_choice)
+	local win_config = {
+		relative = "editor",
+		anchor = "NW",
+		width = nil,
+		height = nil,
+		focusable = false,
+		noautocmd = true,
+		zindex = 150,
+		style = "minimal",
+	}
+
 	local utils = require("pea.ui.utils")
 
 	local prompt = opts.prompt or "Select"

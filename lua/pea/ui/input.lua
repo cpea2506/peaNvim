@@ -1,17 +1,5 @@
 local M = {}
 
-local win_config = {
-	relative = "cursor",
-	anchor = "NW",
-	row = 1,
-	col = 1,
-	width = 40,
-	height = 1,
-	focusable = false,
-	noautocmd = true,
-	style = "minimal",
-}
-
 local win_options = {
 	wrap = false,
 	list = true,
@@ -39,6 +27,18 @@ function M.statuscolumn()
 end
 
 vim.ui.input = function(opts, on_confirm)
+	local win_config = {
+		relative = "cursor",
+		anchor = "NW",
+		row = 1,
+		col = 1,
+		width = 40,
+		height = 1,
+		focusable = false,
+		noautocmd = true,
+		style = "minimal",
+	}
+
 	local utils = require("pea.ui.utils")
 
 	local prompt = opts.prompt or "Input"
