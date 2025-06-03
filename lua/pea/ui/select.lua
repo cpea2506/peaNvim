@@ -31,8 +31,9 @@ local height_limit = {
 }
 
 local function show_cursor(show)
-	vim.api.nvim_set_hl(0, "PeaSelectHiddenCursor", { bg = "#abb2bf", blend = show and 0 or 100 })
 	local guicursor = "a:PeaSelectHiddenCursor"
+
+	vim.api.nvim_set_hl(0, "PeaSelectHiddenCursor", { reverse = true, blend = show and 0 or 100 })
 
 	if show then
 		vim.opt.guicursor:remove(guicursor)
