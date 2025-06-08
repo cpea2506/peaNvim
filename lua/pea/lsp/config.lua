@@ -112,7 +112,9 @@ M.on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
 			group = codelens_refresh_group,
 			buffer = bufnr,
-			callback = vim.lsp.codelens.refresh,
+			callback = function(args)
+				vim.lsp.codelens.refresh({ bufnr = args.buf })
+			end,
 		})
 	end
 
