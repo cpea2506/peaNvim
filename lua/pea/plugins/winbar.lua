@@ -26,6 +26,7 @@ return {
 				"toggleterm",
 				"qf",
 				"lazygit",
+				"arena",
 			},
 		}
 	end,

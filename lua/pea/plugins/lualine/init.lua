@@ -46,6 +46,7 @@ return {
 					"noice",
 					"oil",
 					"toggleterm",
+					"arena",
 				},
 				globalstatus = true,
 				component_separators = "",
