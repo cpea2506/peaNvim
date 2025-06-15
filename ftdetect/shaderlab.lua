@@ -1,7 +1,7 @@
-vim.filetype.add({
-	extension = {
-		shader = "glsl",
-	},
-})
+vim.filetype.add {
+    extension = {
+        shader = "glsl",
+    },
+}
 
-vim.lsp.enable("shaderls")
+vim.lsp.enable "shaderls"

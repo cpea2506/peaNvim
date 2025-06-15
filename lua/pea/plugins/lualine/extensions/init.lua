@@ -4,9 +4,9 @@
 local M = {}
 
 setmetatable(M, {
-	__index = function(_, key)
-		return require("pea.plugins.lualine.extensions." .. key)
-	end,
+    __index = function(_, key)
+        return require("pea.plugins.lualine.extensions." .. key)
+    end,
 })
 
 return M
