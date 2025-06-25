@@ -16,6 +16,7 @@ return {
             typescript = { "prettier" },
             cpp = { "clang-format" },
             toml = { "taplo" },
+            sh = { "shfmt" },
         },
         formatters = {
             csharpier = {
