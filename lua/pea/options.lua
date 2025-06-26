@@ -57,7 +57,7 @@ local options = {
 if utils.is_windows then
     options = vim.tbl_deep_extend("force", options, {
         vim = {
-            shell = "pwsh-preview",
+            shell = "pwsh",
             shellcmdflag = "-NoLogo -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';",
             shellredir = "2>&1 | %{ '$_' } | Out-File %s; exit $LastExitCode",
             shellpipe = "2>&1 | %{ '$_' } | Tee-Object %s; exit $LastExitCode",
