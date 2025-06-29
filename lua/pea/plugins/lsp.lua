@@ -50,7 +50,6 @@ return {
         event = "BufRead Cargo.toml",
         opts = {
             date_format = "%d-%m-%Y",
-            disable_invalid_feature_diagnostic = true,
             popup = {
                 autofocus = true,
                 border = "rounded",
