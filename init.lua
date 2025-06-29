@@ -28,7 +28,6 @@ local modules = {
     "onkeys",
     "events",
     "ui.input",
-    "ui.select",
     "lsp",
 }
 

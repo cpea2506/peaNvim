@@ -13,8 +13,6 @@ return {
                 ["@lsp.type.interface.cs"] = { link = "@type" },
 
                 PeaInputIcon = { fg = colors.cyan },
-                PeaSelectOption = { fg = colors.aqua },
-                PeaSelectOptionIcon = { bg = colors.dark_gray },
                 DapBreakpoint = { fg = colors.dark_red, ctermbg = 0 },
                 DapLogPoint = { fg = colors.aqua, ctermbg = 0 },
                 DapStopped = { fg = colors.green, ctermbg = 0 },
