@@ -31,10 +31,6 @@ local function get_max_width(relative, winid)
     return relative == "editor" and vim.o.columns or vim.api.nvim_win_get_width(winid or 0)
 end
 
-local function get_max_height(relative, winid)
-    return relative == "editor" and vim.o.lines - vim.o.cmdheight or vim.api.nvim_win_get_height(winid or 0)
-end
-
 local function calc_size(desired_size, current_size, size_limit, total_size)
     local result = calc_float(current_size, total_size)
     local min_val = calc_list(size_limit.min_value, total_size, math.max, 1)
@@ -54,10 +50,6 @@ function M.calc_width(relative, desired_size, current_size, size_limit)
     return calc_size(desired_size, current_size, size_limit, get_max_width(relative))
 end
 
-function M.calc_height(relative, desired_size, current_size, size_limit)
-    return calc_size(desired_size, current_size, size_limit, get_max_height(relative))
-end
-
 function M.get_max_strwidth(lines)
     local max = 0
 
@@ -66,22 +58,6 @@ function M.get_max_strwidth(lines)
     end
 
     return max
-end
-
-function M.calc_column(relative, width)
-    if relative == "cursor" then
-        return 0
-    else
-        return math.floor((get_max_width(relative) - width) / 2)
-    end
-end
-
-function M.calc_row(relative, height)
-    if relative == "cursor" then
-        return 0
-    else
-        return math.floor((get_max_height(relative) - height) / 2)
-    end
 end
 
 function M.trim_and_pad_title(title)
