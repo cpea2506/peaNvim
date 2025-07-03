@@ -22,7 +22,7 @@ return {
                 "help",
                 "lazy",
                 "noice",
-                "oil",
+                "fyler",
                 "toggleterm",
                 "qf",
                 "lazygit",

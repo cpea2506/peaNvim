@@ -1,40 +1,29 @@
 return {
-    "stevearc/oil.nvim",
+    "A7Lavinraj/fyler.nvim",
     lazy = false,
     keys = {
-        { "<leader>e", "<cmd>Oil --float<cr>", desc = "Open Explorer" },
+        { "<leader>e", "<cmd>Fyler<cr>", desc = "Open Explorer" },
     },
     opts = {
-        delete_to_trash = true,
-        skip_confirm_for_simple_edits = true,
-        keymaps = {
-            ["g?"] = { "actions.show_help", mode = "n" },
-            ["<CR>"] = "actions.select",
-            ["<C-v>"] = { "actions.select", opts = { vertical = true } },
-            ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
-            ["q"] = { "actions.close", mode = "n" },
-            ["R"] = "actions.refresh",
-            ["-"] = { "actions.parent", mode = "n" },
-            ["_"] = { "actions.open_cwd", mode = "n" },
-            ["`"] = { "actions.cd", mode = "n" },
-            ["~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
-            ["gs"] = { "actions.change_sort", mode = "n" },
-            ["gx"] = "actions.open_external",
-            ["g."] = { "actions.toggle_hidden", mode = "n" },
-            ["g\\"] = { "actions.toggle_trash", mode = "n" },
-            ["gy"] = { "actions.yank_entry", mode = "n" },
+        default_explorer = true,
+        close_on_select = true,
+        icon_provider = "nvim-web-devicons",
+        views = {
+            explorer = {
+                width = 0.8,
+                height = 0.8,
+                kind = "float",
+                border = "rounded",
+            },
         },
-        use_default_keymaps = false,
-        lsp_file_methods = {
-            autosave_changes = true,
-        },
-        float = {
-            max_width = 0.8,
-            max_height = 0.8,
-        },
-        watch_for_changes = true,
-        view_options = {
-            show_hidden = true,
+        mappings = {
+            explorer = {
+                n = {
+                    ["q"] = "CloseView",
+                    ["<CR>"] = "Select",
+                    ["<C-CR>"] = "SelectRecursive",
+                },
+            },
         },
     },
 }

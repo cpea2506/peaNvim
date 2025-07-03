@@ -43,7 +43,7 @@ return {
                     "lspinfo",
                     "mason",
                     "noice",
-                    "oil",
+                    "fyler",
                     "toggleterm",
                     "arena",
                 },
