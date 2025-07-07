@@ -10,7 +10,6 @@ return {
         vim.api.nvim_create_autocmd("User", {
             pattern = "VeryLazy",
             callback = function()
-                require("lazy").load { plugins = plugin.name }
                 require(plugin.name).register_ui_select(function(_, items)
                     local min_height, max_height = 0.15, 0.85
                     local height = (#items + 4) / vim.o.lines
