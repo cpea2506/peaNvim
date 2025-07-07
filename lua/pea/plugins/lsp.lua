@@ -1,15 +1,12 @@
 return {
     {
-        "neovim/nvim-lspconfig",
-        event = "LazyFile",
+        "mason-org/mason-lspconfig.nvim",
+        lazy = false,
+        opts = {},
         dependencies = {
             "mason-org/mason.nvim",
-            "mason-org/mason-lspconfig.nvim",
+            "neovim/nvim-lspconfig",
         },
-    },
-    {
-        "mason-org/mason-lspconfig.nvim",
-        opts = {},
     },
     {
         "mason-org/mason.nvim",
