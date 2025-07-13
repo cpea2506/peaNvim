@@ -1,5 +1,4 @@
 {
-  "arena.nvim": { "branch": "main", "commit": "9d0987c3672ebfb39eeed8f15eb47de815d308b9" },
   "better-escape.nvim": { "branch": "master", "commit": "19a38aab94961016430905ebec30d272a01e9742" },
   "blink-ripgrep.nvim": { "branch": "main", "commit": "1f294a0c7602e091bffea39cfb6dc549f4b6466d" },
   "blink.cmp": { "branch": "main", "commit": "ecf293093551ad4b90070c9ebf7e8cd95c1a5935" },
