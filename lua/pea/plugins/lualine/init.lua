@@ -29,7 +29,7 @@ return {
                 },
                 disabled_filetypes = {
                     "",
-                    "PeaInput",
+                    "input",
                     "TelescopePrompt",
                     "checkhealth",
                     "dap-repl",
@@ -45,7 +45,6 @@ return {
                     "noice",
                     "fyler",
                     "toggleterm",
-                    "arena",
                 },
                 globalstatus = true,
                 component_separators = "",

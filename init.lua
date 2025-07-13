@@ -27,7 +27,6 @@ local modules = {
     "keymaps",
     "onkeys",
     "events",
-    "ui.input",
     "lsp",
 }
 

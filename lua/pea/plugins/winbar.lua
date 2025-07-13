@@ -25,8 +25,8 @@ return {
                 "fyler",
                 "toggleterm",
                 "qf",
+                "input",
                 "lazygit",
-                "arena",
             },
         }
     end,
