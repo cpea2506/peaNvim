@@ -118,6 +118,10 @@ M.on_attach = function(client, bufnr)
         })
     end
 
+    if client:supports_method("textDocument/documentColor", bufnr) then
+        vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
+    end
+
     if client:supports_method("textDocument/documentHighlight", bufnr) then
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             group = document_highlight_group,
