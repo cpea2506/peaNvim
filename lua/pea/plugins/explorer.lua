@@ -8,6 +8,7 @@ return {
         default_explorer = true,
         close_on_select = true,
         icon_provider = "nvim-web-devicons",
+        git_status = false,
         views = {
             explorer = {
                 width = 0.8,
