@@ -101,56 +101,43 @@ end
 local codelens_refresh_group = vim.api.nvim_create_augroup("pea_codelens_refresh", { clear = true })
 local document_highlight_group = vim.api.nvim_create_augroup("pea_document_highlight", { clear = true })
 
-M.on_attach = function(client, bufnr)
+M.on_attach = function(_, bufnr)
     set_lsp_keymaps(bufnr)
 
-    if client:supports_method("textDocument/inlayHint", bufnr) then
-        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    end
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
 
-    if client:supports_method("textDocument/codeLens", bufnr) then
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-            group = codelens_refresh_group,
-            buffer = bufnr,
-            callback = function(args)
-                vim.lsp.codelens.refresh { bufnr = args.buf }
-            end,
-        })
-    end
+    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        group = codelens_refresh_group,
+        buffer = bufnr,
+        callback = function(args)
+            vim.lsp.codelens.refresh { bufnr = args.buf }
+        end,
+    })
 
-    if client:supports_method("textDocument/documentColor", bufnr) then
-        vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
-    end
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        group = document_highlight_group,
+        buffer = bufnr,
+        callback = vim.lsp.buf.document_highlight,
+    })
 
-    if client:supports_method("textDocument/documentHighlight", bufnr) then
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-            group = document_highlight_group,
-            buffer = bufnr,
-            callback = vim.lsp.buf.document_highlight,
-        })
-
-        vim.api.nvim_create_autocmd("CursorMoved", {
-            group = document_highlight_group,
-            buffer = bufnr,
-            callback = vim.lsp.buf.clear_references,
-        })
-    end
+    vim.api.nvim_create_autocmd("CursorMoved", {
+        group = document_highlight_group,
+        buffer = bufnr,
+        callback = vim.lsp.buf.clear_references,
+    })
 end
 
-M.on_exit = function(client, bufnr)
-    if client:supports_method("textDocument/codeLens", bufnr) then
-        vim.api.nvim_clear_autocmds {
-            group = codelens_refresh_group,
-            buffer = bufnr,
-        }
-    end
+M.on_exit = function(_, bufnr)
+    vim.api.nvim_clear_autocmds {
+        group = codelens_refresh_group,
+        buffer = bufnr,
+    }
 
-    if client:supports_method("textDocument/documentHighlight", bufnr) then
-        vim.api.nvim_clear_autocmds {
-            group = document_highlight_group,
-            buffer = bufnr,
-        }
-    end
+    vim.api.nvim_clear_autocmds {
+        group = document_highlight_group,
+        buffer = bufnr,
+    }
 end
 
 M.capabilities = function()
