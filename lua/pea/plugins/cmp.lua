@@ -116,7 +116,11 @@ return {
                         name = "Ripgrep",
                         module = "blink-ripgrep",
                         opts = {
-                            search_casing = "--smart-case",
+                            backend = {
+                                ripgrep = {
+                                    search_casing = "--smart-case",
+                                },
+                            },
                         },
                         score_offset = -3,
                     },
