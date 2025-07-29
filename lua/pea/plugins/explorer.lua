@@ -5,24 +5,39 @@ return {
         { "<leader>e", "<cmd>Fyler<cr>", desc = "Open Explorer" },
     },
     opts = {
-        default_explorer = true,
-        close_on_select = true,
         icon_provider = "nvim-web-devicons",
-        git_status = false,
         views = {
             explorer = {
-                width = 0.8,
-                height = 0.8,
-                kind = "float",
-                border = "rounded",
+                close_on_select = true,
+                confirm_simple = false,
+                default_explorer = true,
+                git_status = false,
+                indentscope = {
+                    enabled = true,
+                    group = "FylerIndentMarker",
+                    marker = "│",
+                },
+                win = {
+                    border = "rounded",
+                    kind = "float",
+                    kind_presets = {
+                        float = {
+                            height = 0.8,
+                            width = 0.8,
+                        },
+                    },
+                },
             },
-        },
-        mappings = {
-            explorer = {
-                n = {
-                    ["q"] = "CloseView",
-                    ["<CR>"] = "Select",
-                    ["<C-CR>"] = "SelectRecursive",
+            confirm = {
+                win = {
+                    border = "rounded",
+                    kind = "float",
+                    kind_presets = {
+                        float = {
+                            height = 0.4,
+                            width = 0.5,
+                        },
+                    },
                 },
             },
         },
