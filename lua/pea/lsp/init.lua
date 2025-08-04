@@ -24,6 +24,6 @@ vim.api.nvim_create_autocmd("LspDetach", {
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-        config.on_exit(client, bufnr)
+        config.on_detach(client, bufnr)
     end,
 })

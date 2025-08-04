@@ -30,7 +30,7 @@ M.on_attach = function(_, bufnr)
     })
 end
 
-M.on_exit = function(_, bufnr)
+M.on_detach = function(_, bufnr)
     vim.api.nvim_clear_autocmds {
         group = codelens_refresh_group,
         buffer = bufnr,
