@@ -1,24 +1,11 @@
 local M = {}
 
-local function dedup(items)
-    local seen = {}
-    local result = {}
-
-    for _, value in ipairs(items) do
-        local key = ("%s:%d:%s"):format(value.filename, value.lnum, value.text)
-
-        if not seen[key] then
-            table.insert(result, value)
-            seen[key] = true
-        end
-    end
-
-    return result
-end
-
 function M.set(bufnr)
+    ---@param opts vim.lsp.LocationOpts.OnList
     local function on_list(opts)
-        opts.items = dedup(opts.items)
+        opts.items = vim.list.unique(opts.items, function(item)
+            return (":%s:%d:%s"):format(item.filename, item.lnum, item.text)
+        end)
 
         if #opts.items == 1 then
             local item = opts.items[1]
@@ -38,15 +25,14 @@ function M.set(bufnr)
 
             vim.bo[b].buflisted = true
 
-            local w = opts.reuse_win and vim.fn.win_findbuf(b)[1] or winid
-            vim.api.nvim_win_set_buf(w, b)
-            vim.api.nvim_win_set_cursor(w, { item.lnum, item.col - 1 })
-            vim._with({ win = w }, function()
+            vim.api.nvim_win_set_buf(winid, b)
+            vim.api.nvim_win_set_cursor(winid, { item.lnum, item.col - 1 })
+            vim._with({ win = winid }, function()
                 -- Open folds under the cursor
                 vim.cmd.normal { "zv", bang = true }
             end)
         else
-            vim.fn.setqflist({}, " ", opts)
+            vim.fn.setqflist({}, " ", { title = opts.title, items = opts.items })
             vim.cmd "bo cope"
         end
     end
