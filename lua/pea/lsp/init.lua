@@ -14,6 +14,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
 
+        if not client then
+            return
+        end
+
         config.on_attach(client, bufnr)
     end,
 })
@@ -23,6 +27,10 @@ vim.api.nvim_create_autocmd("LspDetach", {
     callback = function(args)
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+        if not client then
+            return
+        end
 
         config.on_detach(client, bufnr)
     end,

@@ -3,33 +3,46 @@ local M = {}
 local codelens_refresh_group = vim.api.nvim_create_augroup("pea_codelens_refresh", { clear = true })
 local document_highlight_group = vim.api.nvim_create_augroup("pea_document_highlight", { clear = true })
 
-M.on_attach = function(_, bufnr)
+---@param client vim.lsp.Client
+---@param bufnr integer
+M.on_attach = function(client, bufnr)
     require("pea.lsp.keymaps").set(bufnr)
 
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr) then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-        group = codelens_refresh_group,
-        buffer = bufnr,
-        callback = function(args)
-            vim.lsp.codelens.refresh { bufnr = args.buf }
-        end,
-    })
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentColor, bufnr) then
+        vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
+    end
 
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        group = document_highlight_group,
-        buffer = bufnr,
-        callback = vim.lsp.buf.document_highlight,
-    })
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, bufnr) then
+        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+            group = codelens_refresh_group,
+            buffer = bufnr,
+            callback = function(args)
+                vim.lsp.codelens.refresh { bufnr = args.buf }
+            end,
+        })
+    end
 
-    vim.api.nvim_create_autocmd("CursorMoved", {
-        group = document_highlight_group,
-        buffer = bufnr,
-        callback = vim.lsp.buf.clear_references,
-    })
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            group = document_highlight_group,
+            buffer = bufnr,
+            callback = vim.lsp.buf.document_highlight,
+        })
+
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            group = document_highlight_group,
+            buffer = bufnr,
+            callback = vim.lsp.buf.clear_references,
+        })
+    end
 end
 
+---@param _ vim.lsp.Client
+---@param bufnr integer
 M.on_detach = function(_, bufnr)
     vim.api.nvim_clear_autocmds {
         group = codelens_refresh_group,

@@ -1,5 +1,6 @@
 local M = {}
 
+---@param bufnr integer
 function M.set(bufnr)
     ---@param opts vim.lsp.LocationOpts.OnList
     local function on_list(opts)
