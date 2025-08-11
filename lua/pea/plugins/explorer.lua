@@ -22,8 +22,8 @@ return {
                     kind = "float",
                     kind_presets = {
                         float = {
-                            height = 0.8,
-                            width = 0.8,
+                            height = "0.8rel",
+                            width = "0.8rel",
                         },
                     },
                 },
@@ -34,8 +34,8 @@ return {
                     kind = "float",
                     kind_presets = {
                         float = {
-                            height = 0.4,
-                            width = 0.5,
+                            height = "0.4rel",
+                            width = "0.5rel",
                         },
                     },
                 },
