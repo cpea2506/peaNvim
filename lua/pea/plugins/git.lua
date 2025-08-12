@@ -1,23 +1,38 @@
 return {
     {
-        "cpea2506/git-conflict.nvim",
+        "tronikelis/conflict-marker.nvim",
         event = "VeryLazy",
         opts = {
-            default_mappings = {
-                ours = "co",
-                theirs = "ct",
-                both = "cb",
-                none = "c0",
-                next = "<C-j>",
-                prev = "<C-k>",
-            },
-            default_commands = false,
-            disable_diagnostics = true,
-            list_opener = "copen",
-            highlights = {
-                incoming = "DiffAdd",
-                current = "DiffText",
-            },
+            highlight = true,
+            on_attach = function(conflict)
+                local mid = "^=======$"
+                local keymaps = {
+                    ["<C-j>"] = function()
+                        vim.cmd("/" .. mid)
+                    end,
+                    ["<C-k>"] = function()
+                        vim.cmd("?" .. mid)
+                    end,
+                    ["co"] = function()
+                        conflict:choose_ours()
+                    end,
+                    ["ct"] = function()
+                        conflict:choose_theirs()
+                    end,
+                    ["cb"] = function()
+                        conflict:choose_both()
+                    end,
+                    ["cn"] = function()
+                        conflict:choose_none()
+                    end,
+                }
+
+                for key, value in pairs(keymaps) do
+                    vim.keymap.set("n", key, value, { buffer = conflict.bufnr })
+                end
+
+                vim.diagnostic.enable(false, { bufnr = conflict.bufnr })
+            end,
         },
     },
     {
