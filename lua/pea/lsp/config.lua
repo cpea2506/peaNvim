@@ -94,4 +94,6 @@ M.diagnostics = function()
     }
 end
 
+M.on_progress = require "pea.lsp.progress"
+
 return M

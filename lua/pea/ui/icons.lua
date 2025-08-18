@@ -61,6 +61,7 @@ return {
         Windows = "",
         Treesitter = "",
         Scrollbar = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
+        Spinner = { "", "󰪞", "󰪟", "󰪠", "󰪢", "󰪣", "󰪤", "󰪥" },
         ThinTick = "✓",
         Tick = "",
         ArrowRight = "➜",
