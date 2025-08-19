@@ -24,6 +24,8 @@ return {
                         float = {
                             height = "0.8rel",
                             width = "0.8rel",
+                            top = "0.075rel",
+                            left = "0.075rel",
                         },
                     },
                 },
