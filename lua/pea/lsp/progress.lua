@@ -1,4 +1,5 @@
 ---@class vim.lsp.Client
+---@field progress_id string
 ---@field is_done boolean
 ---@field spinner_idx integer
 ---@field winid? integer
@@ -7,17 +8,19 @@
 ---@field pos integer
 ---@field timer? uv.uv_timer_t
 
----@type table<integer, vim.lsp.Client>
-local progress_clients = {}
-local total_wins = 0
+---@type table<string, vim.lsp.Client>
+local clients = {}
+local total = 0
+
+local api = vim.api
+local o = vim.o
+local uv = vim.uv
+
+local icons = require "pea.ui.icons"
+local ns = api.nvim_create_namespace "pea.lsp_progress"
 
 ---@param callback fun()
 local function guard(callback)
-    local whitelist = {
-        "E11: Invalid in command%-line window",
-        "E523: Not allowed here",
-        "E565: Not allowed to change",
-    }
     local ok, err = pcall(callback)
 
     if ok then
@@ -28,8 +31,12 @@ local function guard(callback)
         error(err)
     end
 
-    for _, msg in ipairs(whitelist) do
-        if string.find(err, msg) then
+    for _, m in ipairs {
+        "E11: Invalid in command%-line window",
+        "E523: Not allowed here",
+        "E565: Not allowed to change",
+    } do
+        if err:find(m) then
             return false
         end
     end
@@ -38,198 +45,202 @@ local function guard(callback)
 end
 
 ---@param client vim.lsp.Client
-local function update_win_config(client)
-    vim.api.nvim_win_set_config(client.winid, {
+local function get_win_config(client)
+    return {
         relative = "editor",
         width = #client.message,
         height = 1,
-        row = vim.o.lines - vim.o.cmdheight - 1 - client.pos * 3,
-        col = vim.o.columns - #client.message,
-    })
+        row = o.lines - o.cmdheight - 1 - client.pos * 3,
+        col = o.columns - #client.message,
+        focusable = false,
+        style = "minimal",
+    }
 end
 
 ---@param client vim.lsp.Client
----@param params lsp.ProgressParams
-local function format_message(client, params)
-    local ns = vim.api.nvim_create_namespace "pea.lsp_progress"
-    vim.api.nvim_buf_clear_namespace(client.bufnr, ns, 0, 1)
-
-    ---@param pattern string
-    ---@param hl_group string
-    local function set_mark(pattern, hl_group)
-        vim.schedule(function()
-            local text = vim.api.nvim_buf_get_lines(client.bufnr, 0, 1, false)[1]
-            local start_col, end_col = text:find(pattern)
-
-            if start_col and end_col then
-                vim.api.nvim_buf_set_extmark(client.bufnr, ns, 0, start_col - 1, {
-                    end_col = end_col,
-                    hl_group = hl_group,
-                })
-            end
-        end)
+local function update_win_config(client)
+    if client.winid and api.nvim_win_is_valid(client.winid) then
+        api.nvim_win_set_config(client.winid, get_win_config(client))
     end
-
-    local icons = require "pea.ui.icons"
-    local message = ("[%s]"):format(client.name)
-    local kind = params.value.kind
-    local title = params.value.title
-
-    if title then
-        message = ("%s %s:"):format(message, title)
-    end
-
-    set_mark("%[.-%]", "Title")
-    set_mark(".-:", "NonText")
-
-    if kind == "end" then
-        client.is_done = true
-        message = (" %s %s Done!"):format(icons.ui.Tick, message)
-
-        set_mark("Done!", "Function")
-        set_mark(icons.ui.Tick, "Function")
-    else
-        client.is_done = false
-        local raw_message = params.value.message
-        local percentage = params.value.percentage
-
-        if raw_message then
-            message = ("%s %s"):format(message, raw_message)
-        end
-
-        if percentage then
-            message = ("%s (%d%%)"):format(message, percentage)
-        end
-
-        local index = client.spinner_idx or 1
-        index = index == #icons.ui.Spinner * 4 and 1 or index + 1
-        client.spinner_idx = index
-
-        local spinner = icons.ui.Spinner[math.ceil(index / 4)]
-        message = (" %s %s"):format(spinner, message)
-
-        set_mark("%d+/%d+", "CursorLine")
-        set_mark("%(%d+%%%)", "Constant")
-        set_mark(spinner, "Constant")
-    end
-
-    return message
 end
 
----@param client vim.lsp.Client
-local function show_message(client)
-    local winid = client.winid
+---@param bufnr integer
+---@param pattern string
+---@param hl_group string
+local function set_mark(bufnr, pattern, hl_group)
+    vim.schedule(function()
+        local lines = api.nvim_buf_get_lines(bufnr, 0, 1, false)
+        local text = lines[1] or ""
+        local start_col, end_col = text:find(pattern)
 
-    if
-        not winid
-        or not vim.api.nvim_win_is_valid(winid)
-        or vim.api.nvim_win_get_tabpage(winid) ~= vim.api.nvim_get_current_tabpage()
-    then
-        local success = guard(function()
-            winid = vim.api.nvim_open_win(client.bufnr, false, {
-                relative = "editor",
-                width = #client.message,
-                height = 1,
-                row = vim.o.lines - vim.o.cmdheight - 1 - client.pos * 3,
-                col = vim.o.columns - #client.message,
-                focusable = false,
-                style = "minimal",
-                noautocmd = true,
+        if start_col and end_col then
+            api.nvim_buf_set_extmark(bufnr, ns, 0, start_col - 1, {
+                end_col = end_col,
+                hl_group = hl_group,
             })
-        end)
-
-        if not success then
-            return
         end
-
-        client.winid = winid
-        total_wins = total_wins + 1
-    else
-        update_win_config(client)
-    end
-
-    guard(function()
-        vim.api.nvim_buf_set_lines(client.bufnr, 0, 1, false, { client.message })
     end)
 end
 
 ---@param client vim.lsp.Client
 ---@param params lsp.ProgressParams
-local function progress(client, params)
-    local id = ("%s.%s"):format(client.id, params.token)
+local function build_message(client, params)
+    local value = params.value or {}
 
-    if not progress_clients[id] then
-        local client_data = {
-            is_done = false,
-            spinner_idx = 0,
-            winid = nil,
-            bufnr = nil,
-            message = nil,
-            pos = total_wins + 1,
-            timer = nil,
-        }
+    api.nvim_buf_clear_namespace(client.bufnr, ns, 0, 1)
 
-        for k, v in pairs(client) do
-            client_data[k] = v
-        end
+    local message = ("[%s]"):format(client.name or "")
 
-        progress_clients[id] = client_data
+    if value.title then
+        message = ("%s %s:"):format(message, value.title)
     end
 
-    local progress_client = progress_clients[id]
+    set_mark(client.bufnr, "%[.-%]", "Title")
+    set_mark(client.bufnr, ".-:", "NonText")
+
+    if value.kind == "end" then
+        client.is_done = true
+
+        local done_message = (" %s %s Done!"):format(icons.ui.Tick, message)
+
+        set_mark(client.bufnr, "Done!", "Function")
+        set_mark(client.bufnr, icons.ui.Tick, "Function")
+
+        return done_message
+    end
+
+    client.is_done = false
+
+    if value.message then
+        message = ("%s %s"):format(message, value.message)
+    end
+
+    if value.percentage then
+        message = ("%s (%d%%)"):format(message, value.percentage)
+    end
+
+    local idx = (client.spinner_idx or 0) + 1
+    local frames = #icons.ui.Spinner * 4
+
+    client.spinner_idx = (idx > frames) and 1 or idx
+
+    local spinner = icons.ui.Spinner[math.ceil(client.spinner_idx / 4)]
+    message = (" %s %s"):format(spinner, message)
+
+    set_mark(client.bufnr, "%d+/%d+", "CursorLine")
+    set_mark(client.bufnr, "%(%d+%%%)", "Constant")
+    set_mark(client.bufnr, spinner, "Constant")
+
+    return message
+end
+
+---@param client vim.lsp.Client
+local function show_progress(client)
+    local has_win = client.winid and api.nvim_win_is_valid(client.winid)
+    local in_same_tab = has_win and api.nvim_win_get_tabpage(client.winid) == api.nvim_get_current_tabpage()
+
+    if not has_win or not in_same_tab then
+        local ok = guard(function()
+            client.winid = api.nvim_open_win(client.bufnr, false, get_win_config(client))
+        end)
+
+        if not ok then
+            return
+        end
+
+        total = total + 1
+    else
+        update_win_config(client)
+    end
+
+    guard(function()
+        api.nvim_buf_set_lines(client.bufnr, 0, 1, false, { client.message })
+    end)
+end
+
+---@param client vim.lsp.Client
+local function cleanup(client)
+    local ok = guard(function()
+        if client.winid and api.nvim_win_is_valid(client.winid) then
+            api.nvim_win_close(client.winid, true)
+        end
+
+        if client.bufnr and api.nvim_buf_is_valid(client.bufnr) then
+            api.nvim_buf_delete(client.bufnr, { force = true })
+        end
+    end)
+
+    if not ok then
+        return
+    end
+
+    if client.timer and not client.timer:is_closing() then
+        client.timer:stop()
+        client.timer:close()
+    end
+
+    total = math.max(0, total - 1)
+
+    for _, c in pairs(clients) do
+        if c.winid and c.pos > client.pos then
+            c.pos = c.pos - 1
+
+            update_win_config(c)
+        end
+    end
+
+    clients[client.progress_id] = nil
+end
+
+---@param client vim.lsp.Client
+---@param params lsp.ProgressParams
+return function(client, params)
+    client.progress_id = ("%s.%s"):format(client.id, params.token)
+
+    local progress_client = clients[client.progress_id]
+
+    if not progress_client then
+        local progress_client_data = {
+            name = client.name,
+            is_done = false,
+            spinner_idx = 0,
+            pos = total + 1,
+        }
+
+        for key, value in pairs(client) do
+            progress_client_data[key] = value
+        end
+
+        clients[client.progress_id] = progress_client_data
+
+        progress_client = clients[client.progress_id]
+    end
 
     if not progress_client.bufnr then
-        progress_client.bufnr = vim.api.nvim_create_buf(false, true)
+        progress_client.bufnr = api.nvim_create_buf(false, true)
     end
 
     if not progress_client.timer then
-        progress_client.timer = vim.uv.new_timer()
+        progress_client.timer = uv.new_timer()
     end
 
-    progress_client.message = format_message(progress_client, params)
+    progress_client.message = build_message(progress_client, params)
 
-    show_message(progress_client)
+    show_progress(progress_client)
 
     if progress_client.is_done then
         progress_client.timer:start(
             2000,
             100,
             vim.schedule_wrap(function()
-                if not progress_client.is_done or progress_client.winid == nil then
+                if not progress_client.is_done or not progress_client.winid then
                     progress_client.timer:stop()
+
                     return
                 end
 
-                local success = false
-                if progress_client.winid and progress_client.bufnr then
-                    success = guard(function()
-                        if vim.api.nvim_win_is_valid(progress_client.winid) then
-                            vim.api.nvim_win_close(progress_client.winid, true)
-                        end
-
-                        if vim.api.nvim_buf_is_valid(progress_client.bufnr) then
-                            vim.api.nvim_buf_delete(progress_client.bufnr, { force = true })
-                        end
-                    end)
-                end
-
-                if success then
-                    progress_client.timer:stop()
-                    progress_client.timer:close()
-                    total_wins = total_wins - 1
-
-                    for _, c in pairs(progress_clients) do
-                        if c.winid and c.pos > progress_client.pos then
-                            c.pos = c.pos - 1
-                            update_win_config(c)
-                        end
-                    end
-
-                    progress_clients[id] = nil
-                end
+                cleanup(progress_client)
             end)
         )
     end
 end
-
-return progress
