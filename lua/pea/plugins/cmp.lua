@@ -4,6 +4,7 @@ return {
     dependencies = {
         "mikavilpas/blink-ripgrep.nvim",
         "rafamadriz/friendly-snippets",
+        "giuxtaposition/blink-cmp-copilot",
     },
     event = {
         "InsertEnter",
@@ -110,8 +111,21 @@ return {
                 },
             },
             sources = {
-                default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+                default = { "lsp", "path", "snippets", "buffer", "ripgrep", "copilot" },
                 providers = {
+                    copilot = {
+                        name = "copilot",
+                        module = "blink-cmp-copilot",
+                        score_offset = 100,
+                        async = true,
+                        transform_items = function(_, items)
+                            for _, item in ipairs(items) do
+                                item.kind_icon = icons.kind.Copilot
+                                item.kind_name = "Copilot"
+                            end
+                            return items
+                        end,
+                    },
                     ripgrep = {
                         name = "Ripgrep",
                         module = "blink-ripgrep",
