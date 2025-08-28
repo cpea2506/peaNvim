@@ -98,6 +98,59 @@ M.diagnostics = function()
     }
 end
 
-M.on_progress = require "pea.lsp.progress"
+---@type table<string, string|integer>
+local progress_message_ids = {}
+
+M.on_progress = function(client, token, value)
+    local icons = require "pea.ui.icons"
+    local progress_id = ("%s.%s"):format(client.id, token)
+    local message = ("[%s]"):format(client.name)
+
+    if value.title then
+        message = ("%s %s"):format(message, value.title)
+    end
+
+    if value.message then
+        message = ("%s %s"):format(message, value.message)
+    end
+
+    if value.kind == "end" then
+        message = (" %s %s: Done!"):format(icons.ui.Tick, message)
+
+        vim.api.nvim_echo({ { message, "Type" } }, true, {
+            id = progress_message_ids[progress_id],
+            kind = "progress",
+            status = "success",
+            percent = 100,
+            title = client.name,
+        })
+
+        progress_message_ids[progress_id] = nil
+    else
+        local percentage = value.percentage or 0
+        local spinner_count = #icons.ui.Spinner
+        local spinner_index = math.max(1, math.min(spinner_count, math.ceil((percentage / 100) * spinner_count)))
+        local spinner = icons.ui.Spinner[spinner_index]
+
+        message = (" %s %s (%d%%)"):format(spinner, message, percentage)
+
+        if not progress_message_ids[progress_id] then
+            progress_message_ids[progress_id] = vim.api.nvim_echo({ { message, "Type" } }, true, {
+                kind = "progress",
+                status = "running",
+                percent = percentage,
+                title = client.name,
+            })
+        else
+            vim.api.nvim_echo({ { message, "Type" } }, true, {
+                id = progress_message_ids[progress_id],
+                kind = "progress",
+                status = "running",
+                percent = percentage,
+                title = client.name,
+            })
+        end
+    end
+end
 
 return M

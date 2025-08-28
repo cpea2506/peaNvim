@@ -40,12 +40,16 @@ vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
     pattern = { "begin", "report", "end" },
     callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        local data = args.data
+        local client = vim.lsp.get_client_by_id(data.client_id)
 
         if not client then
             return
         end
 
-        config.on_progress(client, args.data.params)
+        ---@type lsp.ProgressParams
+        local params = data.params
+
+        config.on_progress(client, params.token, params.value)
     end,
 })
