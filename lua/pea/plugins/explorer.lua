@@ -5,41 +5,26 @@ return {
         { "<leader>e", "<cmd>Fyler<cr>", desc = "Open Explorer" },
     },
     opts = {
-        icon_provider = "nvim-web-devicons",
-        views = {
-            explorer = {
-                close_on_select = true,
-                confirm_simple = false,
-                default_explorer = true,
-                git_status = false,
-                indentscope = {
-                    enabled = true,
-                    group = "FylerIndentMarker",
-                    marker = "│",
-                },
-                win = {
-                    border = "rounded",
-                    kind = "float",
-                    kind_presets = {
-                        float = {
-                            height = "0.8rel",
-                            width = "0.8rel",
-                            top = "0.075rel",
-                            left = "0.075rel",
-                        },
-                    },
-                },
-            },
-            confirm = {
-                win = {
-                    border = "rounded",
-                    kind = "float",
-                    kind_presets = {
-                        float = {
-                            height = "0.4rel",
-                            width = "0.5rel",
-                        },
-                    },
+        icon_provider = "nvim_web_devicons",
+        close_on_select = true,
+        confirm_simple = false,
+        default_explorer = true,
+        git_status = false,
+        indentscope = {
+            enabled = true,
+            group = "FylerIndentMarker",
+            marker = "│",
+        },
+        track_current_buffer = true,
+        win = {
+            border = "rounded",
+            kind = "float",
+            kind_presets = {
+                float = {
+                    height = "0.8rel",
+                    width = "0.8rel",
+                    top = "0.075rel",
+                    left = "0.075rel",
                 },
             },
         },
