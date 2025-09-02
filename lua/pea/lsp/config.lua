@@ -16,6 +16,10 @@ M.on_attach = function(client, bufnr)
         vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
     end
 
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_onTypeFormatting, bufnr) then
+        vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
+    end
+
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, bufnr) then
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
             group = codelens_refresh_group,
