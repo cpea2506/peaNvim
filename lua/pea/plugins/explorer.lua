@@ -9,7 +9,14 @@ return {
         close_on_select = true,
         confirm_simple = false,
         default_explorer = true,
-        git_status = false,
+        icon = {
+            directory_collapsed = "",
+            directory_expanded = "",
+            directory_empty = "",
+        },
+        git_status = {
+            enabled = false,
+        },
         indentscope = {
             enabled = true,
             group = "FylerIndentMarker",

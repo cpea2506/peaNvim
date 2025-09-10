@@ -12,8 +12,6 @@ return {
                 ["@lsp.type.constant.cs"] = { link = "@constant" },
                 ["@lsp.type.interface.cs"] = { link = "@type" },
 
-                Directory = { fg = colors.yellow },
-
                 DapBreakpoint = { fg = colors.dark_red, ctermbg = 0 },
                 DapLogPoint = { fg = colors.aqua, ctermbg = 0 },
                 DapStopped = { fg = colors.green, ctermbg = 0 },
