@@ -127,7 +127,7 @@ M.on_progress = function(client, token, value)
     local title = ("%s [%s] %s"):format(spinner, client.name, value.title)
 
     if not progress_message_ids[progress_id] then
-        progress_message_ids[progress_id] = vim.api.nvim_echo({ { value.message, "Type" } }, true, {
+        progress_message_ids[progress_id] = vim.api.nvim_echo({ { value.message or "", "Type" } }, true, {
             kind = "progress",
             status = "running",
             percent = value.percentage,
