@@ -22,7 +22,7 @@ return {
                 "help",
                 "lazy",
                 "noice",
-                "fyler",
+                "Fyler",
                 "toggleterm",
                 "qf",
                 "input",

@@ -43,7 +43,7 @@ return {
                     "lspinfo",
                     "mason",
                     "noice",
-                    "fyler",
+                    "Fyler",
                     "toggleterm",
                 },
                 globalstatus = true,
