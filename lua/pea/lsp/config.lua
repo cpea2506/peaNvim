@@ -8,19 +8,19 @@ local document_highlight_group = vim.api.nvim_create_augroup("pea_document_highl
 M.on_attach = function(client, bufnr)
     require("pea.lsp.keymaps").set(bufnr)
 
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr) then
+    if client:supports_method("textDocument/inlayHint", bufnr) then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
 
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentColor, bufnr) then
+    if client:supports_method("textDocument/documentColor", bufnr) then
         vim.lsp.document_color.enable(true, bufnr, { style = "virtual" })
     end
 
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_onTypeFormatting, bufnr) then
+    if client:supports_method("textDocument/onTypeFormatting", bufnr) then
         vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
     end
 
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, bufnr) then
+    if client:supports_method("textDocument/codeLens", bufnr) then
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
             group = codelens_refresh_group,
             buffer = bufnr,
@@ -30,7 +30,7 @@ M.on_attach = function(client, bufnr)
         })
     end
 
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
+    if client:supports_method("textDocument/documentHighlight", bufnr) then
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             group = document_highlight_group,
             buffer = bufnr,
