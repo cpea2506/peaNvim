@@ -43,6 +43,11 @@ return {
         },
     },
     {
+        "khoido2003/roslyn-filewatch.nvim",
+        ft = "cs",
+        opts = {},
+    },
+    {
         "saecki/crates.nvim",
         event = "BufRead Cargo.toml",
         opts = {
