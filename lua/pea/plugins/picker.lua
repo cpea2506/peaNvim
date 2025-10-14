@@ -64,6 +64,18 @@ return {
                 cwd_prompt = false,
                 formatter = "path.filename_first",
             },
+            diagnostics = {
+                cwd_only = false,
+                file_icons = true,
+                git_icons = false,
+                color_headings = true,
+                diag_icons = true,
+                diag_source = true,
+                diag_code = true,
+                icon_padding = "",
+                multiline = 2,
+                severity_limit = vim.log.levels.WARN,
+            },
             grep = {
                 hidden = true,
             },
