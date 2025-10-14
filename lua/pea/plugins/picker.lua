@@ -2,8 +2,10 @@ return {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
     keys = {
+        { "<leader>sg", "<cmd>FzfLua global<cr>", desc = "FzfLua Files" },
         { "<leader>sf", "<cmd>FzfLua files<cr>", desc = "FzfLua Files" },
         { "<leader>st", "<cmd>FzfLua live_grep<cr>", desc = "FzfLua Grep" },
+        { "<leader>sb", "<cmd>FzfLua buffers<cr>", desc = "FzfLua Grep" },
         { "<leader>sd", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "FzfLua Diagnostics" },
     },
     init = function(plugin)
