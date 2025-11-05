@@ -104,6 +104,7 @@ local progress_message_ids = {}
 M.on_progress = function(client, token, value)
     local icons = require "pea.ui.icons"
     local progress_id = ("%s.%s"):format(client.id, token)
+    local percentage = value.percentage or 0
 
     if value.kind == "end" then
         local title = ("%s [%s] %s"):format(icons.ui.Tick, client.name, value.title)
@@ -112,7 +113,7 @@ M.on_progress = function(client, token, value)
             id = progress_message_ids[progress_id],
             kind = "progress",
             status = "success",
-            percent = value.percentage,
+            percent = percentage,
             title = title,
         })
 
@@ -122,7 +123,7 @@ M.on_progress = function(client, token, value)
     end
 
     local spinner_count = #icons.ui.Spinner
-    local spinner_index = math.max(1, math.min(spinner_count, math.floor((value.percentage / 100) * spinner_count)))
+    local spinner_index = math.max(1, math.min(spinner_count, math.floor((percentage / 100) * spinner_count)))
     local spinner = icons.ui.Spinner[spinner_index]
     local title = ("%s [%s] %s"):format(spinner, client.name, value.title)
 
@@ -130,7 +131,7 @@ M.on_progress = function(client, token, value)
         progress_message_ids[progress_id] = vim.api.nvim_echo({ { value.message or "", "Type" } }, true, {
             kind = "progress",
             status = "running",
-            percent = value.percentage,
+            percent = percentage,
             title = title,
         })
     else
@@ -138,7 +139,7 @@ M.on_progress = function(client, token, value)
             id = progress_message_ids[progress_id],
             kind = "progress",
             status = "running",
-            percent = value.percentage,
+            percent = percentage,
             title = title,
         })
     end
