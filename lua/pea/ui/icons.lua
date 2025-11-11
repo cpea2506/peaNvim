@@ -43,6 +43,9 @@ return {
         Variable = "",
     },
     ui = {
+        FolderCollapsed = "",
+        FolderExpanded = "",
+        FolderEmpty = "",
         Telescope = "",
         Forward = "",
         ChevronRight = "",
