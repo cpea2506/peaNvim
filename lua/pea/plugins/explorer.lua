@@ -2,7 +2,7 @@ return {
     "A7Lavinraj/fyler.nvim",
     lazy = false,
     keys = {
-        { "<leader>e", "<cmd>Fyler<cr>", desc = "Open Explorer" },
+        { "<leader>e", "<cmd>Fyler dir=.<cr>", desc = "Open Explorer" },
     },
     opts = function()
         local icons = require "pea.ui.icons"
