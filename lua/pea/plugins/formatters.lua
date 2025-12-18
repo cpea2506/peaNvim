@@ -14,6 +14,7 @@ return {
             markdown = { "prettier" },
             javascript = { "prettier" },
             typescript = { "prettier" },
+            svelte = { "prettier" },
             cpp = { "clang-format" },
             toml = { "taplo" },
             sh = { "shfmt" },
