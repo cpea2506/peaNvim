@@ -23,8 +23,10 @@ return {
                         directory_expanded = icons.ui.FolderExpanded,
                         directory_empty = icons.ui.FolderEmpty,
                     },
-                    git_status = {
-                        enabled = false,
+                    columns = {
+                        git = {
+                            enabled = false,
+                        },
                     },
                     indentscope = {
                         enabled = true,
