@@ -6,7 +6,6 @@ return {
         INFO = "",
     },
     kind = {
-        Copilot = "",
         Array = "",
         Boolean = "",
         Class = "",

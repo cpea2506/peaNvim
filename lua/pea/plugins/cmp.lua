@@ -4,7 +4,6 @@ return {
     dependencies = {
         "mikavilpas/blink-ripgrep.nvim",
         "rafamadriz/friendly-snippets",
-        "fang2hou/blink-copilot",
     },
     event = {
         "InsertEnter",
@@ -111,14 +110,8 @@ return {
                 },
             },
             sources = {
-                default = { "lsp", "path", "snippets", "buffer", "ripgrep", "copilot" },
+                default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
                 providers = {
-                    copilot = {
-                        name = "copilot",
-                        module = "blink-copilot",
-                        score_offset = 100,
-                        async = true,
-                    },
                     ripgrep = {
                         name = "Ripgrep",
                         module = "blink-ripgrep",
