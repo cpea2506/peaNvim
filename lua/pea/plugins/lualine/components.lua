@@ -51,6 +51,20 @@ local components = {
         "filesize",
         cond = conditions.buffer_not_empty,
     },
+    diagnostics = {
+        "diagnostics",
+        sources = { "nvim_diagnostic" },
+        symbols = {
+            error = icons.diagnostics.ERROR .. " ",
+            warn = icons.diagnostics.WARN .. " ",
+            info = icons.diagnostics.INFO .. " ",
+        },
+        diagnostics_color = {
+            color_error = { fg = colors.red },
+            color_warn = { fg = colors.yellow },
+            color_info = { fg = colors.cyan },
+        },
+    },
     center = {
         "%=",
     },
