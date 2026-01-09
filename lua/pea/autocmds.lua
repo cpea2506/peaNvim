@@ -55,16 +55,6 @@ local autocmds = {
             end,
         },
     },
-    {
-        "VimLeave",
-        {
-            group = augroup "restore_cursor",
-            callback = function()
-                vim.o.guicursor = ""
-                vim.api.nvim_chan_send(vim.v.stderr, "\x1b[ q")
-            end,
-        },
-    },
 }
 
 for _, autocmd in pairs(autocmds) do
