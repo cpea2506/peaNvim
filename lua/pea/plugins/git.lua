@@ -1,6 +1,6 @@
 return {
     "tronikelis/conflict-marker.nvim",
-    event = "VeryLazy",
+    event = "LazyFile",
     opts = {
         highlight = true,
         on_attach = function(conflict)

@@ -20,6 +20,6 @@ return {
     },
     {
         "cpea2506/input.nvim",
-        event = "VeryLazy",
+        event = "LazyFile",
     },
 }
