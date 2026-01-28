@@ -1,6 +1,6 @@
 return {
     "andrewferrier/debugprint.nvim",
-    event = "LazyFile",
+    keys = { "g?p", "g?P", "g?v", "g?V" },
     opts = {
         filetypes = {
             ["cs"] = {
