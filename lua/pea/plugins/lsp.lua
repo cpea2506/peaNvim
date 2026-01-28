@@ -1,14 +1,5 @@
 return {
     {
-        "mason-org/mason-lspconfig.nvim",
-        event = "VeryLazy",
-        opts = {},
-        dependencies = {
-            "mason-org/mason.nvim",
-            "neovim/nvim-lspconfig",
-        },
-    },
-    {
         "mason-org/mason.nvim",
         cmd = "Mason",
         build = ":MasonUpdate",
@@ -34,6 +25,15 @@ return {
                 },
             }
         end,
+    },
+    {
+        "mason-org/mason-lspconfig.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {},
+        dependencies = {
+            "mason-org/mason.nvim",
+            "neovim/nvim-lspconfig",
+        },
     },
     {
         "seblyng/roslyn.nvim",
