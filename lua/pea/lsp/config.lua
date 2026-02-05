@@ -1,6 +1,5 @@
 local M = {}
 
-local codelens_refresh_group = vim.api.nvim_create_augroup("pea_codelens_refresh", { clear = true })
 local document_highlight_group = vim.api.nvim_create_augroup("pea_document_highlight", { clear = true })
 
 ---@param client vim.lsp.Client
@@ -21,13 +20,7 @@ M.on_attach = function(client, bufnr)
     end
 
     if client:supports_method("textDocument/codeLens", bufnr) then
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-            group = codelens_refresh_group,
-            buffer = bufnr,
-            callback = function(args)
-                vim.lsp.codelens.refresh { bufnr = args.buf }
-            end,
-        })
+        vim.lsp.codelens.enable(true, { bufnr = bufnr })
     end
 
     if client:supports_method("textDocument/documentHighlight", bufnr) then
@@ -48,11 +41,6 @@ end
 ---@param _ vim.lsp.Client
 ---@param bufnr integer
 M.on_detach = function(_, bufnr)
-    vim.api.nvim_clear_autocmds {
-        group = codelens_refresh_group,
-        buffer = bufnr,
-    }
-
     vim.api.nvim_clear_autocmds {
         group = document_highlight_group,
         buffer = bufnr,
