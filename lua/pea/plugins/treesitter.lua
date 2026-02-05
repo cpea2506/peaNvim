@@ -5,10 +5,6 @@ return {
     event = "LazyFile",
     dependencies = {
         {
-            "HiPhish/rainbow-delimiters.nvim",
-            submodules = false,
-        },
-        {
             "nvim-treesitter/nvim-treesitter-context",
             opts = {
                 mode = "cursor",
