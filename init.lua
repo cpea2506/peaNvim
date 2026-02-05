@@ -1,5 +1,5 @@
 vim.loader.enable()
-require("vim._extui").enable {}
+require("vim._core.ui2").enable {}
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
