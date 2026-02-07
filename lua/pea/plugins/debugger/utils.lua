@@ -1,9 +1,9 @@
 local function get_vstuc_path()
     local vstuc_root = vim.env.HOME .. "/.vscode/extensions/"
-    local handle = vim.loop.fs_scandir(vstuc_root)
+    local handle = vim.uv.fs_scandir(vstuc_root)
 
     while handle do
-        local name, type = vim.loop.fs_scandir_next(handle)
+        local name, type = vim.uv.fs_scandir_next(handle)
 
         if not name then
             break

@@ -1,5 +1,20 @@
 return {
     {
+        "MironPascalCaseFan/debugmaster.nvim",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+        keys = "<leader>d",
+        config = function()
+            local debugmaster = require "debugmaster"
+
+            debugmaster.plugins.cursor_hl.enabled = true
+            debugmaster.plugins.ui_auto_toggle.enabled = true
+
+            vim.keymap.set({ "n", "v" }, "<leader>d", debugmaster.mode.toggle, { nowait = true })
+        end,
+    },
+    {
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require "dap"
@@ -49,18 +64,17 @@ return {
         end,
     },
     {
-        "miroshQa/debugmaster.nvim",
-        dependencies = {
-            "mfussenegger/nvim-dap",
+        "andrewferrier/debugprint.nvim",
+        keys = { "g?p", "g?P", "g?v", "g?V" },
+        opts = {
+            filetypes = {
+                ["cs"] = {
+                    left = [[UnityEngine.Debug.Log($"]],
+                    right = [[");]],
+                    mid_var = "{",
+                    right_var = [[}");]],
+                },
+            },
         },
-        keys = "<leader>d",
-        config = function()
-            local debugmaster = require "debugmaster"
-
-            debugmaster.plugins.cursor_hl.enabled = true
-            debugmaster.plugins.ui_auto_toggle.enabled = true
-
-            vim.keymap.set({ "n", "v" }, "<leader>d", debugmaster.mode.toggle, { nowait = true })
-        end,
     },
 }
