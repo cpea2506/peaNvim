@@ -23,13 +23,13 @@
   "nvim-lspconfig": { "branch": "master", "commit": "66fd02ad1c7ea31616d3ca678fa04e6d0b360824" },
   "nvim-navic": { "branch": "master", "commit": "f5eba192f39b453675d115351808bd51276d9de5" },
   "nvim-surround": { "branch": "main", "commit": "1098d7b3c34adcfa7feb3289ee434529abd4afd1" },
-  "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
+  "nvim-treesitter": { "branch": "main", "commit": "45a07f869b0cffba342276f2c77ba7c116d35db8" },
   "nvim-treesitter-context": { "branch": "master", "commit": "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a" },
   "nvim-web-devicons": { "branch": "master", "commit": "746ffbb17975ebd6c40142362eee1b0249969c5c" },
   "one_monokai.nvim": { "branch": "main", "commit": "047a0239831458866945d5c2d111ff1d282d1966" },
   "quicker.nvim": { "branch": "master", "commit": "fc041830fa7cf093786b0d5990d99cf3c7b0c129" },
   "relative-toggle.nvim": { "branch": "main", "commit": "669743be90a3a3c5fc0eceec478042e2bc7541a4" },
-  "roslyn-filewatch.nvim": { "branch": "main", "commit": "d850acd12fc001bbd5f5c21c861598e74e73f8be" },
+  "roslyn-filewatch.nvim": { "branch": "main", "commit": "903409340fda7d624af57a73e1feabd966833319" },
   "roslyn.nvim": { "branch": "main", "commit": "56c421a02451cc61c8d63cfe9dc2079453e1ea6d" },
   "toggleterm.nvim": { "branch": "main", "commit": "9a88eae817ef395952e08650b3283726786fb5fb" }
 }
