@@ -5,7 +5,6 @@ return {
         dependencies = {
             "mikavilpas/blink-ripgrep.nvim",
             "rafamadriz/friendly-snippets",
-            "saghen/blink.pairs",
         },
         event = {
             "InsertEnter",
@@ -163,6 +162,7 @@ return {
     {
         "saghen/blink.pairs",
         build = "cargo build --release",
+        event = "LazyFile",
         opts = {
             highlights = {
                 groups = {
