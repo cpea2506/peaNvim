@@ -31,6 +31,7 @@ return {
     },
     on_attach = function(client, bufnr)
         vim.api.nvim_create_autocmd("InsertCharPre", {
+            group = vim.api.nvim_create_augroup("pea_lsp", { clear = true }),
             desc = "Trigger an auto insert on '/'.",
             buffer = bufnr,
             callback = function()

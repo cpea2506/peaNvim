@@ -10,6 +10,7 @@ return {
     },
     init = function(plugin)
         vim.api.nvim_create_autocmd("User", {
+            group = vim.api.nvim_create_augroup("pea_picker", { clear = true }),
             pattern = "VeryLazy",
             callback = function()
                 require(plugin.name).register_ui_select(function(_, items)

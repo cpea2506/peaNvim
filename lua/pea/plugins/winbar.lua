@@ -68,8 +68,6 @@ return {
             return filename .. "%#NavicSeparator#" .. opts.separator .. "%*" .. locations
         end
 
-        local augroup = vim.api.nvim_create_augroup("navic-winbar", { clear = true })
-
         vim.api.nvim_create_autocmd({
             "CursorHoldI",
             "CursorHold",
@@ -80,7 +78,7 @@ return {
             "TabClosed",
             "TabEnter",
         }, {
-            group = augroup,
+            group = vim.api.nvim_create_augroup("pea_winbar", { clear = true }),
             callback = function(args)
                 local bufnr = args.buf
 
