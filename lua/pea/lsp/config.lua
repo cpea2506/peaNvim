@@ -91,44 +91,31 @@ local progress_message_ids = {}
 
 M.on_progress = function(client, token, value)
     local icons = require "pea.ui.icons"
+
     local progress_id = ("%s.%s"):format(client.id, token)
     local percentage = value.percentage or 0
 
     if value.kind == "end" then
-        local title = ("%s [%s] %s"):format(icons.ui.Tick, client.name, value.title)
-
         vim.api.nvim_echo({ { "Done", "Type" } }, true, {
             id = progress_message_ids[progress_id],
             kind = "progress",
             status = "success",
             percent = percentage,
-            title = title,
+            title = ("%s [%s] %s"):format(icons.ui.Tick, client.name, value.title),
         })
 
         progress_message_ids[progress_id] = nil
-
-        return
-    end
-
-    local spinner_count = #icons.ui.Spinner
-    local spinner_index = math.max(1, math.min(spinner_count, math.floor((percentage / 100) * spinner_count)))
-    local spinner = icons.ui.Spinner[spinner_index]
-    local title = ("%s [%s] %s"):format(spinner, client.name, value.title)
-
-    if not progress_message_ids[progress_id] then
-        progress_message_ids[progress_id] = vim.api.nvim_echo({ { value.message or "", "Type" } }, true, {
-            kind = "progress",
-            status = "running",
-            percent = percentage,
-            title = title,
-        })
     else
-        vim.api.nvim_echo({ { value.message, "Type" } }, true, {
+        local spinner = icons.ui.Spinner
+        local count = #spinner
+        local index = math.min(math.floor((percentage / 100) * count) + 1, count)
+
+        progress_message_ids[progress_id] = vim.api.nvim_echo({ { value.message or "", "Type" } }, true, {
             id = progress_message_ids[progress_id],
             kind = "progress",
             status = "running",
             percent = percentage,
-            title = title,
+            title = ("%s [%s] %s"):format(spinner[index], client.name, value.title),
         })
     end
 end
