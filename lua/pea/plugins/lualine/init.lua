@@ -45,6 +45,7 @@ return {
                     "noice",
                     "fyler",
                     "toggleterm",
+                    "pager",
                 },
                 globalstatus = true,
                 component_separators = "",
