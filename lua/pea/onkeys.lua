@@ -2,7 +2,7 @@ local function namespace(name)
     return vim.api.nvim_create_namespace("pea_" .. name)
 end
 
-local on_key_listeners = {
+local listeners = {
     {
         function(char)
             if vim.fn.mode() == "n" then
@@ -17,6 +17,6 @@ local on_key_listeners = {
     },
 }
 
-for _, listener in pairs(on_key_listeners) do
+for _, listener in pairs(listeners) do
     vim.on_key(listener[1], listener[2], listener[3])
 end

@@ -1,4 +1,4 @@
-local event_handler = require "lazy.core.handler.event"
+local handler = require "lazy.core.handler.event"
 
 local events = {
     LazyFile = {
@@ -8,6 +8,6 @@ local events = {
 }
 
 for event, mapping in pairs(events) do
-    event_handler.mappings[event] = mapping
-    event_handler.mappings["User " .. event] = event_handler.mappings[event]
+    handler.mappings[event] = mapping
+    handler.mappings["User " .. event] = mapping
 end
