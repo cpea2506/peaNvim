@@ -16,19 +16,13 @@ local autocmds = {
         "FileType",
         {
             group = augroup "q_close",
-            pattern = { "help", "man", "qf", "startuptime", "checkhealth", "man" },
+            pattern = { "help", "man", "qf", "checkhealth" },
             callback = function(args)
                 local bufnr = args.buf
 
-                vim.bo[bufnr].buflisted = false
-
-                vim.schedule(function()
-                    vim.keymap.set("n", "q", function()
-                        vim.cmd.close()
-
-                        pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
-                    end, { buffer = bufnr, silent = true, desc = "Quit buffer" })
-                end)
+                vim.keymap.set("n", "q", function()
+                    vim.cmd.bd(bufnr)
+                end, { buffer = bufnr, silent = true })
             end,
         },
     },
