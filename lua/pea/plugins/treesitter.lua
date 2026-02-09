@@ -24,7 +24,10 @@ return {
                     end
 
                     vim.treesitter.start(args.buf, lang)
-                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+                    if vim.treesitter.query.get(lang, "indents") then
+                        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
                 end,
             })
         end,
