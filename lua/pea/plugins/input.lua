@@ -22,4 +22,9 @@ return {
         "cpea2506/input.nvim",
         event = "LazyFile",
     },
+    {
+        "kylechui/nvim-surround",
+        event = "LazyFile",
+        opts = {},
+    },
 }
