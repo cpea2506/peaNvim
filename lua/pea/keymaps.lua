@@ -1,7 +1,7 @@
 local keymaps = {
     { "n", "<leader>q", "<cmd>q<cr>" },
     { "n", "<C-s>", "<cmd>w<cr>" },
-    { "n", "<C-e>", "<cmd>BufClose<cr>" },
+    { "n", "<C-e>", "<cmd>bd<cr>" },
 
     { "n", "<C-h>", "<C-w>h", { remap = true } },
     { "n", "<C-j>", "<C-w>j", { remap = true } },
