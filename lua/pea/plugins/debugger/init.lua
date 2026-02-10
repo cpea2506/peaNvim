@@ -18,8 +18,8 @@ return {
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require "dap"
-            local adapters = require "pea.plugins.dap.adapters"
-            local configurations = require "pea.plugins.dap.configurations"
+            local adapters = require "pea.plugins.debugger.adapters"
+            local configurations = require "pea.plugins.debugger.configurations"
 
             for adapter, config in pairs(adapters) do
                 dap.adapters[adapter] = config

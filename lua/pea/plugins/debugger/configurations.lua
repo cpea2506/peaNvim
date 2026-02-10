@@ -1,4 +1,4 @@
-local utils = require "pea.plugins.dap.utils"
+local utils = require "pea.plugins.debugger.utils"
 
 local configurations = {
     cs = {
